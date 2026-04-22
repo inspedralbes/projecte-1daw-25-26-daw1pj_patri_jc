@@ -1,7 +1,4 @@
 # Documentació
-Llistat d'alguns dels punts que han de quedar explicats en aquesta carpeta. Poden ser tots en aquest fitxer o en diversos fitxers enllaçats.
-
-És obligatori modificar aquest document!!
 
 ## Documentació bàsica MÍNIMA
  * Objectius
@@ -17,3 +14,12 @@ Llistat d'alguns dels punts que han de quedar explicats en aquesta carpeta. Pode
  * Aplicació Android
  * Altres elements importants.
  * ...
+
+<details>
+  <summary><h2>Programació</h2></summary>
+  <blockquote>
+    <h2>Diagrama de Casos d'Ús</h2>
+    <img src="https://github.com/inspedralbes/projecte-1daw-25-26-daw1pj_patri_jc/blob/main/assets/CasosUs_PJ_Incidencies.drawio.png?raw=true"
+      alt="Imatge amb casos d'ús" width="500">
+  </blockquote>
+</details>
