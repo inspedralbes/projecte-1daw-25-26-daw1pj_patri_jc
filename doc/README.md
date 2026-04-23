@@ -23,3 +23,20 @@
       alt="Imatge amb casos d'ús" width="500">
   </blockquote>
 </details>
+
+
+<details>
+  <summary><h2>Base de Dades</h2></summary>
+  <blockquote>
+    <h2>Diagrama de Casos d'Ús</h2>
+    <img src="<details>
+  <summary><h2>Programació</h2></summary>
+  <blockquote>
+    <h2>Disseny del model E-R (Entitat-Relació)</h2>
+    <img src="https://github.com/inspedralbes/projecte-1daw-25-26-daw1pj_patri_jc/blob/main/assets/CasosUs_PJ_Incidencies.drawio.png?raw=true"
+      alt="Imatge amb casos d'ús" width="500">
+  </blockquote>
+</details>"
+      alt="Imatge amb casos d'ús" width="500">
+  </blockquote>
+</details>
