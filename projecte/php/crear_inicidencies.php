@@ -9,6 +9,7 @@
         //Obtenir la incidencia
         $nomIncidencia = $_POST['nom'];
 
+        
         if(empty($nom)){
             echo "<p class='error'>El nom de la incidència no pot estar buit.</p>";
             return;
