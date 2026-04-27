@@ -16,7 +16,13 @@ $titol = "Gestió d'incidències";
         <nav class="navbar" style="background-color: #D0F3F9;" data-bs-theme="light">
             <div class="container-fluid">
                 <img src="./assets/logo.png" alt="Logo de l'institut Pedralbes" width="150" class="d-inline-block align-text-top">
-                 <span class="mb-0 mx-5 h1 fs-2" style="color: #555555"><?php echo $titol; ?></span> 
+                
+                <span class="mb-0 me-5 h1 fs-2" style="color: #555555"><?php echo $titol; ?></span> 
+
+                <a class="link-offset-2 link-offset-4-hover link-underline link-underline-opacity-0 mx-3" style="color: #43A9ED;" onmouseover="this.style.color='#0d6efd'"
+                onmouseout="this.style.color='#43A9ED'" href="index.php">
+                🏠︎ Inici
+            </a>
             </div>
         </nav>
     </header>
