@@ -10,11 +10,11 @@ $titol = "Institut Pedralbes";
     <title>Gestió d'incidències</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/projecte/CSS/estilos.css">
+    <link rel="stylesheet" href="/projecte/estils/estils.css">
 </head>
 <body>
     <header>
-        <nav class="navbar" style="background-color: #D0F3F9;" data-bs-theme="light">
+        <nav class="navbar w-100 " style="background-color: #D0F3F9;" data-bs-theme="light">
             <div class="container-fluid">
                 <img src="./assets/logo2.png" alt="Logo de l'institut Pedralbes" width="50" class="d-inline-block align-text-top">
                 
