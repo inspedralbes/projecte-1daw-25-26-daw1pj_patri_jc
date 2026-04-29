@@ -71,7 +71,8 @@
 <main > 
     <div class="text-center mt-5">
         <h1>Cercador d'Incidències</h1>
-        <hr class="border border-primary border-3 opacity-75 mb-5 w-50 mx-auto">
+        <hr class="border border-primary border-3 opacity-75 mb-5 col-lg-4 
+        col-10 mx-auto">
     </div>
 
     <?php 
@@ -79,10 +80,11 @@
             cercar($conn);
         }else{
             ?>
+            
             <!-- Buscar por departamento -->
-                <div class= "col-6 mx-auto">
+                <div class= "col-lg-5 mx-auto p-5 mb-4">
                     <form method="post" class="border rounded border-dark p-5">
-                        <div class="mb-5">
+                        <div class="mb-4">
                             <label for="b_departament" class="form-label d-block">
                                 Buscar per departament
                             </label>
@@ -102,13 +104,16 @@
                         </div>
 
                 <!-- Buscar por id -->
-                        <div class="mb-5">
+                        <div class="mb-4">
                             <label for="id" class="form-label d-block">Buscar per identificador</label>
                             <input type="text" class="form-control" id= "id" name="id" placeholder="Número identificador ex: 13" inputmode="numeric" 
                             pattern = "[0-9]*">
                         </div>
-
-                        <input class= "btn btn-primary py-1" type="submit" value="Enviar">
+                        
+                        <div class = "text-center">
+                            <input class= "btn btn-primary py-1" type="submit" value="Envía">
+                        </div>
+                        
                     </form>
                 </div> 
             <?php

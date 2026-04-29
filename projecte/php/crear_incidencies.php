@@ -66,15 +66,18 @@
             ?>
 
 
-    <div class = "container-lg mt-3 mb-4 border border-primary  w-75 w-md-75 p-3 mx-auto rounded-5 border-3 bg-body-tertiary
-" style = "border-color: #20D1E9 !important;">
+    <div class = "container-lg mt-3 mb-4   p-3 mx-auto">
 
+    <div class ="text-center mt-5">
+        <h1 class = "text-center">Formulari d'Incidències</h1>
+        <hr class="border border-primary border-3 opacity-75 mb-5 col-lg-4 
+        col-10 mx-auto">
+    </div>
     
-    <h1 class = "text-center" style = "color: #444444;">Formulari d'Incidències</h1>
-    <div class="mb-3 w-100 p-3   mx-auto px-3 mt-3">
+    <div class="mb-3 col-lg-6 p-3 mx-auto px-3 mt-3">
         <form action="crear_incidencies.php" method ="POST">
             
-            <div class = 'd-flex flex-column mb-2 p-2'>
+            <div class = 'd-flex flex-column mb-2 p-2 border rounded border-dark p-5'>
                 <label for="dept" class = "form-label mb-2 mt-2">Departament</label>
                 <select name="dept" id="dept" class = "form-control">  
                     <option selected disabled>Selecciona...</option>
@@ -89,7 +92,7 @@
                     <option value="9">Altres</option>
                 </select>
 
-                <label for="tipus" class = "form-label mt-2 mb-2">Tipus d'Incidència</label>
+                <label for="tipus" class = "form-label mt-3 mb-2">Tipus d'Incidència</label>
                 <select name="tipus" id="tipus" class = "form-control">
                     <option selected disabled>Selecciona...</option>
                     <option value="1">Hardware</option>
@@ -100,16 +103,16 @@
 
                 </select>
             
-                <label for="desc" class = "form-label mb-2">Descripció</label>
+                <label for="desc" class = "form-label mt-3 mb-2">Descripció</label>
                 <textarea name="desc" id="desc" class = "form-control mb-2" rows = "3">
 
                 </textarea>
-            
+                <div class = "text-center">
+                <input type="submit" value="Envía" class = "btn btn-primary mt-3">
+            </div>
             </div>
 
-            <div class = "text-center">
-                <input type="submit" value="Envía" class = "btn btn-primary">
-            </div>
+            
             
             
         </form>
@@ -118,6 +121,8 @@
         ?>
     </div>
     </div>
+
+
     <?php 
     include './header-footer/footer.php';?>
 </body>
