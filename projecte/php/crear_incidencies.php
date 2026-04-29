@@ -38,7 +38,9 @@
         $stmt->bind_param("iiss", $nomDept, $nomTipus, $data_inici, $nomDesc);
 
         if($stmt->execute()){
-            echo "<p class 'info'> Incidència creada amb èxit! </p>";
+            $id = $stmt->insert_id; // Obtenir l'ID de la última inserción
+            echo "<script> window.location.href = 'confirmacio.php?id=" . $id . "'; </script>";
+            exit();
         } else{
             echo "<p class ='error'> Error al crear la incidència: " . htmlspecialchars($stmt->error) . "</p>";
         }
@@ -79,8 +81,8 @@
             
             <div class = 'd-flex flex-column mb-2 p-2 border rounded border-dark p-5'>
                 <label for="dept" class = "form-label mb-2 mt-2">Departament</label>
-                <select name="dept" id="dept" class = "form-control">  
-                    <option selected disabled>Selecciona...</option>
+                <select name="dept" id="dept" class = "form-control" required>  
+                    <option selected disabled value="">Selecciona...</option>
                     <option value="1">Llengua Anglesa</option>
                     <option value="2">Llengua Catalana</option>
                     <option value="3">Història</option>
@@ -93,8 +95,8 @@
                 </select>
 
                 <label for="tipus" class = "form-label mt-3 mb-2">Tipus d'Incidència</label>
-                <select name="tipus" id="tipus" class = "form-control">
-                    <option selected disabled>Selecciona...</option>
+                <select name="tipus" id="tipus" class = "form-control" required>
+                    <option selected disabled value = "">Selecciona...</option>
                     <option value="1">Hardware</option>
                     <option value="2">Software</option>
                     <option value="3">Xarxa</option>
@@ -104,9 +106,7 @@
                 </select>
             
                 <label for="desc" class = "form-label mt-3 mb-2">Descripció</label>
-                <textarea name="desc" id="desc" class = "form-control mb-2" rows = "3">
-
-                </textarea>
+                <textarea name="desc" id="desc" class = "form-control mb-2" rows = "3" required value = ""></textarea>
                 <div class = "text-center">
                 <input type="submit" value="Envía" class = "btn btn-primary mt-3">
             </div>

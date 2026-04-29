@@ -3,9 +3,9 @@
 <main class="d-flex align-items-center justify-content-center" style="min-height: 60vh">
     <div class="w-100 text-center">
         <h1>Portal d'Incidències</h1>
-        <hr class="border border-primary border-3 opacity-75 mb-5 w-50 mx-auto">
+        <hr class="border border-primary border-3 opacity-75 mb-5 col-9 col-lg-4 mx-auto">
 
-        <div class="d-grid gap-4 col-3 mx-auto">
+        <div class="d-grid gap-4 col-lg-3 col-6 mx-auto">
             <h2 class="text-center mt-4">Usuari</h2>
             <a class="btn btn-primary py-3" href="crear_incidencies.php">
                     Nova incidència
