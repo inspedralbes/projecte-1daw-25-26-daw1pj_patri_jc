@@ -1,10 +1,11 @@
 <?php include './header-footer/header.php';
     require_once 'connexio.php';
+    $rol = $_GET['rol'] ?? 'usuari';
 
     function cercar($conn){
         $departament = $_POST['departament'] ?? '';
         $id = $_POST['id'] ?? '';
-
+        
         //Valida si els dos camps estan buits
         if(empty($departament) && empty($id)){
             echo "<p class='error'>Siusplau ompli un dels dos camps.</p>";
@@ -35,7 +36,7 @@
 
             if($result->num_rows > 0){
                 //redirige a la pagina de detalle de la incidencia con ese id
-                header("Location: incidencia_detall.php?id=$id"); 
+                header("Location: detall_incidencia.php?id=$id&rol=$rol"); 
                 exit;
 
             }else{
@@ -57,7 +58,7 @@
 
             if($result->num_rows > 0){
                 //redirige a la pagina de incidencias de ese dept
-                header("Location: llistar_incidencies.php?id=$departament"); 
+                header("Location: llistar_incidencies.php?id=$departament&rol=$rol"); 
                 exit;
 
             }else{
