@@ -16,5 +16,3 @@ if ($conn->connect_error){
     echo "<p>Error de connexió: " . htmlspecialchars($conn->connect_error) . "</p>";
     die("Error de connexió: " . $conn->connect_error);// La resta de PHP no es fa
 }
-
-echo "<p>Connexió exitosa!</p>";

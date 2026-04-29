@@ -12,6 +12,8 @@ services:
       VAR2: ${VAR2}
     depends_on:
       - db
+
+
   db:
     image: mysql:9.3
     environment:
@@ -24,6 +26,8 @@ services:
     volumes:
       - ./db_data:/var/lib/mysql
       - ./db_init:/docker-entrypoint-initdb.d
+
+      
   adminer:
     image: adminer
     ports:
