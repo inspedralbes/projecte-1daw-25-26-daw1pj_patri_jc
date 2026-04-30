@@ -1,5 +1,6 @@
 <?php
     require_once 'connexio.php';
+
     $rol = $_GET['rol'] ?? 'usuari';
 
     function cercar($conn, $rol){
@@ -72,8 +73,8 @@
         cercar($conn, $rol);
     }       
 ?>
+    <?php include './header-footer/header.php'; ?>
 
-<?php include './header-footer/header.php'; ?>
 <main > 
     <div class="text-center mt-5">
         <h1>Cercador d'Incidències</h1>
