@@ -77,7 +77,7 @@
 <main > 
     <div class="text-center mt-5">
         <h1>Cercador d'Incidències</h1>
-        <hr class="border border-primary border-3 opacity-75 mb-5 w-50 mx-auto">
+        <hr class="border border-primary border-3 opacity-75 rounded mb-5 w-50 mx-auto">
     </div>  
             <!-- Buscar por departamento -->
                 <div class= "col-6 mx-auto">
@@ -111,6 +111,11 @@
                         <input class= "btn btn-primary py-1" type="submit" value="Enviar">
                     </form>
                 </div> 
+     <div>
+        <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover mx-2 position-absolute mb-5 bottom-0" href="usuari.php">
+            🢘 Torna enrere
+        </a>
+    </div>
 </main>
     <!-- Hay que validar que el id sea valido y un num con php -->
 
