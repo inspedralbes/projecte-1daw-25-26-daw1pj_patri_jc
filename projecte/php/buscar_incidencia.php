@@ -1,8 +1,8 @@
-<?php include './header-footer/header.php';
+<?php
     require_once 'connexio.php';
     $rol = $_GET['rol'] ?? 'usuari';
 
-    function cercar($conn){
+    function cercar($conn, $rol){
         $departament = $_POST['departament'] ?? '';
         $id = $_POST['id'] ?? '';
         
@@ -67,19 +67,18 @@
             }
         }
     }
+
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        cercar($conn, $rol);
+    }       
 ?>
 
+<?php include './header-footer/header.php'; ?>
 <main > 
     <div class="text-center mt-5">
         <h1>Cercador d'Incidències</h1>
         <hr class="border border-primary border-3 opacity-75 mb-5 w-50 mx-auto">
-    </div>
-
-    <?php 
-        if($_SERVER["REQUEST_METHOD"] == "POST") {
-            cercar($conn);
-        }else{
-            ?>
+    </div>  
             <!-- Buscar por departamento -->
                 <div class= "col-6 mx-auto">
                     <form method="post" class="border rounded border-dark p-5">
@@ -112,9 +111,6 @@
                         <input class= "btn btn-primary py-1" type="submit" value="Enviar">
                     </form>
                 </div> 
-            <?php
-        }
-        ?>
 </main>
     <!-- Hay que validar que el id sea valido y un num con php -->
 
