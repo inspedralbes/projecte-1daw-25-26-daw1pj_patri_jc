@@ -91,3 +91,8 @@ INSERT INTO TIPUS (NOM_TIPUS) VALUES
     ('Xarxa'),
     ('Perifèrics'),
     ('Altres');
+
+    INSERT INTO TECNIC (NOM_TECNIC) VALUES 
+    ('Ermengol'),
+    ('Àlvaro'),
+    ('Gerard');

@@ -26,7 +26,7 @@
         
     </div>
     
-    <a class="btn btn-primary p-2 position-lg-static position-absolute bottom-0 start-0  mb-5 ms-3 d-block mx-auto col-5 col-lg-2 text-center" 
+    <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover mb-5 position-absolute bottom-0 start-0 ms-3" 
    href="usuari.php">
     Torna al Menú Usuari
 </a>

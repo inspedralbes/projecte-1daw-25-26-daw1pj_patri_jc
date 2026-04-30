@@ -1,7 +1,7 @@
 <?php include './header-footer/header.php';
     require_once 'connexio.php';
 
-    function cercar($conn){
+    function cercarUsuari($conn){
         $departament = $_POST['departament'] ?? '';
         $id = $_POST['id'] ?? '';
 
