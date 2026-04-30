@@ -81,7 +81,7 @@ $classe = $resultat["classe"];
 
 <?php include './header-footer/header.php'; ?>
 
-<main> 
+<main class="d-flex flex-column flex-grow-1 pb-3">
     <div class="text-center mt-5 mx-auto col-10 col-lg-4">
     <h1>Incidència#<span style="color: #EB8623"><?php echo $incidencia["ID_INCIDENCIA"]; ?></span></h1>        
     <hr class="border border-primary border-3 opacity-75 mb-5 mx-auto">
@@ -150,7 +150,7 @@ $classe = $resultat["classe"];
         </table>
     </div>
 
-    <div class="mt-auto col-lg-8 mx-auto">
+    <div class="mt-auto col-10 col-lg-11 mx-auto">
         <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="buscar_incidencia.php">
             🢘 Torna enrere
         </a>

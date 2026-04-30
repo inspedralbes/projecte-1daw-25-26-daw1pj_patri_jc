@@ -75,23 +75,15 @@
 ?>
     <?php include './header-footer/header.php'; ?>
 
-<main > 
+<main class="d-flex flex-column flex-grow-1 pb-3">
     <div class="text-center mt-5">
         <h1>Cercador d'Incidències</h1>
-        <hr class="border border-primary border-3 opacity-75 mb-5 col-lg-4 
-        col-10 mx-auto">
-    </div>
-
-    <?php 
-        if($_SERVER["REQUEST_METHOD"] == "POST") {
-            cercar($conn);
-        }else{
-            ?>
-            
+        <hr class="border border-primary border-3 opacity-75 rounded mb-5 col-10 col-lg-4 mx-auto">
+    </div>  
             <!-- Buscar por departamento -->
-                <div class= "col-lg-5 mx-auto p-5 mb-4">
+                <div class= "col-10 col-lg-4 mx-auto">
                     <form method="post" class="border rounded border-dark p-5">
-                        <div class="mb-4">
+                        <div class="mb-5">
                             <label for="b_departament" class="form-label d-block">
                                 Buscar per departament
                             </label>
@@ -111,20 +103,17 @@
                         </div>
 
                 <!-- Buscar por id -->
-                        <div class="mb-4">
+                        <div class="mb-5">
                             <label for="id" class="form-label d-block">Buscar per identificador</label>
                             <input type="text" class="form-control" id= "id" name="id" placeholder="Número identificador ex: 13" inputmode="numeric" 
                             pattern = "[0-9]*">
                         </div>
-                        
-                        <div class = "text-center">
-                            <input class= "btn btn-primary py-1" type="submit" value="Envía">
-                        </div>
-                        
+
+                        <input class= "btn btn-primary py-1" type="submit" value="Enviar">
                     </form>
                 </div> 
-     <div>
-        <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover mx-2 position-absolute mb-5 bottom-0" href="usuari.php">
+    <div class="mt-auto col-10 col-lg-11 mx-auto">
+        <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="usuari.php">
             🢘 Torna enrere
         </a>
     </div>
