@@ -10,7 +10,7 @@
             <a class="btn btn-primary py-3" href="crear_incidencies.php">
                     Nova incidència
             </a>
-            <a class="btn btn-primary py-3" href="buscar_incidencia.php">
+            <a class="btn btn-primary py-3" href="buscar_incidencia.php?rol=usuari">
                     Veure estat incidència
             </a>
         </div>

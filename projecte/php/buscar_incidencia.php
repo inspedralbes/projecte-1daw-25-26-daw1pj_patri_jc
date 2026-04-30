@@ -1,10 +1,11 @@
-<?php include './header-footer/header.php';
+<?php
     require_once 'connexio.php';
+    $rol = $_GET['rol'] ?? 'usuari';
 
-    function cercarUsuari($conn){
+    function cercar($conn, $rol){
         $departament = $_POST['departament'] ?? '';
         $id = $_POST['id'] ?? '';
-
+        
         //Valida si els dos camps estan buits
         if(empty($departament) && empty($id)){
             echo "<p class='error'>Siusplau ompli un dels dos camps.</p>";
@@ -35,7 +36,7 @@
 
             if($result->num_rows > 0){
                 //redirige a la pagina de detalle de la incidencia con ese id
-                header("Location: incidencia_detall.php?id=$id"); 
+                header("Location: detall_incidencia.php?id=$id&rol=$rol"); 
                 exit;
 
             }else{
@@ -57,7 +58,7 @@
 
             if($result->num_rows > 0){
                 //redirige a la pagina de incidencias de ese dept
-                header("Location: llistar_incidencies.php?id=$departament"); 
+                header("Location: llistar_incidencies.php?id=$departament&rol=$rol"); 
                 exit;
 
             }else{
@@ -66,8 +67,13 @@
             }
         }
     }
+
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        cercar($conn, $rol);
+    }       
 ?>
 
+<?php include './header-footer/header.php'; ?>
 <main > 
     <div class="text-center mt-5">
         <h1>Cercador d'Incidències</h1>
@@ -116,9 +122,11 @@
                         
                     </form>
                 </div> 
-            <?php
-        }
-        ?>
+     <div>
+        <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover mx-2 position-absolute mb-5 bottom-0" href="usuari.php">
+            🢘 Torna enrere
+        </a>
+    </div>
 </main>
     <!-- Hay que validar que el id sea valido y un num con php -->
 
