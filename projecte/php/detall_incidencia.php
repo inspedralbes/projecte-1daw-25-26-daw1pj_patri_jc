@@ -1,5 +1,6 @@
 <?php
     require_once 'connexio.php';
+    require_once 'funcions.php';
     $rol = $_GET['rol'] ?? 'usuari';
     $id = $_GET['id'] ?? null;
 
@@ -9,73 +10,13 @@
         exit;
     }
 
-    function getIncidencia($conn, $id){
-        $sql = "SELECT i.ID_INCIDENCIA, i.PRIORITAT, t.NOM_TIPUS, d.NOM_DEPT, i.DATA_INICI, i.DATA_FI, i.DESC_INCIDENCIA, tec.NOM_TECNIC
-        FROM INCIDENCIA i
-        LEFT JOIN TIPUS t ON i.ID_TIPUS = t.ID_TIPUS
-        LEFT JOIN DEPARTAMENT d ON i.ID_DEPT = d.ID_DEPT
-        LEFT JOIN TECNIC tec ON i.ID_TECNIC = tec.ID_TECNIC
-        WHERE i.ID_INCIDENCIA = ?";
+    $incidencia = getIncidencia($conn, $id);
 
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-                
-        $incidencia = $result->fetch_assoc();
+    $actuacions = getActuacions($conn, $incidencia["ID_INCIDENCIA"]);
 
-        if (!$incidencia) {
-            echo "<p class='error'>No s'ha trobat cap incidència.</p>";
-            return;
-        }
-
-        return $incidencia;
-    }
-
-    function getActuacions($conn, $id){
-        $sql = "SELECT *
-        FROM ACTUACIO
-        WHERE ID_INCIDENCIA = ?
-        ORDER BY DATA_ACTUACIO DESC";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-                
-        $actuacions = $result->fetch_all(MYSQLI_ASSOC);
-    
-        return $actuacions;
-    }
-    //retorna una array amb l'estat i la classe  que canvia el color segons l'estat
-    function getEstat($actuacions, $incidencia){
-        if($incidencia["DATA_FI"] !== null){
-            return[
-                "estat" => "Tancada",
-                "classe" => "bg-danger bg-gradient"
-            ];
-        } elseif(!empty($actuacions)){
-            return[
-                "estat" => "En Procès",
-                "classe" => "bg-warning bg-gradient"
-            ];
-        }else{
-            return[
-                "estat" => "Enviada",
-                "classe" => "bg-success bg-gradient"
-            ];
-        }
-    }
-?>
-
-<?php 
-$incidencia = getIncidencia($conn, $id);
-
-$actuacions = getActuacions($conn, $incidencia["ID_INCIDENCIA"]);
-
-$resultat = getEstat($actuacions, $incidencia);
-$estat = $resultat["estat"];
-$classe = $resultat["classe"];
+    $resultat = getEstat($actuacions, $incidencia);
+    $estat = $resultat["estat"];
+    $classe = $resultat["classe"];
 ?>
 
 
