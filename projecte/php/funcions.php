@@ -18,14 +18,14 @@
         } 
    
    //funcio que retorna les incidencies d'un departament concret segond l'id
-    function llistar_incidencies($conn, $id_dept){
-        $sql="SELECT I.ID_INCIDENCIA, I.DATA_INICI, I.DATA_FI, I.DESCRIPCIO, D.NOM_DEPT
+    function getIncidenciesDept($conn, $id_dept){
+        $sql="SELECT I.ID_INCIDENCIA, I.DATA_INICI, I.DATA_FI, I.DESC_INCIDENCIA, D.NOM_DEPT
         FROM INCIDENCIA I 
         LEFT JOIN DEPARTAMENT D ON I.ID_DEPT = D.ID_DEPT
         WHERE I.ID_DEPT = ?";
 
         $stmt = $conn -> prepare($sql);
-        $stmt->bind_param("i", $id);
+        $stmt->bind_param("i", $id_dept);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -140,7 +140,7 @@
 
         if($result->num_rows > 0){
             //redirige a la pagina de incidencias de ese dept
-            header("Location: llistaIncidencies.php?id=$id_dept&rol=$rol"); 
+            header("Location: llistaIncidencies.php?id_dept=$id_dept&rol=$rol"); 
             exit;
 
         }else{
