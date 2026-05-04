@@ -1,5 +1,23 @@
 <?php
-    //funcio que retorna les incidencies d'un departament concret segond l'id
+
+   //Llista les incidències d'un tecnic segons el seu id
+   function getIncidenciesTecnic($conn, $idTecnic){
+            $sql = "SELECT i.ID_INCIDENCIA, i.DATA_INICI, i.PRIORITAT, i.DESC_INCIDENCIA,
+            t.NOM_TECNIC 
+            FROM INCIDENCIA i
+            LEFT JOIN TECNIC t ON i.ID_TECNIC = t.ID_TECNIC
+            WHERE i.ID_TECNIC = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i",$idTecnic);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            $incidenciesTec = $result->fetch_all(MYSQLI_ASSOC);
+
+            return $incidenciesTec;
+        } 
+   
+   //funcio que retorna les incidencies d'un departament concret segond l'id
     function llistar_incidencies($conn, $id_dept){
         $sql="SELECT I.ID_INCIDENCIA, I.DATA_INICI, I.DATA_FI, I.DESCRIPCIO, D.NOM_DEPT
         FROM INCIDENCIA I 
@@ -11,9 +29,9 @@
         $stmt->execute();
         $result = $stmt->get_result();
 
-        $incidencies = $result->fetch_all(MYSQLI_ASSOC);
+        $incidenciesDept = $result->fetch_all(MYSQLI_ASSOC);
 
-        return $incidencies;
+        return $incidenciesDept;
     }
 
     //retorna una array amb l'estat i la classe  que canvia el color segons l'estat
@@ -106,12 +124,12 @@
         
         //Cercar per departament
         if(!empty($id_dept)){
-           cercarPerDept($conn, $id_dept);
+           cercarPerDept($conn, $id_dept, $rol);
         }
     }
 
     //Cerca les incidencies per el id del departament i redirigeix a la pagina
-    function cercarPerDept($conn, $id_dept){
+    function cercarPerDept($conn, $id_dept, $rol){
         $sql = "SELECT ID_DEPT FROM DEPARTAMENT
         WHERE ID_DEPT = ?";
 
@@ -122,7 +140,7 @@
 
         if($result->num_rows > 0){
             //redirige a la pagina de incidencias de ese dept
-            header("Location: llistar_incidencies.php?id=$id_dept"); 
+            header("Location: llistaIncidencies.php?id=$id_dept&rol=$rol"); 
             exit;
 
         }else{

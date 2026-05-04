@@ -1,93 +1,50 @@
-<?php include './header-footer/header.php';
-    require_once 'connexio.php';  
+<?php 
+    require_once 'connexio.php';
+    require_once 'funcions.php';
+
     $rol = $_GET['rol'] ?? 'usuari';
     $idTecnic = $_GET['idTecnic'] ?? '';
-    $nomTecnic = null;
-
-
-    if ($rol == 'usuari'){
-        echo "<script> window.location.href = 'index.php'; </script>";
-        echo "<p>No tens el rol corresponent.</p>";
-        exit();
-    }else{
-
-        $sql = "SELECT NOM_TECNIC FROM TECNIC WHERE ID_TECNIC = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $idTecnic);
-
-        if($stmt->execute()){
-            $result = $stmt->get_result();
-            $row = $result->fetch_assoc();
-            $nomTecnic = $row['NOM_TECNIC'];
-        }
-        }
-
-        function llistarIncidencies($conn, $idTecnic){
-            // Consulta SQL per obtenir totes les files de la taula 'cases'
-    $sql = "SELECT ID_INCIDENCIA,DATA_INICI, PRIORITAT, DESC_INCIDENCIA 
-    FROM INCIDENCIA
-     WHERE ID_TECNIC = ?";
-     $stmt = $conn->prepare($sql);
-     $stmt->bind_param("i",$idTecnic);
-     $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Comprovar si hi ha resultats
-    if ($result->num_rows > 0) {
-
-        // Llistar els resultats. 
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr>
-                <td style = 'color: #F28508'>" . $row["ID_INCIDENCIA"] . "</td>
-                <td>" . $row["DATA_INICI"] . "</td>
-                <td>" . $row["PRIORITAT"] . "</td>
-                <td>" . htmlspecialchars($row["DESC_INCIDENCIA"])  . "</td>
-             </tr>";
-        }
-
-    } else {
-        echo "<tr><td colspan='5' class = 'text-center p-3'>No hi ha incidències.</td></tr>";
-    }
-        }
-
-        
     
+    if($rol == 'tecnic' && !empty($idTecnic)){
+        $incidencies = getIncidenciesTecnic($conn, $idTecnic);
+        $nomTecnic = $incidencies[0]['NOM_TECNIC'] ?? 'Tècnic';
+    }elseif($rol == 'usuari' && !empty($id_dept)){
+        //funcion listar por dept
+    }//opcion con admin
+    else {
+        header("Location: index.php");
+        exit();
+    }
+    
+    include './header-footer/header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="cat">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Llista</title>
-</head>
-<body>
-    <h1 class = "mt-5 ms-4 text-center">Benvingut, <span style = "color: #F28508"><?php echo $nomTecnic ?>!</span></h1>
-
-    <div class = "mx-auto mt-5 col-lg-8 col-10">
-        <table class = "table table-bordered ">
-        <thead >
-            <th >ID</th>
-            <th>Data Inicial</th>
-            <th>Prioritat</th>
-            <th>Descripció</th>
+<main class="d-flex flex-column flex-grow-1 pb-3">
+    <h1 class = "mt-5 ms-4 text-center">Benvingut, 
+        <span style = "color: #F28508"><?php echo $nomTecnic ?>!</span>
+    </h1>
+    <div class="mt-5 col-10 col-lg-8 mx-auto">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th class="col-1"scope="col">ID</th>
+                <th class="col-2"scope="col">Data</th>
+                <th class="col-2"scope="col">Prioritat</th>
+                <th scope="col">Descripció</th>
+            </tr>
         </thead>
 
-        <tbody>
-            <?php llistarIncidencies($conn,$idTecnic)?>
+        <tbody class="table-group-divider">
+            <!--Si n'hi han fa un bucle-->
+            <?php if(!empty($incidencies)): ?>
+            <?php foreach($incidencies as $inc): ?>
+                <td><?= $inc["ID_INCIDENCIA"];?> </td>
+            <!--Si no un mutted text "No hi han incidencies asignades"-->
+            <?php endforeach ?>
+            <?php endif ?>
         </tbody>
     </table>
     </div>
-    
-</body>
-</html>
-
-
-
-
-
-
-
-
+</main>    
 
 <?php include './header-footer/footer.php';?>
