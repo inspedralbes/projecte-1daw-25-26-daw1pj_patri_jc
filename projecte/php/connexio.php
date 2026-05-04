@@ -1,10 +1,10 @@
 <?php
-
-$servername = "db"; // Nom del servei
-$username = getenv('VAR1'); // Usuari (getenv = llegir les variables d'entorn)
-$password = getenv('VAR2'); // Contrasenya (getenv = llegir les variables d'entorn)
-$dbname = "incidenciesDB"; // Nom de la base de dades
-
+if(getenv('VAR1')){
+    $servername = "db"; // Nom del servei
+    $username = getenv('VAR1'); // Usuari (getenv = llegir les variables d'entorn)
+    $password = getenv('VAR2'); // Contrasenya (getenv = llegir les variables d'entorn)
+    $dbname = "incidenciesDB"; // Nom de la base de dades
+}
 
 //CREAR LA CONNEXIÓ
 $conn = new mysqli($servername, $username,$password,$dbname);

@@ -9,7 +9,9 @@
     
     if($rol == 'tecnic' && !empty($idTecnic)){
         $incidencies = getIncidenciesTecnic($conn, $idTecnic);
+        $actuacions  = getActuacions($conn, $incidencies);
         $nomTecnic = $incidencies[0]['NOM_TECNIC'] ?? 'Tècnic';
+        
     }elseif($rol == 'usuari' && !empty($id_dept)){
         $incidencies = getIncidenciesDept($conn, $id_dept);
         $nom_dept = $incidencies[0]['NOM_DEPT'] ?? 'Departament';
