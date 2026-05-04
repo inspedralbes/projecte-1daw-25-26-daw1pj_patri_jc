@@ -1,7 +1,7 @@
 <?php
 
    //Llista les incidències d'un tecnic segons el seu id
-   function getIncidenciesTecnic($conn, $idTecnic){
+    function getIncidenciesTecnic($conn, $idTecnic){
             $sql = "SELECT i.ID_INCIDENCIA, i.DATA_INICI, i.DATA_FI,  i.PRIORITAT, i.DESC_INCIDENCIA,
             t.NOM_TECNIC 
             FROM INCIDENCIA i
@@ -16,7 +16,7 @@
 
             return $incidenciesTec;
         } 
-   
+
    //funcio que retorna les incidencies d'un departament concret segond l'id
     function getIncidenciesDept($conn, $id_dept){
         $sql="SELECT I.ID_INCIDENCIA, I.DATA_INICI, I.DATA_FI, I.DESC_INCIDENCIA, D.NOM_DEPT
@@ -124,7 +124,7 @@
         
         //Cercar per departament
         if(!empty($id_dept)){
-           cercarPerDept($conn, $id_dept, $rol);
+            cercarPerDept($conn, $id_dept, $rol);
         }
     }
 
