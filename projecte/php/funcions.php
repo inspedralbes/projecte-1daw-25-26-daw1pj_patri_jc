@@ -2,7 +2,7 @@
 
    //Llista les incidències d'un tecnic segons el seu id
    function getIncidenciesTecnic($conn, $idTecnic){
-            $sql = "SELECT i.ID_INCIDENCIA, i.DATA_INICI, i.PRIORITAT, i.DESC_INCIDENCIA,
+            $sql = "SELECT i.ID_INCIDENCIA, i.DATA_INICI, i.DATA_FI,  i.PRIORITAT, i.DESC_INCIDENCIA,
             t.NOM_TECNIC 
             FROM INCIDENCIA i
             LEFT JOIN TECNIC t ON i.ID_TECNIC = t.ID_TECNIC

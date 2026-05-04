@@ -7,7 +7,9 @@
     
     if($rol == 'tecnic' && !empty($idTecnic)){
         $incidencies = getIncidenciesTecnic($conn, $idTecnic);
+        $actuacions  = getActuacions($conn, $incidencies);
         $nomTecnic = $incidencies[0]['NOM_TECNIC'] ?? 'Tècnic';
+        
     }elseif($rol == 'usuari' && !empty($id_dept)){
         //funcion listar por dept
     }//opcion con admin
@@ -31,16 +33,33 @@
                 <th class="col-2"scope="col">Data</th>
                 <th class="col-2"scope="col">Prioritat</th>
                 <th scope="col">Descripció</th>
+                <th scope="col">Estat</th>
             </tr>
         </thead>
 
         <tbody class="table-group-divider">
             <!--Si n'hi han fa un bucle-->
             <?php if(!empty($incidencies)): ?>
-            <?php foreach($incidencies as $inc): ?>
-                <td><?= $inc["ID_INCIDENCIA"];?> </td>
-            <!--Si no un mutted text "No hi han incidencies asignades"-->
-            <?php endforeach ?>
+                <?php foreach($incidencies as $inc):;
+
+                    $res_estat = getEstat($actuacions, $inc);
+                    $estat = $res_estat ["estat"];
+                    $classe = $res_estat["classe"];
+
+                ?>
+                
+                    
+                <a href="detall_incidencia.php"><td><?= $inc["ID_INCIDENCIA"];?> </td></a>
+                <td><?= $inc["DATA_INICI"];?> </td>
+                <td><?= $inc["PRIORITAT"];?> </td>
+                <td><?= $inc["DESC_INCIDENCIA"];?> </td>
+                <td class = <?php echo $classe;?> > <?php echo $estat;?> </td>
+
+
+
+                <!--Si no un mutted text "No hi han incidencies asignades"-->
+
+                <?php endforeach ?>
             <?php endif ?>
         </tbody>
     </table>
