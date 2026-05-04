@@ -1,0 +1,36 @@
+services:
+  web:
+    build:
+      context: ./images
+      dockerfile: Dockerfile_php
+    ports:
+      - "8080:80"
+    volumes:
+      - ./projecte/php:/var/www/html
+    environment:
+      VAR1: ${VAR1}
+      VAR2: ${VAR2}
+    depends_on:
+      - db
+
+
+  db:
+    image: mysql:9.3
+    environment:
+      MYSQL_ROOT_PASSWORD: ${VAR3}
+      MYSQL_USER: ${VAR1}
+      MYSQL_PASSWORD: ${VAR2}
+      LANG: C.UTF-8
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db_data:/var/lib/mysql
+      - ./db_init:/docker-entrypoint-initdb.d
+
+      
+  adminer:
+    image: adminer
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
