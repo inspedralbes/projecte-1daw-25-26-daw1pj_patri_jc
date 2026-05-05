@@ -17,7 +17,7 @@
             return $incidenciesTec;
         } 
    
-   //funcio que retorna les incidencies d'un departament concret segond l'id
+   //funcio que retorna les incidencies d'un departament concret segons l'id
     function getIncidenciesDept($conn, $id_dept){
         $sql="SELECT I.ID_INCIDENCIA, I.DATA_INICI, I.DATA_FI, I.DESC_INCIDENCIA, D.NOM_DEPT
         FROM INCIDENCIA I 
@@ -32,6 +32,17 @@
         $incidenciesDept = $result->fetch_all(MYSQLI_ASSOC);
 
         return $incidenciesDept;
+    }
+
+    //Funcio per afegir l'estat a l'array d'incidencies
+    function afegirEstat($conn, $incidencies){
+        foreach($incidencies as &$inc){ // la & fa que es modifiqui a l'array original
+            $actuacions = getActuacions($conn, $inc['ID_INCIDENCIA']);
+            $resEstat = getEstat($actuacions, $inc);
+            $inc['estat'] = $resEstat['estat'];
+            $inc['classe'] = $resEstat['classe'];
+        } 
+        return $incidencies; //retorna la llista d'incidencies pero amb els camps nous estat i classe.
     }
 
     //retorna una array amb l'estat i la classe  que canvia el color segons l'estat
@@ -76,6 +87,35 @@
         }
 
         return $incidencia;
+    }
+
+    //funcio que retorna totes les incidencies
+    function getAllIncidencies($conn, $filtre, $ordre, $dir){
+        $sql = "SELECT i.ID_INCIDENCIA, i.PRIORITAT, t.NOM_TIPUS, i.DATA_INICI, i.DATA_FI, i.DESC_INCIDENCIA, tec.NOM_TECNIC, d.NOM_DEPT
+        FROM INCIDENCIA  i
+        LEFT JOIN TIPUS t ON i.ID_TIPUS = t.ID_TIPUS
+        LEFT JOIN DEPARTAMENT d ON i.ID_DEPT = d.ID_DEPT
+        LEFT JOIN TECNIC tec ON i.ID_TECNIC = tec.ID_TECNIC";
+
+        if($filtre == 'no_assignades'){
+            $sql .= " WHERE i.ID_TECNIC IS NULL";
+        }elseif(is_numeric($filtre)){
+            $sql .= " WHERE i.ID_TECNIC = $filtre";
+        }
+
+        $sql .= " ORDER BY $ordre $dir";
+
+        $stmt = $conn->prepare($sql);
+
+        if(is_numeric($filtre)){
+        $stmt->bind_param("i", $filtre);
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $incidencies = $result->fetch_all(MYSQLI_ASSOC);
+
+        return $incidencies;
     }
 
     //funcio que retorna les actuacions d'una incidencia segons el seu id

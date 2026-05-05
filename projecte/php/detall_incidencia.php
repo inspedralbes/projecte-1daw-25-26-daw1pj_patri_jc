@@ -93,7 +93,7 @@
 
     <div class="mt-auto col-10 col-lg-11 mx-auto">
         <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="buscar_incidencia.php">
-            🢘 Torna enrere
+            🢘 Torna al cercador
         </a>
     </div>
 </main>
