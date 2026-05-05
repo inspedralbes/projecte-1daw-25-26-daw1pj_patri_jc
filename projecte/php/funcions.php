@@ -168,4 +168,22 @@
             return;
         }
     }
+
+    function getNomTecnic ($conn, $id){
+        $sql = "SELECT NOM_TECNIC 
+        FROM TECNIC 
+        WHERE ID_TECNIC = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+         $fila = $result->fetch_assoc();
+
+        if ($result == null){
+            return "Tècnic";
+        }else {
+            return $fila["NOM_TECNIC"];
+        }
+    }
 ?>

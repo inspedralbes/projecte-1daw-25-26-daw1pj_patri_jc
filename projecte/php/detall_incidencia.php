@@ -46,22 +46,33 @@
             </div>
         </div>
     </div>
-
-    <div class="mt-5 col-10 col-lg-8 mx-auto">
-        <h4 class="text-primary">Descripció Indicencia</h4>
-
-        <div class="border rounded p-2">
-            <p><?php echo $incidencia["DESC_INCIDENCIA"]; ?></p>
-        </div>
-    </div>
+    <?php
+        if($rol != 'tecnic'){
+            echo '<div class="mt-5 col-10 col-lg-8 mx-auto">';
+            echo '<h4 class="text-primary col-lg-12">Descripció Indicencia</h4>';
+            echo '<div class="border rounded p-2">';
+            echo '<p>' . $incidencia["DESC_INCIDENCIA"] . '</p>';
+            echo '</div>';
+            echo '</div>';
+        
+        }
+    ?>
 
     <div class="mt-5 col-10 col-lg-8 mx-auto">
         <h4 class="text-primary">Actuacions</h4>
         <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th class="col-3"scope="col">Data</th>
-                <th scope="col">Descripció</th>
+                <th class="col-3 col-lg-2"scope="col">Data</th>
+                <th scope="col" class="col-3 col-lg-7">Descripció</th>
+                <?php
+                    if($rol == 'tecnic'){
+                        echo '<th class="col-3 col-lg-2" scope="col">Temps</th>';
+                        echo '<th class="col-1 col-lg-3" scope="col"> </th>';
+
+                    }
+                ?>
+
             </tr>
         </thead>
 
@@ -73,6 +84,11 @@
                 <tr>
                     <td><?= $act["DATA_ACTUACIO"]; ?></td>
                     <td><?= $act["DESC_ACTUACIO"]; ?></td>
+                    <?php
+                        if($rol == 'tecni'){
+
+                        }
+                    ?>
                 </tr>
             <?php endforeach; ?>
 
@@ -80,15 +96,31 @@
             <?php else: ?>
 
                 <tr>
-                    <td colspan="2" class="text-center text-muted">
+                    <?php
+                        if($rol == 'tecnic'){
+                            echo '<td colspan="4" class="text-center text-muted">
+                            No hi ha actuacions
+                            </td>';
+                        }else{
+                            echo '<td colspan="2" class="text-center text-muted">
                         No hi ha actuacions
-                    </td>
+                    </td>';
+                        }
+                    ?>
+                    
                 </tr>
 
             <?php endif; ?>
         </tbody>
 
         </table>
+
+        <?php
+            if ($rol == 'tecnic'){
+                echo '<a href="afegir_actuacio.php?id=' . $incidencia["ID_INCIDENCIA"] . '&rol=' . $rol . '"><button type="button" class="btn btn-primary position-absolute bottom-0 end-0 mb-5 me-5">Nova Actuació</button></a>';
+
+            }
+        ?>
     </div>
 
     <div class="mt-auto col-10 col-lg-11 mx-auto">

@@ -8,7 +8,7 @@
     if($rol == 'tecnic' && !empty($idTecnic)){
         $incidencies = getIncidenciesTecnic($conn, $idTecnic);
         $actuacions  = getActuacions($conn, $incidencies);
-        $nomTecnic = $incidencies[0]['NOM_TECNIC'] ?? 'Tècnic';
+        
         
     }elseif($rol == 'usuari' && !empty($id_dept)){
         //funcion listar por dept
@@ -17,7 +17,7 @@
         header("Location: index.php");
         exit();
     }
-    
+    $nomTecnic = getNomTecnic($conn, $idTecnic);
     include './header-footer/header.php';
 ?>
 
