@@ -22,6 +22,9 @@
 ?>
 
 <main class="d-flex flex-column flex-grow-1 pb-3">
+
+    <?php if($rol == 'tecnic'): ?>
+
     <h1 class = "mt-5 ms-4 text-center">Benvingut, 
         <span style = "color: #F28508"><?php echo $nomTecnic ?>!</span>
     </h1>
@@ -64,6 +67,11 @@
         </tbody>
     </table>
     </div>
+
+    <?php elseif($rol == 'usuari'): ?>
+
+        
+    <?php endif ?>
 </main>    
 
 <?php include './header-footer/footer.php';?>
