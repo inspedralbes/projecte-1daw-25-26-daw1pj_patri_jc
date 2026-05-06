@@ -68,7 +68,7 @@
                 <?php
                     if($rol == 'tecnic'){
                         echo '<th class="col-3 col-lg-2" scope="col">Temps</th>';
-                        echo '<th class="col-1 col-lg-3" scope="col"> </th>';
+                        echo '<th class="col-1 col-lg-3" scope="col">Edita </th>';
 
                     }
                 ?>
@@ -81,16 +81,20 @@
             <?php if (!empty($actuacions)): ?>
 
             <?php foreach ($actuacions as $act): ?>
-                <tr>
-                    <td><?= $act["DATA_ACTUACIO"]; ?></td>
-                    <td><?= $act["DESC_ACTUACIO"]; ?></td>
-                    <?php
-                        if($rol == 'tecni'){
+            <tr>
+                <?php if($rol == 'tecnic'): ?>
+                    <td><?= $act["DATA_ACTUACIO"] ?></td>
+                    <td><?= $act["DESC_ACTUACIO"] ?></td>
+                    <td><?= $act["TEMPS"] ?></td>
+                    <td class = "text-center">✏️</td>
+                <?php elseif($rol == 'usuari' && $act["ES_VISIBLE"] == 1): ?>
 
-                        }
-                    ?>
-                </tr>
-            <?php endforeach; ?>
+                    <td><?= $act["DATA_ACTUACIO"] ?></td>
+                    <td><?= $act["DESC_ACTUACIO"] ?></td>
+                    <td><?= $act["TEMPS"] ?></td>
+                <?php endif; ?>
+            </tr>
+    <?php endforeach; ?>
 
             <!--Si no hi han actuacions-->
             <?php else: ?>
