@@ -144,7 +144,7 @@
     <div class="mt-5 col-10 col-lg-11 mx-auto"> 
         
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=<?= $filtre_estat ?>&ordre=ID_INCIDENCIA&dir=ASC" class="btn btn-outline-secondary btn-sm ">
+            <a href="?rol=<?= $rol ?>&filtre=&filtre_estat=&ordre=ID_INCIDENCIA&dir=ASC" class="btn btn-outline-secondary btn-sm ">
             Reset ordre
             </a>       
         </div>
@@ -177,7 +177,7 @@
                     <?php foreach($incidencies as $inc): ?>
                     <tr>
                         <td>
-                            <a href="detall_incidencia.php?id=<?php echo $inc['ID_INCIDENCIA']; ?>&rol=<?php echo $rol; ?>" class="link-primary">
+                            <a href="modificar_incidencia.php?id=<?php echo $inc['ID_INCIDENCIA']; ?>&rol=<?php echo $rol; ?>" class="link-primary">
                                 <?php echo $inc['ID_INCIDENCIA']; ?>
                             </a>
                         </td>
