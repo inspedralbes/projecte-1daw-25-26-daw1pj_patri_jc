@@ -1,7 +1,7 @@
 <?php
 
    //Llista les incidències d'un tecnic segons el seu id
-   function getIncidenciesTecnic($conn, $idTecnic){
+    function getIncidenciesTecnic($conn, $idTecnic){
             $sql = "SELECT i.ID_INCIDENCIA, i.DATA_INICI, i.DATA_FI,  i.PRIORITAT, i.DESC_INCIDENCIA,
             t.NOM_TECNIC 
             FROM INCIDENCIA i
@@ -169,7 +169,7 @@
         
         //Cercar per departament
         if(!empty($id_dept)){
-           cercarPerDept($conn, $id_dept, $rol);
+            cercarPerDept($conn, $id_dept, $rol);
         }
     }
 
@@ -213,4 +213,136 @@
             return;
         }
     }
+
+    function getNomTecnic ($conn, $id){
+        $sql = "SELECT NOM_TECNIC 
+        FROM TECNIC 
+        WHERE ID_TECNIC = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+         $fila = $result->fetch_assoc();
+
+        if ($result == null){
+            return "Tècnic";
+        }else {
+            return $fila["NOM_TECNIC"];
+        }
+    }
+
+    function crear_incidencia($conn){
+
+        //Obtenir nom del departament
+        $nomDept = $_POST['dept'];
+
+        if(empty($nomDept)){
+            echo "<p class='error'>El nom del departament no pot estar buit.</p>";
+            return;
+        }
+
+        //Obtenir el tipus de la incidencia
+        $nomTipus = $_POST['tipus'];
+
+        if(empty($nomTipus)){
+            echo "<p class='error'>El tipus de la incidència no pot estar buit.</p>";
+            return;
+        }
+
+        //Obtenit la descripcio de la incidencia
+        $nomDesc = $_POST['desc'];
+
+        if(empty($nomDesc)){
+            echo "<p class='error'>La descripció de la incidència no pot estar buit.</p>";
+            return;
+        }
+
+
+        $data_inici = date('Y-m-d');
+
+
+        $sql = "INSERT INTO INCIDENCIA (id_dept, id_tipus,data_inici, desc_incidencia ) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iiss", $nomDept, $nomTipus, $data_inici, $nomDesc);
+
+        if($stmt->execute()){
+            $id = $stmt->insert_id; // Obtenir l'ID de la última inserción
+            echo "<script> window.location.href = 'confirmacio.php?id=" . $id . "'; </script>";
+            exit();
+        } else{
+            echo "<p class ='error'> Error al crear la incidència: " . htmlspecialchars($stmt->error) . "</p>";
+        }
+
+        $stmt->close();
+    }
+
+    function afegir_actuacions($conn, $idIncidencia, $rol){
+        
+        $temps = $_POST['temps'] . ':00';
+
+        if(empty($temps)){
+            echo "<p class='error'>No has posat el temps que has dedicat per fer la incidència.</p>";
+            return;
+        }
+
+        $data = $_POST['dataActuacio'];
+
+        if(empty($data)){
+            echo "<p class='error'>No has posat la data de la incidència.</p>";
+            return;
+        }
+
+        $desc = $_POST['desc'];
+
+        if(empty($desc)){
+            echo "<p class='error'>No has posat res de en la descripcio.</p>";
+            return;
+        }
+
+        if(isset($_POST['visible'])){
+            $visible = 1;
+        }else{
+            $visible = 0;
+        }
+
+        
+
+        $sql = "INSERT INTO ACTUACIO (data_actuacio, desc_actuacio, temps, es_visible, id_incidencia)
+        VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssii",$data , $desc, $temps, $visible, $idIncidencia);
+
+
+        if($stmt->execute()){
+        $id = $stmt->insert_id;
+        echo "<script> window.location.href = 'confirmacio.php?id=" . $id . "&rol=" . $rol . "'; </script>";
+        exit();
+        }   
+        else {
+        echo "<p class='error'> Error al crear la actuació: " . htmlspecialchars($stmt->error) . "</p>";
+        }
+        $stmt->close();
+    }
+
+    function esVisible($conn, $idIncidencia){
+        $sql = "SELECT es_visible 
+        FROM ACTUACIO 
+        WHERE id_incidencia = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $idIncidencia);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $fila = $result->fetch_assoc();
+
+        if($fila["es_visible"] == 0){
+            return 0;
+        }else{
+            return 1;
+        }
+
+
+    }
+
 ?>

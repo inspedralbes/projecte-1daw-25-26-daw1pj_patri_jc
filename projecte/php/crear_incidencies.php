@@ -1,53 +1,7 @@
 <?php 
     include './header-footer/header.php';
     include 'connexio.php';
-
-
-    function crear_incidencia($conn){
-
-        //Obtenir nom del departament
-        $nomDept = $_POST['dept'];
-
-        if(empty($nomDept)){
-            echo "<p class='error'>El nom del departament no pot estar buit.</p>";
-            return;
-        }
-
-        //Obtenir el tipus de la incidencia
-        $nomTipus = $_POST['tipus'];
-
-        if(empty($nomTipus)){
-            echo "<p class='error'>El tipus de la incidència no pot estar buit.</p>";
-            return;
-        }
-
-        //Obtenit la descripcio de la incidencia
-        $nomDesc = $_POST['desc'];
-
-        if(empty($nomDesc)){
-            echo "<p class='error'>La descripció de la incidència no pot estar buit.</p>";
-            return;
-        }
-
-
-        $data_inici = date('Y-m-d');
-
-
-        $sql = "INSERT INTO INCIDENCIA (id_dept, id_tipus,data_inici, desc_incidencia ) VALUES (?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iiss", $nomDept, $nomTipus, $data_inici, $nomDesc);
-
-        if($stmt->execute()){
-            $id = $stmt->insert_id; // Obtenir l'ID de la última inserción
-            echo "<script> window.location.href = 'confirmacio.php?id=" . $id . "'; </script>";
-            exit();
-        } else{
-            echo "<p class ='error'> Error al crear la incidència: " . htmlspecialchars($stmt->error) . "</p>";
-        }
-
-        $stmt->close();
-    }
-
+    require_once 'funcions.php';
     ?>
 
 
