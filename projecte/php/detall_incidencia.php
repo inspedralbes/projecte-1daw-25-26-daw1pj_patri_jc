@@ -128,9 +128,16 @@
     </div>
 
     <div class="mt-auto col-10 col-lg-11 mx-auto">
+        <?php if($rol == 'usuari'): ?>
         <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="buscar_incidencia.php">
+            🢘 Torna al cercador
+        </a>
+
+        <?php elseif($rol == 'admin'): ?>
+        <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="llistaIncidencies.php?rol=<?php echo $rol ?>">
             🢘 Torna enrere
         </a>
+        <?php endif; ?>
     </div>
 </main>
 

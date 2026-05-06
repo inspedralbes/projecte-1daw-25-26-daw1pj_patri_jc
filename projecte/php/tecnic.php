@@ -1,6 +1,4 @@
-<?php include './header-footer/header.php'
-
-    
+<?php include './header-footer/header.php'    
 ?>
 
 <main class="d-flex align-items-center justify-content-center" style="min-height: 60vh">
