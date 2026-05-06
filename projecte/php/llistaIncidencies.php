@@ -78,6 +78,12 @@
             <?php endif ?>
         </tbody>
     </table>
+
+    <div class="mt-auto col-10 col-lg-11 mx-auto">
+        <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover position-absolute bottom-0 start-0 mb-5 ms-5" href="tecnic.php">
+            🢘 Torna al Menú Tècnic
+        </a>
+    </div>
     </div>
 
 

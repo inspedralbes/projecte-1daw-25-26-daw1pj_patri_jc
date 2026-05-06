@@ -345,4 +345,18 @@
 
     }
 
+    function sumarTemps($conn, $idIncidencia){
+        $sql = "SELECT TIME_FORMAT(SEC_TO_TIME(SUM(TIME_TO_SEC(temps))), '%H:%i:%s') AS TOTAL_TEMPS
+        FROM ACTUACIO
+        WHERE id_incidencia = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $idIncidencia);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $fila = $result->fetch_assoc();
+
+        return $fila["TOTAL_TEMPS"] ?? '00:00';
+    }
+
 ?>

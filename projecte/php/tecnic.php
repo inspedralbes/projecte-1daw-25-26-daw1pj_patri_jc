@@ -6,7 +6,7 @@
         <h1>Portal d'Incidències</h1>
         <hr class="border border-primary border-3 opacity-75 mb-5 w-50 mx-auto">
 
-        <div class="d-grid gap-4 col-lg-3 col-6 mx-auto">
+        <div class="d-grid gap-4 col-lg-5 col-6 mx-auto">
             <h2 class="text-center mt-4">Entra com a:</h2>
             <a href="llistaIncidencies.php?idTecnic=1&rol=tecnic" class="btn btn-primary py-3 col-lg-5 col-8 mx-auto">Ermengol</a>
 

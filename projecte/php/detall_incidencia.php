@@ -46,6 +46,8 @@
             </div>
         </div>
     </div>
+
+
     <?php
         if($rol != 'tecnic'){
             echo '<div class="mt-5 col-10 col-lg-8 mx-auto">';
@@ -82,16 +84,17 @@
 
             <?php foreach ($actuacions as $act): ?>
             <tr>
-                <?php if($rol == 'tecnic' || $rol = 'admin'): ?>
+                <?php if($rol == 'tecnic' || $rol == 'admin'): ?>
                     <td><?= $act["DATA_ACTUACIO"] ?></td>
                     <td><?= $act["DESC_ACTUACIO"] ?></td>
                     <td><?= $act["TEMPS"] ?></td>
                     <td class = "text-center">✏️</td>
+
                 <?php elseif($rol == 'usuari' && $act["ES_VISIBLE"] == 1): ?>
 
                     <td><?= $act["DATA_ACTUACIO"] ?></td>
                     <td><?= $act["DESC_ACTUACIO"] ?></td>
-                    <td><?= $act["TEMPS"] ?></td>
+                    <td class = "text-center aling-middle"><?= $act["TEMPS"] ?></td>
                 <?php endif; ?>
             </tr>
     <?php endforeach; ?>
@@ -115,16 +118,27 @@
                 </tr>
 
             <?php endif; ?>
+            <tr>
+                <td class = "border-0" colspan = "2"></td>
+                <td>
+                        <strong>Total:</strong>
+        <span><?= sumarTemps($conn, $incidencia["ID_INCIDENCIA"]) ?></span>
+                </td>
+                <td></td>
+            </tr>
         </tbody>
 
         </table>
 
-        <?php
-            if ($rol == 'tecnic'){
-                echo '<a href="afegir_actuacio.php?id=' . $incidencia["ID_INCIDENCIA"] . '&rol=' . $rol . '"><button type="button" class="btn btn-primary position-absolute bottom-0 end-0 mb-5 me-5">Nova Actuació</button></a>';
+        <?php if ($rol == 'tecnic'): ?>
 
-            }
-        ?>
+    <div>
+        <a href="afegir_actuacio.php?id=<?= $incidencia["ID_INCIDENCIA"] ?>&rol=<?= $rol ?>">
+        <button type="button" class="btn btn-primary">Nova Actuació</button>
+        </a>
+        
+    </div>
+<?php endif; ?>
     </div>
 
     <div class="mt-auto col-10 col-lg-11 mx-auto">
@@ -132,9 +146,10 @@
         <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="buscar_incidencia.php">
             🢘 Torna al cercador
         </a>
+         <?php endif; ?>
 
-        <?php elseif($rol == 'admin'): ?>
-        <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="llistaIncidencies.php?rol=<?php echo $rol ?>">
+        <?php if($rol == 'tecnic'): ?>
+        <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="llistaIncidencies.php?rol=<?= $rol ?>">
             🢘 Torna enrere
         </a>
         <?php endif; ?>
