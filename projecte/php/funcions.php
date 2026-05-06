@@ -90,17 +90,22 @@
     }
 
     //funcio que retorna totes les incidencies
-    function getAllIncidencies($conn, $filtre, $ordre, $dir){
+    function getAllIncidencies($conn, $filtre, $filtre_estat, $ordre, $dir){
         $sql = "SELECT i.ID_INCIDENCIA, i.PRIORITAT, t.NOM_TIPUS, i.DATA_INICI, i.DATA_FI, i.DESC_INCIDENCIA, tec.NOM_TECNIC, d.NOM_DEPT
         FROM INCIDENCIA  i
         LEFT JOIN TIPUS t ON i.ID_TIPUS = t.ID_TIPUS
         LEFT JOIN DEPARTAMENT d ON i.ID_DEPT = d.ID_DEPT
-        LEFT JOIN TECNIC tec ON i.ID_TECNIC = tec.ID_TECNIC";
+        LEFT JOIN TECNIC tec ON i.ID_TECNIC = tec.ID_TECNIC
+        WHERE 1=1"; //condicio que sempre es true per aixi poder posar la resta de condicions amb AND!
 
         if($filtre == 'no_assignades'){
-            $sql .= " WHERE i.ID_TECNIC IS NULL";
+            $sql .= " AND i.ID_TECNIC IS NULL";
         }elseif(is_numeric($filtre)){
-            $sql .= " WHERE i.ID_TECNIC = $filtre";
+            $sql .= " AND i.ID_TECNIC = $filtre";
+        }
+
+        if($filtre_estat == 'actives'){
+            $sql .= " AND i.DATA_FI IS NULL";
         }
 
         $sql .= " ORDER BY $ordre $dir";
