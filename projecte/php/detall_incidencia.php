@@ -66,7 +66,7 @@
                 <th class="col-3 col-lg-2"scope="col">Data</th>
                 <th scope="col" class="col-3 col-lg-7">Descripció</th>
                 <?php
-                    if($rol == 'tecnic'){
+                    if($rol == 'tecnic' || $rol == 'admin'){
                         echo '<th class="col-3 col-lg-2" scope="col">Temps</th>';
                         echo '<th class="col-1 col-lg-3" scope="col">Edita </th>';
 
@@ -82,7 +82,7 @@
 
             <?php foreach ($actuacions as $act): ?>
             <tr>
-                <?php if($rol == 'tecnic'): ?>
+                <?php if($rol == 'tecnic' || $rol = 'admin'): ?>
                     <td><?= $act["DATA_ACTUACIO"] ?></td>
                     <td><?= $act["DESC_ACTUACIO"] ?></td>
                     <td><?= $act["TEMPS"] ?></td>

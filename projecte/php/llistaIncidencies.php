@@ -21,6 +21,7 @@
         $ordre = $_GET['ordre'] ?? 'ID_INCIDENCIA';
         $dir = $_GET['dir'] ?? 'ASC';
         $incidencies = getAllIncidencies($conn, $filtre, $filtre_estat, $ordre, $dir);
+        $incidencies = afegirEstat($conn, $incidencies);
     }
     else {
         header("Location: index.php");

@@ -225,7 +225,7 @@
         $result = $stmt->get_result();
          $fila = $result->fetch_assoc();
 
-        if ($result == null){
+        if ($fila == null){
             return "Tècnic";
         }else {
             return $fila["NOM_TECNIC"];
