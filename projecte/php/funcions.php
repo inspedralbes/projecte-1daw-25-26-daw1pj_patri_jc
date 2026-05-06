@@ -1,7 +1,7 @@
 <?php
 
    //Llista les incidències d'un tecnic segons el seu id
-   function getIncidenciesTecnic($conn, $idTecnic){
+    function getIncidenciesTecnic($conn, $idTecnic){
             $sql = "SELECT i.ID_INCIDENCIA, i.DATA_INICI, i.DATA_FI,  i.PRIORITAT, i.DESC_INCIDENCIA,
             t.NOM_TECNIC 
             FROM INCIDENCIA i
@@ -17,7 +17,7 @@
             return $incidenciesTec;
         } 
    
-   //funcio que retorna les incidencies d'un departament concret segond l'id
+   //funcio que retorna les incidencies d'un departament concret segons l'id
     function getIncidenciesDept($conn, $id_dept){
         $sql="SELECT I.ID_INCIDENCIA, I.DATA_INICI, I.DATA_FI, I.DESC_INCIDENCIA, D.NOM_DEPT
         FROM INCIDENCIA I 
@@ -32,6 +32,17 @@
         $incidenciesDept = $result->fetch_all(MYSQLI_ASSOC);
 
         return $incidenciesDept;
+    }
+
+    //Funcio per afegir l'estat a l'array d'incidencies
+    function afegirEstat($conn, $incidencies){
+        foreach($incidencies as &$inc){ // la & fa que es modifiqui a l'array original
+            $actuacions = getActuacions($conn, $inc['ID_INCIDENCIA']);
+            $resEstat = getEstat($actuacions, $inc);
+            $inc['estat'] = $resEstat['estat'];
+            $inc['classe'] = $resEstat['classe'];
+        } 
+        return $incidencies; //retorna la llista d'incidencies pero amb els camps nous estat i classe.
     }
 
     //retorna una array amb l'estat i la classe  que canvia el color segons l'estat
@@ -76,6 +87,40 @@
         }
 
         return $incidencia;
+    }
+
+    //funcio que retorna totes les incidencies
+    function getAllIncidencies($conn, $filtre, $filtre_estat, $ordre, $dir){
+        $sql = "SELECT i.ID_INCIDENCIA, i.PRIORITAT, t.NOM_TIPUS, i.DATA_INICI, i.DATA_FI, i.DESC_INCIDENCIA, tec.NOM_TECNIC, d.NOM_DEPT
+        FROM INCIDENCIA  i
+        LEFT JOIN TIPUS t ON i.ID_TIPUS = t.ID_TIPUS
+        LEFT JOIN DEPARTAMENT d ON i.ID_DEPT = d.ID_DEPT
+        LEFT JOIN TECNIC tec ON i.ID_TECNIC = tec.ID_TECNIC
+        WHERE 1=1"; //condicio que sempre es true per aixi poder posar la resta de condicions amb AND!
+
+        if($filtre == 'no_assignades'){
+            $sql .= " AND i.ID_TECNIC IS NULL";
+        }elseif(is_numeric($filtre)){
+            $sql .= " AND i.ID_TECNIC = $filtre";
+        }
+
+        if($filtre_estat == 'actives'){
+            $sql .= " AND i.DATA_FI IS NULL";
+        }
+
+        $sql .= " ORDER BY $ordre $dir";
+
+        $stmt = $conn->prepare($sql);
+
+        if(is_numeric($filtre)){
+        $stmt->bind_param("i", $filtre);
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $incidencies = $result->fetch_all(MYSQLI_ASSOC);
+
+        return $incidencies;
     }
 
     //funcio que retorna les actuacions d'una incidencia segons el seu id
@@ -124,7 +169,7 @@
         
         //Cercar per departament
         if(!empty($id_dept)){
-           cercarPerDept($conn, $id_dept, $rol);
+            cercarPerDept($conn, $id_dept, $rol);
         }
     }
 
@@ -168,4 +213,136 @@
             return;
         }
     }
+
+    function getNomTecnic ($conn, $id){
+        $sql = "SELECT NOM_TECNIC 
+        FROM TECNIC 
+        WHERE ID_TECNIC = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+         $fila = $result->fetch_assoc();
+
+        if ($fila == null){
+            return "Tècnic";
+        }else {
+            return $fila["NOM_TECNIC"];
+        }
+    }
+
+    function crear_incidencia($conn){
+
+        //Obtenir nom del departament
+        $nomDept = $_POST['dept'];
+
+        if(empty($nomDept)){
+            echo "<p class='error'>El nom del departament no pot estar buit.</p>";
+            return;
+        }
+
+        //Obtenir el tipus de la incidencia
+        $nomTipus = $_POST['tipus'];
+
+        if(empty($nomTipus)){
+            echo "<p class='error'>El tipus de la incidència no pot estar buit.</p>";
+            return;
+        }
+
+        //Obtenit la descripcio de la incidencia
+        $nomDesc = $_POST['desc'];
+
+        if(empty($nomDesc)){
+            echo "<p class='error'>La descripció de la incidència no pot estar buit.</p>";
+            return;
+        }
+
+
+        $data_inici = date('Y-m-d');
+
+
+        $sql = "INSERT INTO INCIDENCIA (id_dept, id_tipus,data_inici, desc_incidencia ) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iiss", $nomDept, $nomTipus, $data_inici, $nomDesc);
+
+        if($stmt->execute()){
+            $id = $stmt->insert_id; // Obtenir l'ID de la última inserción
+            echo "<script> window.location.href = 'confirmacio.php?id=" . $id . "'; </script>";
+            exit();
+        } else{
+            echo "<p class ='error'> Error al crear la incidència: " . htmlspecialchars($stmt->error) . "</p>";
+        }
+
+        $stmt->close();
+    }
+
+    function afegir_actuacions($conn, $idIncidencia, $rol){
+        
+        $temps = $_POST['temps'] . ':00';
+
+        if(empty($temps)){
+            echo "<p class='error'>No has posat el temps que has dedicat per fer la incidència.</p>";
+            return;
+        }
+
+        $data = $_POST['dataActuacio'];
+
+        if(empty($data)){
+            echo "<p class='error'>No has posat la data de la incidència.</p>";
+            return;
+        }
+
+        $desc = $_POST['desc'];
+
+        if(empty($desc)){
+            echo "<p class='error'>No has posat res de en la descripcio.</p>";
+            return;
+        }
+
+        if(isset($_POST['visible'])){
+            $visible = 1;
+        }else{
+            $visible = 0;
+        }
+
+        
+
+        $sql = "INSERT INTO ACTUACIO (data_actuacio, desc_actuacio, temps, es_visible, id_incidencia)
+        VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssii",$data , $desc, $temps, $visible, $idIncidencia);
+
+
+        if($stmt->execute()){
+        $id = $stmt->insert_id;
+        echo "<script> window.location.href = 'confirmacio.php?id=" . $id . "&rol=" . $rol . "'; </script>";
+        exit();
+        }   
+        else {
+        echo "<p class='error'> Error al crear la actuació: " . htmlspecialchars($stmt->error) . "</p>";
+        }
+        $stmt->close();
+    }
+
+    function esVisible($conn, $idIncidencia){
+        $sql = "SELECT es_visible 
+        FROM ACTUACIO 
+        WHERE id_incidencia = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $idIncidencia);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $fila = $result->fetch_assoc();
+
+        if($fila["es_visible"] == 0){
+            return 0;
+        }else{
+            return 1;
+        }
+
+
+    }
+
 ?>

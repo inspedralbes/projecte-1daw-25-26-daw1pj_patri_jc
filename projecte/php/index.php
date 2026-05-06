@@ -14,7 +14,7 @@ include './header-footer/header.php' ?>
                 <a class="btn btn-primary py-3" href="tecnic.php">
                     Entra com a Tècnic
                 </a>
-                <a class="btn btn-primary py-3" href="incidencies.php">
+                <a class="btn btn-primary py-3" href="llistaIncidencies.php?rol=admin">
                     Entra com a Admin
                 </a>
             </div>
