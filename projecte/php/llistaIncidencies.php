@@ -144,8 +144,8 @@
     <div class="mt-5 col-10 col-lg-11 mx-auto"> 
         
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="?rol=<?= $rol ?>&filtre=&filtre_estat=&ordre=ID_INCIDENCIA&dir=ASC" class="btn btn-outline-secondary btn-sm ">
-            Reset ordre
+            <a href="?rol=<?= $rol ?>&filtre=&filtre_estat=actives&ordre=ID_INCIDENCIA&dir=ASC" class="btn btn-outline-secondary btn-sm ">
+            Reset filtres
             </a>       
         </div>
     
@@ -169,15 +169,18 @@
                     </th>
                     <th class="col-lg-1 text-nowrap"scope="col">Tècnic</th>
                     <th scope="col text-nowrap">Descripció</th>
+                    <th scope="col-lg-1 text-nowrap">Edita</th>
+
                 </tr>
             </thead>
 
             <tbody class="table-group-divider">
+
                 <?php if(!empty($incidencies)): ?>
                     <?php foreach($incidencies as $inc): ?>
                     <tr>
                         <td>
-                            <a href="modificar_incidencia.php?id=<?php echo $inc['ID_INCIDENCIA']; ?>&rol=<?php echo $rol; ?>" class="link-primary">
+                            <a href="detall_incidencia.php?id=<?php echo $inc['ID_INCIDENCIA']; ?>&rol=<?php echo $rol; ?>" class="link-primary">
                                 <?php echo $inc['ID_INCIDENCIA']; ?>
                             </a>
                         </td>
@@ -187,6 +190,9 @@
                         <td><?= $inc['PRIORITAT'] ?? '-'; ?></td>
                         <td><?= $inc['NOM_TECNIC']; ?></td>
                         <td><?= $inc['DESC_INCIDENCIA']; ?></td>
+                        <td class = "text-center text-dark">
+                            <a href="modificar_incidencia.php?id=<?php echo $inc['ID_INCIDENCIA']; ?>&rol=<?php echo $rol; ?>" class="link-primary"> ✏️ </a>
+                        </td>
                     </tr>
 
                 <?php endforeach ?>
@@ -198,12 +204,13 @@
                         </td>
                     </tr>
                 <?php endif ?>
+            </tbody>
         </table>
         </div>
 
-        <div class="d-flex gap-4 mt-3">
 
 <!-- Filtre per estat incidencia -->
+         <div class="d-flex gap-4 mt-3">
             <div class="dropdown">
                 <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Filtrar per estat
@@ -226,7 +233,9 @@
             </div>
         </div>
     </div>
+
 <?php endif ?>
+
 </main>    
 
 <?php include './header-footer/footer.php';?>
