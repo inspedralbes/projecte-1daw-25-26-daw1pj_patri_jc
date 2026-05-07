@@ -1,16 +1,24 @@
-<?php 
-    require_once 'connexio.php';
-    require_once 'funcions.php';
-    $rol = $_GET['rol'] ?? 'usuari';
-    $id = $_GET['id'] ?? null;
+<?php
+include_once "connexio.php";
+require_once 'funcions.php';
 
-    //Valida si el id es un enter i no es null
-    if (empty($id) || !filter_var($id, FILTER_VALIDATE_INT)) {
-        echo "ID no vàlid";
-        exit;
-    }
+$rol = $_GET['rol'] ?? 'usuari';
+$id = $_GET['id'] ?? null;
 
-    $incidencia = getIncidencia($conn, $id);
+if (empty($id) || !filter_var($id, FILTER_VALIDATE_INT)) {
+    echo "ID no vàlid";
+    exit;
+}
 
-    echo "modificar incidencia $id";
-?>
+if($rol != 'admin'){
+    header("Location: index.php");
+    exit;
+}
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    updateIncidencia($conn, $id, $_POST['prioritat'], $_POST['tecnic']);
+    header("Location: llistaIncidencies.php?rol=admin");
+    exit;
+}
+
+?>  

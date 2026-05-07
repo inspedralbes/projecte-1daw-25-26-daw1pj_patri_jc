@@ -48,7 +48,7 @@
                         <input class= "btn btn-primary py-1" type="submit" value="Enviar">
                     </form>
                 </div> 
-    <div class="mt-auto col-10 col-lg-12 px-3 mx-auto">
+    <div class="mt-auto col-11 col-lg-12 px-3 pt-3 mx-auto">
         <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="usuari.php">
             🢘 Torna al Menú Usuari
         </a>
