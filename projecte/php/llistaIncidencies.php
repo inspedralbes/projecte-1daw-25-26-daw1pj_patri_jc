@@ -64,13 +64,13 @@
                     
                 ?>
                 
-                    
+                <tr> 
                 <td><a href="detall_incidencia.php?id=<?php echo $inc['ID_INCIDENCIA']; ?>&rol=<?php echo $rol; ?>" class="link-primary"><?php echo $inc['ID_INCIDENCIA']; ?></a></td>
                 <td><?= $inc["DATA_INICI"];?> </td>
                 <td><?= $inc["PRIORITAT"];?> </td>
                 <td><?= $inc["DESC_INCIDENCIA"];?> </td>
                 <td class = <?php echo $classe;?> > <?php echo $estat;?> </td>
-
+                </tr>
 
                 <!--Si no un mutted text "No hi han incidencies asignades"-->
 

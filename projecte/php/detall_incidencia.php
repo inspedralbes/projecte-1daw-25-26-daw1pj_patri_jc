@@ -47,22 +47,20 @@
         </div>
     </div>
 
-
-    <?php
-        if($rol != 'tecnic'){
-            echo '<div class="mt-5 col-10 col-lg-8 mx-auto">';
-            echo '<h4 class="text-primary col-lg-12">Descripció Indicencia</h4>';
-            echo '<div class="border rounded p-2">';
-            echo '<p>' . $incidencia["DESC_INCIDENCIA"] . '</p>';
-            echo '</div>';
-            echo '</div>';
         
-        }
-    ?>
+    <div class="mt-5 col-10 col-lg-8 mx-auto">
+        <h4 class="text-primary col-lg-12">Descripció Indicencia</h4>
+        <div class="border rounded p-2">
+        <p><?= $incidencia["DESC_INCIDENCIA"] ?></p>
+        </div>
+    </div>
+        
+        
 
     <div class="mt-5 col-10 col-lg-8 mx-auto">
         <h4 class="text-primary">Actuacions</h4>
-        <table class="table table-bordered table-striped">
+        <div class = "overflow-auto" style="max-height: 380px;">
+        <table class="table table-bordered table-striped ">
         <thead>
             <tr>
                 <th class="col-3 col-lg-2"scope="col">Data</th>
@@ -83,21 +81,18 @@
             <?php if (!empty($actuacions)): ?>
 
             <?php foreach ($actuacions as $act): ?>
-            <tr>
-                <?php if($rol == 'tecnic' || $rol == 'admin'): ?>
-                    <td><?= $act["DATA_ACTUACIO"] ?></td>
-                    <td><?= $act["DESC_ACTUACIO"] ?></td>
-                    <td><?= $act["TEMPS"] ?></td>
-                    <td class = "text-center">✏️</td>
-
-                <?php elseif($rol == 'usuari' && $act["ES_VISIBLE"] == 1): ?>
-
-                    <td><?= $act["DATA_ACTUACIO"] ?></td>
-                    <td><?= $act["DESC_ACTUACIO"] ?></td>
-                    <td class = "text-center aling-middle"><?= $act["TEMPS"] ?></td>
-                <?php endif; ?>
-            </tr>
-    <?php endforeach; ?>
+        <tr>
+        <?php if($rol == 'tecnic' || $rol == 'admin'): ?>
+            <td><?= $act["DATA_ACTUACIO"] ?></td>
+            <td><?= $act["DESC_ACTUACIO"] ?></td>
+            <td><?= $act["TEMPS"] ?></td>
+            <td class="text-center"><a class="link-offset-2 link-underline link-underline-opacity-0" href="afegir_actuacio.php?idActuacio=<?= $act["ID_ACTUACIO"]?>&dataActuacio=<?= $act["DATA_ACTUACIO"]?>&desc_actuacio=<?= $act["DESC_ACTUACIO"]?>&temps=<?= $act["TEMPS"]?>&esVisible=<?= $act["ES_VISIBLE"]?>&rol=<?= $rol?>">✏️</a></td>
+        <?php elseif($rol == 'usuari' && $act["ES_VISIBLE"] == 1): ?>
+            <td><?= $act["DATA_ACTUACIO"] ?></td>
+            <td><?= $act["DESC_ACTUACIO"] ?></td>
+        <?php endif; ?>
+    </tr>
+<?php endforeach; ?>
 
             <!--Si no hi han actuacions-->
             <?php else: ?>
@@ -129,19 +124,24 @@
         </tbody>
 
         </table>
-
+    </div>
         <?php if ($rol == 'tecnic'): ?>
 
-    <div>
-        <a href="afegir_actuacio.php?id=<?= $incidencia["ID_INCIDENCIA"] ?>&rol=<?= $rol ?>">
+    <div class ="mt-3 mb-3 d-flex justify-content-between" >
+        <a  href="afegir_actuacio.php?id=<?= $incidencia["ID_INCIDENCIA"] ?>&rol=<?= $rol ?>">
         <button type="button" class="btn btn-primary">Nova Actuació</button>
         </a>
-        
+        <form action="confirmacio.php" method = "POST">
+            <input type="hidden" name="idIncidencia" value="<?= $incidencia["ID_INCIDENCIA"] ?>">
+            <input type="hidden" name="rol" value="<?= $rol ?>">
+            <input type="hidden" name="finalitzar" value="1">
+            <button type="submit" class="btn btn-danger">Finalitzar Incidència</button>        
+        </form>
     </div>
 <?php endif; ?>
     </div>
 
-    <div class="mt-auto col-10 col-lg-11 mx-auto">
+    <div class="mt-auto col-10 col-lg-12 px-3 mx-auto">
         <?php if($rol == 'usuari'): ?>
         <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="buscar_incidencia.php">
             🢘 Torna al cercador
