@@ -20,6 +20,7 @@ if ($rol == 'tecnic' && !empty($idTecnic)) {
     $incidencies = getAllIncidencies($conn, $filtre, $filtre_estat, $ordre, $dir);
     $incidencies = afegirEstat($conn, $incidencies);
     $tecnics = getAllTecnics($conn);
+    $tipus = getAllTipus($conn);
 } else {
     header("Location: index.php");
     exit();
@@ -152,18 +153,23 @@ include './header-footer/header.php';
                     <thead>
                         <tr>
                             <th class="col-lg-1 text-nowrap" scope="col">ID</th>
+
                             <th class="col-lg-1 text-nowrap" scope="col">
                                 Data inici&nbsp <!-- afegeix un espai -->
                                 <a href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=<?= $filtre_estat ?>&ordre=DATA_INICI&dir=ASC" class="text-decoration-none">▲</a>
                                 <a href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=<?= $filtre_estat ?>&ordre=DATA_INICI&dir=DESC" class="text-decoration-none">▼</a>
                             </th>
+
                             <th class="col-lg-1 text-nowrap" scope="col">Data fi</th>
+
                             <th class="col-lg-1 text-nowrap" scope="col">Estat</th>
+
                             <th class="col-lg-1 text-nowrap" scope="col">
                                 Prioritat&nbsp
                                 <a href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=<?= $filtre_estat ?>&ordre=PRIORITAT&dir=ASC" class="text-decoration-none">▲</a>
                                 <a href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=<?= $filtre_estat ?>&ordre=PRIORITAT&dir=DESC" class="text-decoration-none">▼</a>
                             </th>
+                            <th class="col-lg-1 text-nowrap" scope="col">Tipus</th>
                             <th class="col-lg-1 text-nowrap" scope="col">Tècnic</th>
                             <th scope="col text-nowrap">Descripció</th>
                             <th scope="col-lg-1 text-nowrap">Edita</th>
@@ -185,6 +191,7 @@ include './header-footer/header.php';
                                     <td><?= $inc['DATA_FI'] ?? '-'; ?></td>
                                     <td class="<?= $inc['classe'] ?>"><?= $inc['estat'] ?></td>
                                     <td><?= $inc['PRIORITAT'] ?? '-'; ?></td>
+                                    <td><?= $inc['NOM_TIPUS']; ?></td>
                                     <td><?= $inc['NOM_TECNIC']; ?></td>
                                     <td><?= $inc['DESC_INCIDENCIA']; ?></td>
                                     <td class="text-center text-dark">
@@ -235,9 +242,21 @@ include './header-footer/header.php';
                                             <?= $tec['NOM_TECNIC'] ?>
                                         </option> 
                                         <?php endforeach ?>
-
                                     </select>
 
+                                    <!-- TIPUS -->
+                                    <label for="tipus" class="form-label fw-bold mt-4">Tipus</label>
+                                    <select id="tipus" name="tipus" class="form-select" aria-label="Seleccionador de tipus">
+
+                                        <option value="">Selecciona tipus...</option>
+
+                                        <?php foreach ($tipus as $tip): ?>
+                                            <option value="<?= $tip['ID_TIPUS'] ?>" >
+                                            <?= $tip['NOM_TIPUS'] ?>
+                                        </option> 
+                                        <?php endforeach ?>
+                                    </select>
+                                            
                                 </div>
                                 <div class="modal-footer mt-2">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tanca</button>

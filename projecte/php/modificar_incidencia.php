@@ -16,7 +16,7 @@ if($rol != 'admin'){
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    updateIncidencia($conn, $id, $_POST['prioritat'], $_POST['tecnic']);
+    updateIncidencia($conn, $id, $_POST['prioritat'], $_POST['tecnic'], $_POST['tipus']);
     header("Location: llistaIncidencies.php?rol=admin");
     exit;
 }
