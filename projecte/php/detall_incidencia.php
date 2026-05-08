@@ -59,19 +59,20 @@ $classe = $resultat["classe"];
             </div>
         <?php endif; ?>
 
-        <div class="mt-5 col-10 col-lg-8 mx-auto">
-            <h4 class="text-primary">Actuacions</h4>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th class="col-3 col-lg-2" scope="col">Data</th>
-                        <th scope="col" class="col-3 col-lg-7">Descripció</th>
-                        <?php
-                        if ($rol == 'tecnic') {
-                            echo '<th class="col-3 col-lg-2" scope="col">Temps</th>';
-                            echo '<th class="col-1 col-lg-3" scope="col">Edita </th>';
-                        }
-                        ?>
+    <div class="mt-5 col-10 col-lg-8 mx-auto">
+        <h4 class="text-primary">Actuacions</h4>
+        <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th class="col-3 col-lg-2"scope="col">Data</th>
+                <th scope="col" class="col-3 col-lg-7">Descripció</th>
+                <?php
+                    if($rol == 'tecnic' || $rol == 'admin'){
+                        echo '<th class="col-3 col-lg-2" scope="col">Temps</th>';
+                        echo '<th class="col-1 col-lg-3" scope="col">Edita </th>';
+
+                    }
+                ?>
 
                     </tr>
                 </thead>
@@ -114,14 +115,36 @@ $classe = $resultat["classe"];
 
                         </tr>
 
-                    <?php endif; ?>
-                </tbody>
+            <?php endif; ?>
+            <tr>
+                <td class = "border-0" colspan = "2"></td>
+                <td>
+                        <strong>Total:</strong>
+        <span><?= sumarTemps($conn, $incidencia["ID_INCIDENCIA"]) ?></span>
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
 
-            </table>
+        </table>
+    </div>
+        <?php if ($rol == 'tecnic'): ?>
 
-            <?php
-            if ($rol == 'tecnic') {
-                echo '<a href="afegir_actuacio.php?id=' . $incidencia["ID_INCIDENCIA"] . '&rol=' . $rol . '"><button type="button" class="btn btn-primary position-absolute bottom-0 end-0 mb-5 me-5">Nova Actuació</button></a>';
+    <div class ="mt-3 mb-3 d-flex justify-content-between" >
+        <a  href="afegir_actuacio.php?id=<?= $incidencia["ID_INCIDENCIA"] ?>&rol=<?= $rol ?>">
+        <button type="button" class="btn btn-primary">Nova Actuació</button>
+        </a>
+
+        <?php
+            if(getEstat($actuacions, $incidencia) == 'Tancada'){
+        ?>
+        <form action="confirmacio.php" method = "POST">
+            <input type="hidden" name="idIncidencia" value="<?= $incidencia["ID_INCIDENCIA"] ?>">
+            <input type="hidden" name="rol" value="<?= $rol ?>">
+            <input type="hidden" name="finalitzar" value="1">
+            <button type="submit" class="btn btn-danger">Finalitzar Incidència</button>        
+        </form>
+        <?php
             }
             ?>
         </div>
@@ -224,10 +247,15 @@ $classe = $resultat["classe"];
                 🢘 Torna al cercador
             </a>
 
-        <?php elseif ($rol == 'admin'): ?>
+            <?php elseif ($rol == 'admin'): ?>
             <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="llistaIncidencies.php?rol=<?php echo $rol ?>">
                 🢘 Torna enrere
             </a>
+            <?php elseif ($rol == 'tecnic'): ?>
+            <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="llistaIncidencies.php?rol=<?= $rol ?>">
+                🢘 Torna enrere
+            </a>
+            <?php endif; ?>
     </div>
 
 <?php endif; ?>
