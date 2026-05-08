@@ -251,10 +251,11 @@ $classe = $resultat["classe"];
             <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="llistaIncidencies.php?rol=<?php echo $rol ?>">
                 🢘 Torna enrere
             </a>
-            <?php if ($rol == 'tecnic'): ?>
+            <?php elseif ($rol == 'tecnic'): ?>
             <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="llistaIncidencies.php?rol=<?= $rol ?>">
                 🢘 Torna enrere
             </a>
+            <?php endif; ?>
     </div>
 
 <?php endif; ?>
