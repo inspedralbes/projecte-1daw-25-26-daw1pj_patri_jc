@@ -87,7 +87,9 @@ $classe = $resultat["classe"];
                                     <td><?= $act["DATA_ACTUACIO"] ?></td>
                                     <td><?= $act["DESC_ACTUACIO"] ?></td>
                                     <td><?= $act["TEMPS"] ?></td>
-                                    <td class="text-center">✏️</td>
+                                    <td class="text-center"><a class="link-offset-2 link-underline link-underline-opacity-0" href="afegir_actuacio.php?idActuacio=<?= $act["ID_ACTUACIO"]?>&dataActuacio=<?= $act["DATA_ACTUACIO"]?>&desc_actuacio=<?= $act["DESC_ACTUACIO"]?>&temps=<?= $act["TEMPS"]?>&esVisible=<?= $act["ES_VISIBLE"]?>&rol=<?= $rol?>">✏️</a></td>
+
+                            
                                 <?php elseif ($rol == 'usuari' && $act["ES_VISIBLE"] == 1): ?>
 
                                     <td><?= $act["DATA_ACTUACIO"] ?></td>
@@ -127,17 +129,19 @@ $classe = $resultat["classe"];
         </tbody>
 
         </table>
-    </div>
+    
         <?php if ($rol == 'tecnic'): ?>
 
-    <div class ="mt-3 mb-3 d-flex justify-content-between" >
+    <div class ="mt-3 mb-3 d-flex justify-content-between align-items-center" >
+        <?php
+        $resultat = getEstat($actuacions, $incidencia);
+            if($resultat["estat"] != 'Tancada'){
+        ?>
         <a  href="afegir_actuacio.php?id=<?= $incidencia["ID_INCIDENCIA"] ?>&rol=<?= $rol ?>">
         <button type="button" class="btn btn-primary">Nova Actuació</button>
         </a>
 
-        <?php
-            if(getEstat($actuacions, $incidencia) == 'Tancada'){
-        ?>
+        
         <form action="confirmacio.php" method = "POST">
             <input type="hidden" name="idIncidencia" value="<?= $incidencia["ID_INCIDENCIA"] ?>">
             <input type="hidden" name="rol" value="<?= $rol ?>">
@@ -149,6 +153,7 @@ $classe = $resultat["classe"];
             ?>
         </div>
     <?php endif; ?>
+    </div>
 
 
     <!-------------------------------------ADMIN--------------------------------------->
