@@ -1,4 +1,44 @@
 <?php
+    //Fer update a incidencies prioritat i tecnic
+    function updateIncidencia($conn, $id, $prioritat, $idTecnic, $idTipus){
+
+        //Actualitza els tres camps
+        if(!empty($prioritat) && !empty($idTecnic) && !empty($idTipus)){
+            $sql= "UPDATE INCIDENCIA SET PRIORITAT = ?, ID_TECNIC = ?, ID_TIPUS = ?
+            WHERE ID_INCIDENCIA = ?";
+
+            $stmt = $conn->prepare($sql);
+            $stmt-> bind_param("siii", $prioritat, $idTecnic, $idTipus, $id);
+            
+        }        
+        //Actualitza la prioritat
+        elseif(!empty($prioritat) && empty($idTecnic) && empty($idTipus)){
+            $sql= "UPDATE INCIDENCIA SET PRIORITAT = ?
+            WHERE ID_INCIDENCIA = ?";
+
+            $stmt = $conn->prepare($sql);
+            $stmt-> bind_param("si", $prioritat, $id);
+        }
+        //Actualitza el tecnic
+        elseif(empty($prioritat) && !empty($idTecnic) && empty($idTipus)){
+            $sql= "UPDATE INCIDENCIA SET ID_TECNIC = ? 
+            WHERE ID_INCIDENCIA = ?";
+
+            $stmt = $conn->prepare($sql);
+            $stmt-> bind_param("ii", $idTecnic, $id);
+        }
+        //Actualitza el tipus
+        elseif(empty($prioritat) && empty($idTecnic) && !empty($idTipus)){
+            $sql= "UPDATE INCIDENCIA SET ID_TIPUS = ? 
+            WHERE ID_INCIDENCIA = ?";
+
+            $stmt = $conn->prepare($sql);
+            $stmt-> bind_param("ii", $idTipus, $id);
+        }
+        //TODO: SI NO OMPLE CAP DELS DOS CAMPS ES RETORNA UN ERROR AMB JS
+
+        $stmt->execute();
+    }
 
    //Llista les incidències d'un tecnic segons el seu id
     function getIncidenciesTecnic($conn, $idTecnic){
@@ -212,6 +252,25 @@
             echo "<p class='error'>No s'ha trobat cap incidència.</p>";
             return;
         }
+    }
+    //Funcio que retorna tots els tecnics
+    function getAllTipus($conn){
+        $sql= "SELECT * FROM TIPUS";
+
+        $stmt=$conn->prepare($sql);
+        $stmt->execute();
+        
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    //Funcio que retorna tots els tecnics
+    function getAllTecnics($conn){
+        $sql= "SELECT * FROM TECNIC";
+
+        $stmt=$conn->prepare($sql);
+        $stmt->execute();
+        
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
     function getNomTecnic ($conn, $id){

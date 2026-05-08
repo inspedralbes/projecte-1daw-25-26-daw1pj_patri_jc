@@ -1,8 +1,8 @@
 <?php
     include './header-footer/header.php';
     require_once 'connexio.php';
-    $id =$_GET['id'];
-    $rol = $_GET['rol']; // Obtenir l'ID de la incidencia
+    $id =$_GET['id']; // Obtenir l'ID de la incidencia
+    $rol = $_GET['rol'] ?? 'usuari';
 ?>
 
 <!DOCTYPE html>
