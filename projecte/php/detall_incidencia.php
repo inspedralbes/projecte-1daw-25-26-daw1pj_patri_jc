@@ -67,7 +67,7 @@ $classe = $resultat["classe"];
                 <th class="col-3 col-lg-2"scope="col">Data</th>
                 <th scope="col" class="col-3 col-lg-7">Descripció</th>
                 <?php
-                    if($rol == 'tecnic' || $rol == 'admin'){
+                    if($rol == 'tecnic'){
                         echo '<th class="col-3 col-lg-2" scope="col">Temps</th>';
                         echo '<th class="col-1 col-lg-3" scope="col">Edita </th>';
 
@@ -84,7 +84,7 @@ $classe = $resultat["classe"];
                         <?php foreach ($actuacions as $act): ?>
                             <tr>
                                 <?php if ($rol == 'tecnic'): ?>
-                                    <td><?= $act["DATA_ACTUACIO"] ?></td>
+                                    <td><?= substr($act["DATA_ACTUACIO"],0 , 10) ?></td>
                                     <td><?= $act["DESC_ACTUACIO"] ?></td>
                                     <td><?= $act["TEMPS"] ?></td>
                                     <td class="text-center"><a class="link-offset-2 link-underline link-underline-opacity-0" href="afegir_actuacio.php?idActuacio=<?= $act["ID_ACTUACIO"]?>&dataActuacio=<?= $act["DATA_ACTUACIO"]?>&desc_actuacio=<?= $act["DESC_ACTUACIO"]?>&temps=<?= $act["TEMPS"]?>&esVisible=<?= $act["ES_VISIBLE"]?>&rol=<?= $rol?>">✏️</a></td>
@@ -92,9 +92,8 @@ $classe = $resultat["classe"];
                             
                                 <?php elseif ($rol == 'usuari' && $act["ES_VISIBLE"] == 1): ?>
 
-                                    <td><?= $act["DATA_ACTUACIO"] ?></td>
+                                    <td><?= substr($act["DATA_ACTUACIO"],0 , 10) ?></td>
                                     <td><?= $act["DESC_ACTUACIO"] ?></td>
-                                    <td><?= $act["TEMPS"] ?></td>
                                 <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
@@ -118,6 +117,9 @@ $classe = $resultat["classe"];
                         </tr>
 
             <?php endif; ?>
+            <?php
+            if($rol != 'usuari'){
+            ?>
             <tr>
                 <td class = "border-0" colspan = "2"></td>
                 <td>
@@ -126,6 +128,9 @@ $classe = $resultat["classe"];
                 </td>
                 <td></td>
             </tr>
+            <?php
+            }
+            ?>
         </tbody>
 
         </table>
