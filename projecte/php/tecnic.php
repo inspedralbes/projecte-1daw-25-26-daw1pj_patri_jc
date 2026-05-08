@@ -2,7 +2,7 @@
 ?>
 
 <main class="d-flex align-items-center justify-content-center" style="min-height: 60vh">
-    <div class="w-100 text-center">
+    <div class="w-100 text-center mb-3">
         <h1>Portal d'Incidències</h1>
         <hr class="border border-primary border-3 opacity-75 mb-5 w-50 mx-auto">
 

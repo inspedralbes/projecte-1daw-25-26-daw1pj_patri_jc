@@ -2,6 +2,8 @@
     include './header-footer/header.php';
     include 'connexio.php';
     require_once 'funcions.php';
+
+    $rol = $_GET['rol'] ?? 'usuari';
     ?>
 
 
@@ -22,15 +24,15 @@
             ?>
 
 
-    <div class = "container-lg mt-3 mb-4   p-3 mx-auto">
+    <div class = "container-lg mt-3 mb-1   p-3 mx-auto">
 
     <div class ="text-center mt-5">
         <h1 class = "text-center">Formulari d'Incidències</h1>
-        <hr class="border border-primary border-3 opacity-75 mb-5 col-lg-4 
+        <hr class="border border-primary border-3 opacity-75 mb-5 col-lg-6 
         col-10 mx-auto">
     </div>
     
-    <div class="mb-3 col-lg-6 p-3 mx-auto px-3 mt-3">
+    <div class="mb-2 col-lg-6 p-3 mx-auto px-3 mt-3">
         <form action="crear_incidencies.php" method ="POST">
             
             <div class = 'd-flex flex-column mb-2 p-2 border rounded border-dark p-5'>
@@ -64,18 +66,15 @@
                 <div class = "text-center">
                 <input type="submit" value="Envía" class = "btn btn-primary mt-3">
             </div>
-            </div>
-
-            
-            
-            
+            </div>                       
         </form>
         <?php
         }
         ?>
+        
     </div>
     </div>
-    <div class="mt-auto col-10 col-lg-11 mx-auto">
+    <div class="mt-auto col-12 col-lg-12 px-3 mx-auto">
         <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="usuari.php">
             🢘 Torna al Menú Usuari
         </a>
