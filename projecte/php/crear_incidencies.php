@@ -2,6 +2,8 @@
     include './header-footer/header.php';
     include 'connexio.php';
     require_once 'funcions.php';
+
+    $rol = $_GET['rol'] ?? 'usuari';
     ?>
 
 
