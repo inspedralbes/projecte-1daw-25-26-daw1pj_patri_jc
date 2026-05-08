@@ -73,7 +73,7 @@
 
         return $incidenciesDept;
     }
-
+        
     //Funcio per afegir l'estat a l'array d'incidencies
     function afegirEstat($conn, $incidencies){
         foreach($incidencies as &$inc){ // la & fa que es modifiqui a l'array original
@@ -338,7 +338,7 @@
 
     function afegir_actuacions($conn, $idIncidencia, $rol){
         
-        $temps = $_POST['temps'] . ':00';
+        $temps = $_POST['temps'];
 
         if(empty($temps)){
             echo "<p class='error'>No has posat el temps que has dedicat per fer la incidència.</p>";
@@ -403,5 +403,56 @@
 
 
     }
+
+    function sumarTemps($conn, $idIncidencia){
+        $sql = "SELECT TIME_FORMAT(SEC_TO_TIME(SUM(TIME_TO_SEC(temps))), '%H:%i:%s') AS TOTAL_TEMPS
+        FROM ACTUACIO
+        WHERE id_incidencia = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $idIncidencia);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $fila = $result->fetch_assoc();
+
+        return $fila["TOTAL_TEMPS"] ?? '00:00';
+    }
+
+
+    //ACTUALIZAR LES ACTUACIONS
+    function actualizarActuacio($conn, $idActuacio, $descActuacio, $temps, $esVisible, $rol){
+        $sql = "UPDATE ACTUACIO
+        SET DESC_ACTUACIO = ?, TEMPS = ?, ES_VISIBLE = ?
+        WHERE ID_ACTUACIO = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssii", $descActuacio, $temps, $esVisible, $idActuacio);
+        $stmt->execute();
+
+        if($stmt->execute()){
+        $id = $stmt->insert_id;
+        echo "<script> window.location.href = 'confirmacio.php?id=" . $idActuacio . "&rol=" . $rol . "'; </script>";
+        exit();
+        }   
+        else {
+        echo "<p class='error'> Error al crear la actuació: " . htmlspecialchars($stmt->error) . "</p>";
+        }
+        $stmt->close();
+    }
+
+    //FINALITZAR INCIDENCIA
+    function finalitzarIncidencia($conn, $idIncidencia, $rol){
+        $sql = "UPDATE INCIDENCIA
+        SET DATA_FI = NOW()
+        WHERE ID_INCIDENCIA = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $idIncidencia);
+        $stmt->execute();
+
+        $stmt->close();
+
+    }
+
 
 ?>
