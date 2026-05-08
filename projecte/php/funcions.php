@@ -1,43 +1,45 @@
 <?php
     //Fer update a incidencies prioritat i tecnic
     function updateIncidencia($conn, $id, $prioritat, $idTecnic, $idTipus){
+        //Crear arrays per guardar els valors:
+        $cols = [];
+        $valors = [];
+        $tipusVariable = '';
 
-        //Actualitza els tres camps
-        if(!empty($prioritat) && !empty($idTecnic) && !empty($idTipus)){
-            $sql= "UPDATE INCIDENCIA SET PRIORITAT = ?, ID_TECNIC = ?, ID_TIPUS = ?
-            WHERE ID_INCIDENCIA = ?";
+        //Ifs per saber si la variables esta buida o no, si no la afegim les dades alsarrays corresponents
 
-            $stmt = $conn->prepare($sql);
-            $stmt-> bind_param("siii", $prioritat, $idTecnic, $idTipus, $id);
-            
-        }        
-        //Actualitza la prioritat
-        elseif(!empty($prioritat) && empty($idTecnic) && empty($idTipus)){
-            $sql= "UPDATE INCIDENCIA SET PRIORITAT = ?
-            WHERE ID_INCIDENCIA = ?";
-
-            $stmt = $conn->prepare($sql);
-            $stmt-> bind_param("si", $prioritat, $id);
+        if(!empty($prioritat)){
+            $cols[] = "PRIORITAT = ?";
+            $valors[] = $prioritat;
+            $tipusVariable .= 's';  //Afegim el tipus de la variable s -> String
         }
-        //Actualitza el tecnic
-        elseif(empty($prioritat) && !empty($idTecnic) && empty($idTipus)){
-            $sql= "UPDATE INCIDENCIA SET ID_TECNIC = ? 
-            WHERE ID_INCIDENCIA = ?";
-
-            $stmt = $conn->prepare($sql);
-            $stmt-> bind_param("ii", $idTecnic, $id);
+        if(!empty($idTecnic)){
+            $cols[] = "ID_TECNIC = ?";
+            $valors[] = $idTecnic;
+            $tipusVariable .= 'i';
         }
-        //Actualitza el tipus
-        elseif(empty($prioritat) && empty($idTecnic) && !empty($idTipus)){
-            $sql= "UPDATE INCIDENCIA SET ID_TIPUS = ? 
-            WHERE ID_INCIDENCIA = ?";
-
-            $stmt = $conn->prepare($sql);
-            $stmt-> bind_param("ii", $idTipus, $id);
+        if(!empty($idTipus)){
+            $cols[] = "ID_TIPUS = ?";
+            $valors[] = $idTipus;
+            $tipusVariable .= 'i';
         }
+
+        if(empty($cols)){ //Si cap té valor, no fa res
+            return;
+        }
+
+        $tipusVariable .= 'i';
+        $valors[] = $id; //Afegim l'id de la incidencia també a l'array.
+
+        //Fem la consulta de forma dinamica per a no fer 7 ifs diferents
+        //implodes uneix els valors de l'arrray cols amb una , per poder afegir-ho a la consulta
+
+        $sql = "UPDATE INCIDENCIA SET " . implode(", ", $cols) . " WHERE ID_INCIDENCIA = ?";
+        $stmt = $conn -> prepare($sql);
+        $stmt -> bind_param($tipusVariable, ...$valors); // ... es un spread operator, desplega l'array.
+        $stmt -> execute();
+
         //TODO: SI NO OMPLE CAP DELS DOS CAMPS ES RETORNA UN ERROR AMB JS
-
-        $stmt->execute();
     }
 
    //Llista les incidències d'un tecnic segons el seu id
