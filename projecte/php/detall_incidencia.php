@@ -131,12 +131,19 @@
         <a  href="afegir_actuacio.php?id=<?= $incidencia["ID_INCIDENCIA"] ?>&rol=<?= $rol ?>">
         <button type="button" class="btn btn-primary">Nova Actuació</button>
         </a>
+
+        <?php
+            if(getEstat($actuacions, $incidencia) == 'Tancada'){
+        ?>
         <form action="confirmacio.php" method = "POST">
             <input type="hidden" name="idIncidencia" value="<?= $incidencia["ID_INCIDENCIA"] ?>">
             <input type="hidden" name="rol" value="<?= $rol ?>">
             <input type="hidden" name="finalitzar" value="1">
             <button type="submit" class="btn btn-danger">Finalitzar Incidència</button>        
         </form>
+        <?php
+            }
+        ?>
     </div>
 <?php endif; ?>
     </div>
