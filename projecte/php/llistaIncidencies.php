@@ -320,12 +320,13 @@ include './header-footer/header.php';
 
     <?php endif ?>
 
+    <?php if($rol == 'admin'): ?>
     <div class="mt-auto col-10 col-lg-12 px-3 mx-auto">
             <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="admin.php">
                 🢘 Panell d'administració
             </a>
     </div>
-
+    <?php endif; ?>
 </main>
 
 <?php include './header-footer/footer.php'; ?>
