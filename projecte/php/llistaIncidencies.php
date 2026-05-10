@@ -171,7 +171,7 @@ include './header-footer/header.php';
                             <th class="col-lg-1 text-nowrap" scope="col">Estat</th>
 
                             <th class="col-lg-1 text-nowrap" scope="col">
-                                Prioritat&nbsp
+                                Prioritat&nbsp <!--&nbsp fa un espai -->
                                 <a href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=<?= $filtre_estat ?>&ordre=PRIORITAT&dir=ASC" class="text-decoration-none">▲</a>
                                 <a href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=<?= $filtre_estat ?>&ordre=PRIORITAT&dir=DESC" class="text-decoration-none">▼</a>
                             </th>
@@ -187,7 +187,7 @@ include './header-footer/header.php';
 
                         <?php if (!empty($incidencies)): ?>
                             <?php foreach ($incidencies as $inc): ?>
-                                <tr>
+                                <tr data-tecnic="<?= $inc['NOM_TECNIC'] ?>" data-estat="<?= $inc['estat'] ?>">
                                     <td>
                                         <a href="detall_incidencia.php?id=<?php echo $inc['ID_INCIDENCIA']; ?>&rol=<?php echo $rol; ?>" class="link-primary">
                                             <?php echo $inc['ID_INCIDENCIA']; ?>
@@ -286,17 +286,12 @@ include './header-footer/header.php';
                         </button>
                         <ul class="dropdown-menu dropdown-menu-lg-end">
                             <li>
-                                <a class="dropdown-item <?= $filtre_estat == 'actives' ? 'fw-bold text-primary' : '' // Manté en blau el filtre actual?>" href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=actives&ordre=<?= $ordre ?>&dir=<?= $dir ?>">
-                                    Actives   
-                                </a>
+                                <button class="dropdown-item" data-f-estat="actives"> Actives </button>
 
                             </li>
 
                             <li>
-                                <a class="dropdown-item <?= $filtre_estat == 'totes' ? 'fw-bold text-primary' : '' ?>" href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=totes&ordre=<?= $ordre ?>&dir=<?= $dir ?>">
-                                    Totes
-                                </a>
-
+                                <button class="dropdown-item" data-f-estat="totes"> Totes </button>
                             </li>
 
                         </ul>
@@ -310,8 +305,8 @@ include './header-footer/header.php';
                             Filtrar per tècnic
                         </button>
                         <ul class="dropdown-menu dropdown-menu-lg-end">
-                            <li><a class="dropdown-item <?= $filtre == 'no_assignades' ? 'fw-bold text-primary' : '' ?>" href="?rol=<?= $rol ?>&filtre=no_assignades&filtre_estat=<?= $filtre_estat ?>&ordre=<?= $ordre ?>&dir=<?= $dir ?>">No assignades</a></li>
-                            <li><a class="dropdown-item <?= $filtre == '' ? 'fw-bold text-primary' : '' ?>" href="?rol=<?= $rol ?>&filtre='no_assignades'&filtre_estat=<?= $filtre_estat ?>&ordre=<?= $ordre ?>&dir=<?= $dir ?>">Totes</a></li>
+                            <li><button class="dropdown-item" data-f-tecnic="no_assignades">No assignades</button></li>
+                            <li><button class="dropdown-item" data-f-tecnic="totes">Totes</a></li>
                         </ul>
                     </div>
                 </div>
