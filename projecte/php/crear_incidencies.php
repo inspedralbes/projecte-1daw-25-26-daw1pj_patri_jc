@@ -2,25 +2,18 @@
     include './header-footer/header.php';
     include 'connexio.php';
     require_once 'funcions.php';
+
+    $rol = $_GET['rol'] ?? 'usuari';
     ?>
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Incidència</title>
-</head>
-
-
-<body class = "bg-body">
     <?php
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             crear_incidencia($conn);
         }else{
             ?>
 
+
+<main class="d-flex flex-column flex-grow-1 pb-3">
 
     <div class = "container-lg mt-3 mb-1   p-3 mx-auto">
 
@@ -77,10 +70,9 @@
             🢘 Torna al Menú Usuari
         </a>
     </div>
+</main>
 
     <?php 
     include './header-footer/footer.php';?>
-</body>
-</html>
 
 

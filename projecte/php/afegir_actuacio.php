@@ -37,6 +37,8 @@ $esVisible = $_GET['esVisible'] ?? '';
             $idIncidencia = $_GET['id'] ?? '';
             ?>
 
+            
+<main class="d-flex flex-column flex-grow-1 pb-3">
 <?php
     if(empty($idActuacio)){
         echo '<h1 class = "text-center mx-auto mt-5">Actuació de la Incidència <span style = "color: #F28508">' . $idIncidencia . '</span></h1>';
@@ -52,8 +54,8 @@ $esVisible = $_GET['esVisible'] ?? '';
             
             <div class = 'd-flex flex-column mb-2 p-2 border rounded border-dark p-5'>
 
-                <label for="temps" class="form-label mb-2 mt-2">Temps(HH:MM:SS):</label>
-                <input type="time" name="temps" id="temps" value="<?= $temps ?>" step = "1">
+                <label for="temps" class="form-label mb-2 mt-2">Temps(HH:MM):</label>
+                <input type="time" name="temps" id="temps" value="<?= $temps ?>">
 
                 <?php
                 if(empty($dataActuacio)){
@@ -96,7 +98,8 @@ $esVisible = $_GET['esVisible'] ?? '';
         <?php }?>
 </div>
 
+</main>
  <?php
  include './header-footer/footer.php' ?>
-</body>
-</html>
+
+

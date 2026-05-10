@@ -73,7 +73,7 @@
 
         return $incidenciesDept;
     }
-
+        
     //Funcio per afegir l'estat a l'array d'incidencies
     function afegirEstat($conn, $incidencies){
         foreach($incidencies as &$inc){ // la & fa que es modifiqui a l'array original
@@ -338,6 +338,8 @@
 
     function afegir_actuacions($conn, $idIncidencia, $rol){
         
+        $temps = $_POST['temps'];
+
         if(empty($temps)){
             echo "<p class='error'>No has posat el temps que has dedicat per fer la incidència.</p>";
             return;
@@ -451,4 +453,6 @@
         $stmt->close();
 
     }
+
+
 ?>

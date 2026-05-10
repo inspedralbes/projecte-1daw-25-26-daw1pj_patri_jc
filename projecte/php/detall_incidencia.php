@@ -59,19 +59,20 @@ $classe = $resultat["classe"];
             </div>
         <?php endif; ?>
 
-        <div class="mt-5 col-10 col-lg-8 mx-auto">
-            <h4 class="text-primary">Actuacions</h4>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th class="col-3 col-lg-2" scope="col">Data</th>
-                        <th scope="col" class="col-3 col-lg-7">Descripció</th>
-                        <?php
-                        if ($rol == 'tecnic') {
-                            echo '<th class="col-3 col-lg-2" scope="col">Temps</th>';
-                            echo '<th class="col-1 col-lg-3" scope="col">Edita </th>';
-                        }
-                        ?>
+    <div class="mt-5 col-10 col-lg-8 mx-auto">
+        <h4 class="text-primary">Actuacions</h4>
+        <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th class="col-3 col-lg-2"scope="col">Data</th>
+                <th scope="col" class="col-3 col-lg-7">Descripció</th>
+                <?php
+                    if($rol == 'tecnic'){
+                        echo '<th class="col-3 col-lg-2" scope="col">Temps</th>';
+                        echo '<th class="col-1 col-lg-3" scope="col">Edita </th>';
+
+                    }
+                ?>
 
                     </tr>
                 </thead>
@@ -83,15 +84,16 @@ $classe = $resultat["classe"];
                         <?php foreach ($actuacions as $act): ?>
                             <tr>
                                 <?php if ($rol == 'tecnic'): ?>
-                                    <td><?= $act["DATA_ACTUACIO"] ?></td>
+                                    <td><?= substr($act["DATA_ACTUACIO"],0 , 10) ?></td>
                                     <td><?= $act["DESC_ACTUACIO"] ?></td>
                                     <td><?= $act["TEMPS"] ?></td>
-                                    <td class="text-center">✏️</td>
+                                    <td class="text-center"><a class="link-offset-2 link-underline link-underline-opacity-0" href="afegir_actuacio.php?idActuacio=<?= $act["ID_ACTUACIO"]?>&dataActuacio=<?= $act["DATA_ACTUACIO"]?>&desc_actuacio=<?= $act["DESC_ACTUACIO"]?>&temps=<?= $act["TEMPS"]?>&esVisible=<?= $act["ES_VISIBLE"]?>&rol=<?= $rol?>">✏️</a></td>
+
+                            
                                 <?php elseif ($rol == 'usuari' && $act["ES_VISIBLE"] == 1): ?>
 
-                                    <td><?= $act["DATA_ACTUACIO"] ?></td>
+                                    <td><?= substr($act["DATA_ACTUACIO"],0 , 10) ?></td>
                                     <td><?= $act["DESC_ACTUACIO"] ?></td>
-                                    <td><?= $act["TEMPS"] ?></td>
                                 <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
@@ -114,18 +116,49 @@ $classe = $resultat["classe"];
 
                         </tr>
 
-                    <?php endif; ?>
-                </tbody>
-
-            </table>
-
+            <?php endif; ?>
             <?php
-            if ($rol == 'tecnic') {
-                echo '<a href="afegir_actuacio.php?id=' . $incidencia["ID_INCIDENCIA"] . '&rol=' . $rol . '"><button type="button" class="btn btn-primary position-absolute bottom-0 end-0 mb-5 me-5">Nova Actuació</button></a>';
+            if($rol != 'usuari'){
+            ?>
+            <tr>
+                <td class = "border-0" colspan = "2"></td>
+                <td>
+                        <strong>Total:</strong>
+        <span><?= sumarTemps($conn, $incidencia["ID_INCIDENCIA"]) ?></span>
+                </td>
+                <td></td>
+            </tr>
+            <?php
+            }
+            ?>
+        </tbody>
+
+        </table>
+    
+        <?php if ($rol == 'tecnic'): ?>
+
+    <div class ="mt-3 mb-3 d-flex justify-content-between align-items-center" >
+        <?php
+        $resultat = getEstat($actuacions, $incidencia);
+            if($resultat["estat"] != 'Tancada'){
+        ?>
+        <a  href="afegir_actuacio.php?id=<?= $incidencia["ID_INCIDENCIA"] ?>&rol=<?= $rol ?>">
+        <button type="button" class="btn btn-primary">Nova Actuació</button>
+        </a>
+
+        
+        <form action="confirmacio.php" method = "POST">
+            <input type="hidden" name="idIncidencia" value="<?= $incidencia["ID_INCIDENCIA"] ?>">
+            <input type="hidden" name="rol" value="<?= $rol ?>">
+            <input type="hidden" name="finalitzar" value="1">
+            <button type="submit" class="btn btn-danger">Finalitzar Incidència</button>        
+        </form>
+        <?php
             }
             ?>
         </div>
     <?php endif; ?>
+    </div>
 
 
     <!-------------------------------------ADMIN--------------------------------------->
@@ -224,10 +257,15 @@ $classe = $resultat["classe"];
                 🢘 Torna al cercador
             </a>
 
-        <?php elseif ($rol == 'admin'): ?>
+            <?php elseif ($rol == 'admin'): ?>
             <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="llistaIncidencies.php?rol=<?php echo $rol ?>">
                 🢘 Torna enrere
             </a>
+            <?php elseif ($rol == 'tecnic'): ?>
+            <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="llistaIncidencies.php?rol=<?= $rol ?>">
+                🢘 Torna enrere
+            </a>
+            <?php endif; ?>
     </div>
 
 <?php endif; ?>

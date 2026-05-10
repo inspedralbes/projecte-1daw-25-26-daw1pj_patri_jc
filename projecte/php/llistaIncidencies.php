@@ -56,7 +56,8 @@ include './header-footer/header.php';
                     <?php if (!empty($incidencies)): ?>
                         <?php foreach ($incidencies as $inc):
 
-                    $res_estat = getEstat($actuacions, $inc);
+                    $actuacions_inc = getActuacions($conn, $inc['ID_INCIDENCIA']); 
+                    $res_estat = getEstat($actuacions_inc, $inc);
                     $estat = $res_estat ["estat"];
                     $classe = $res_estat["classe"];
                     
@@ -200,9 +201,11 @@ include './header-footer/header.php';
                                     <td><?= $inc['NOM_TIPUS']; ?></td>
                                     <td><?= $inc['NOM_TECNIC']; ?></td>
                                     <td><?= $inc['DESC_INCIDENCIA']; ?></td>
+
                                     <td class="text-center text-dark">
-                                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modal<?= $inc['ID_INCIDENCIA'] ?>"> ✏️ </button> <!--obre el modal amb el mateix id de la incidencia quan cliquem sobre el llapis-->
+                                        <button type="button" class="btn btn-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#modal<?= $inc['ID_INCIDENCIA'] ?>"> ✏️ </button> <!--obre el modal amb el mateix id de la incidencia quan cliquem sobre el llapis-->
                                     </td>
+
                                 </tr>
                             <?php endforeach ?>
 
@@ -283,9 +286,20 @@ include './header-footer/header.php';
                             Filtrar per estat
                         </button>
                         <ul class="dropdown-menu dropdown-menu-lg-end">
-                            <li><a class="dropdown-item <?= $filtre_estat == 'actives' ? 'fw-bold text-primary' : '' // Manté en blau el filtre actual
-                                                        ?>" href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=actives&ordre=<?= $ordre ?>&dir=<?= $dir ?>">Actives</a></li>
-                            <li><a class="dropdown-item <?= $filtre_estat == 'totes' ? 'fw-bold text-primary' : '' ?>" href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=totes&ordre=<?= $ordre ?>&dir=<?= $dir ?>">Totes</a></li>
+                            <li>
+                                <a class="dropdown-item <?= $filtre_estat == 'actives' ? 'fw-bold text-primary' : '' // Manté en blau el filtre actual?>" href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=actives&ordre=<?= $ordre ?>&dir=<?= $dir ?>">
+                                    Actives   
+                                </a>
+
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item <?= $filtre_estat == 'totes' ? 'fw-bold text-primary' : '' ?>" href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=totes&ordre=<?= $ordre ?>&dir=<?= $dir ?>">
+                                    Totes
+                                </a>
+
+                            </li>
+
                         </ul>
                     </div>
                 </div>
@@ -306,7 +320,14 @@ include './header-footer/header.php';
         </div>
 
     <?php endif ?>
-
+    
+    <?php if($rol == 'admin'):?>
+    <div class="mt-auto col-10 col-lg-12 px-3 mx-auto">
+            <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="admin.php">
+                🢘 Panell d'administració
+            </a>
+    </div>
+    <?php endif;?>
 </main>
 
 <?php include './header-footer/footer.php'; ?>
