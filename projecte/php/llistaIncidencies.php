@@ -322,7 +322,8 @@ include './header-footer/header.php';
                 🢘 Panell d'administració
             </a>
     </div>
-
+    <?php endif ?>
+    
 </main>
 
 <?php include './header-footer/footer.php'; ?>
