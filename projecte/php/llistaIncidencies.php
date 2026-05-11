@@ -14,7 +14,7 @@ if ($rol == 'tecnic' && !empty($idTecnic)) {
     $nom_dept = $incidencies[0]['NOM_DEPT'] ?? 'Departament';
 } elseif ($rol == 'admin') {
     $filtre = $_GET['filtre'] ?? '';
-    $filtre_estat = $_GET['filtre_estat'] ?? 'actives';
+    $filtre_estat = 'totes';
     $ordre = $_GET['ordre'] ?? 'ID_INCIDENCIA';
     $dir = $_GET['dir'] ?? 'ASC';
     $incidencies = getAllIncidencies($conn, $filtre, $filtre_estat, $ordre, $dir);
@@ -56,27 +56,34 @@ include './header-footer/header.php';
                     <?php if (!empty($incidencies)): ?>
                         <?php foreach ($incidencies as $inc):
 
-                            $res_estat = getEstat($actuacions, $inc);
-                            $estat = $res_estat["estat"];
-                            $classe = $res_estat["classe"];
-
-                        ?>
-
-
-                            <td><a href="detall_incidencia.php?id=<?php echo $inc['ID_INCIDENCIA']; ?>&rol=<?php echo $rol; ?>" class="link-primary"><?php echo $inc['ID_INCIDENCIA']; ?></a></td>
-                            <td><?= $inc["DATA_INICI"]; ?> </td>
-                            <td><?= $inc["PRIORITAT"]; ?> </td>
-                            <td><?= $inc["DESC_INCIDENCIA"]; ?> </td>
-                            <td class=<?php echo $classe; ?>> <?php echo $estat; ?> </td>
-
+                    $actuacions_inc = getActuacions($conn, $inc['ID_INCIDENCIA']); 
+                    $res_estat = getEstat($actuacions_inc, $inc);
+                    $estat = $res_estat ["estat"];
+                    $classe = $res_estat["classe"];
+                    
+                ?>
+                
+                <tr> 
+                <td><a href="detall_incidencia.php?id=<?php echo $inc['ID_INCIDENCIA']; ?>&rol=<?php echo $rol; ?>" class="link-primary"><?php echo $inc['ID_INCIDENCIA']; ?></a></td>
+                <td><?= $inc["DATA_INICI"];?> </td>
+                <td><?= $inc["PRIORITAT"];?> </td>
+                <td><?= $inc["DESC_INCIDENCIA"];?> </td>
+                <td class = <?php echo $classe;?> > <?php echo $estat;?> </td>
+                </tr>
 
                             <!--Si no un mutted text "No hi han incidencies asignades"-->
 
-                        <?php endforeach ?>
-                    <?php endif ?>
-                </tbody>
-            </table>
-        </div>
+                <?php endforeach ?>
+            <?php endif ?>
+        </tbody>
+    </table>
+
+    <div class="mt-auto col-10 col-lg-11 mx-auto">
+        <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover position-absolute bottom-0 start-0 mb-5 ms-5" href="tecnic.php">
+            🢘 Torna al Menú Tècnic
+        </a>
+    </div>
+    </div>
 
 
         <!-------------------------------------USUARI--------------------------------------->
@@ -165,7 +172,7 @@ include './header-footer/header.php';
                             <th class="col-lg-1 text-nowrap" scope="col">Estat</th>
 
                             <th class="col-lg-1 text-nowrap" scope="col">
-                                Prioritat&nbsp
+                                Prioritat&nbsp <!--&nbsp fa un espai -->
                                 <a href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=<?= $filtre_estat ?>&ordre=PRIORITAT&dir=ASC" class="text-decoration-none">▲</a>
                                 <a href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=<?= $filtre_estat ?>&ordre=PRIORITAT&dir=DESC" class="text-decoration-none">▼</a>
                             </th>
@@ -181,7 +188,7 @@ include './header-footer/header.php';
 
                         <?php if (!empty($incidencies)): ?>
                             <?php foreach ($incidencies as $inc): ?>
-                                <tr>
+                                <tr data-tecnic="<?= $inc['NOM_TECNIC'] ?>" data-estat="<?= $inc['estat'] ?>">
                                     <td>
                                         <a href="detall_incidencia.php?id=<?php echo $inc['ID_INCIDENCIA']; ?>&rol=<?php echo $rol; ?>" class="link-primary">
                                             <?php echo $inc['ID_INCIDENCIA']; ?>
@@ -260,8 +267,15 @@ include './header-footer/header.php';
                                     </select>
                                             
                                 </div>
+                                
+                                <!--Div error -->
+                                <div id="error-updateInc-<?= $inc['ID_INCIDENCIA']?>" class="alert alert-warning d-none mx-3 col-11">
+                                    Siusplau ompli almenys un camp.
+                                </div>
+
                                 <div class="modal-footer mt-2">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tanca</button>
+
                                     <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
                             </form>
@@ -280,17 +294,12 @@ include './header-footer/header.php';
                         </button>
                         <ul class="dropdown-menu dropdown-menu-lg-end">
                             <li>
-                                <a class="dropdown-item <?= $filtre_estat == 'actives' ? 'fw-bold text-primary' : '' // Manté en blau el filtre actual?>" href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=actives&ordre=<?= $ordre ?>&dir=<?= $dir ?>">
-                                    Actives   
-                                </a>
+                                <button class="dropdown-item" data-f-estat="actives"> Actives </button>
 
                             </li>
 
                             <li>
-                                <a class="dropdown-item <?= $filtre_estat == 'totes' ? 'fw-bold text-primary' : '' ?>" href="?rol=<?= $rol ?>&filtre=<?= $filtre ?>&filtre_estat=totes&ordre=<?= $ordre ?>&dir=<?= $dir ?>">
-                                    Totes
-                                </a>
-
+                                <button class="dropdown-item" data-f-estat="totes"> Totes </button>
                             </li>
 
                         </ul>
@@ -304,8 +313,8 @@ include './header-footer/header.php';
                             Filtrar per tècnic
                         </button>
                         <ul class="dropdown-menu dropdown-menu-lg-end">
-                            <li><a class="dropdown-item <?= $filtre == 'no_assignades' ? 'fw-bold text-primary' : '' ?>" href="?rol=<?= $rol ?>&filtre=no_assignades&filtre_estat=<?= $filtre_estat ?>&ordre=<?= $ordre ?>&dir=<?= $dir ?>">No assignades</a></li>
-                            <li><a class="dropdown-item <?= $filtre == '' ? 'fw-bold text-primary' : '' ?>" href="?rol=<?= $rol ?>&filtre='no_assignades'&filtre_estat=<?= $filtre_estat ?>&ordre=<?= $ordre ?>&dir=<?= $dir ?>">Totes</a></li>
+                            <li><button class="dropdown-item" data-f-tecnic="no_assignades">No assignades</button></li>
+                            <li><button class="dropdown-item" data-f-tecnic="totes">Totes</a></li>
                         </ul>
                     </div>
                 </div>
@@ -314,12 +323,14 @@ include './header-footer/header.php';
 
     <?php endif ?>
 
+    <?php if($rol == 'admin'): ?>
     <div class="mt-auto col-10 col-lg-12 px-3 mx-auto">
             <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="admin.php">
                 🢘 Panell d'administració
             </a>
     </div>
-
+    <?php endif ?>
+    
 </main>
 
 <?php include './header-footer/footer.php'; ?>

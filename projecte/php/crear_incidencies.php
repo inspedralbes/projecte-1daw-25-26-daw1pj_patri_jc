@@ -6,23 +6,14 @@
     $rol = $_GET['rol'] ?? 'usuari';
     ?>
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Incidència</title>
-</head>
-
-
-<body class = "bg-body">
     <?php
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             crear_incidencia($conn);
         }else{
             ?>
 
+
+<main class="d-flex flex-column flex-grow-1 pb-3">
 
     <div class = "container-lg mt-3 mb-1   p-3 mx-auto">
 
@@ -33,9 +24,12 @@
     </div>
     
     <div class="mb-2 col-lg-6 p-3 mx-auto px-3 mt-3">
+            
         <form action="crear_incidencies.php" method ="POST">
             
+            
             <div class = 'd-flex flex-column mb-2 p-2 border rounded border-dark p-5'>
+                <div id = "errors"></div>
                 <label for="dept" class = "form-label mb-2 mt-2">Departament</label>
                 <select name="dept" id="dept" class = "form-control" required>  
                     <option selected disabled value="">Selecciona...</option>
@@ -66,8 +60,10 @@
                 <div class = "text-center">
                 <input type="submit" value="Envía" class = "btn btn-primary mt-3">
             </div>
-            </div>                       
+            </div>   
+                            
         </form>
+        
         <?php
         }
         ?>
@@ -79,10 +75,9 @@
             🢘 Torna al Menú Usuari
         </a>
     </div>
+</main>
 
     <?php 
     include './header-footer/footer.php';?>
-</body>
-</html>
 
 

@@ -1,0 +1,16 @@
+{
+    "name": "inspedralbes/amb-mongodb",
+    "description": "PHP Amb MongoDB",
+
+    "authors": [
+        {
+            "name": "Juan Carlos Diaz Dual"
+        },
+        {
+            "name": "Patricia Fornieles Rosa"
+        }
+    ],
+    "require": {
+        "mongodb/mongodb": "^2.0"
+    }
+}

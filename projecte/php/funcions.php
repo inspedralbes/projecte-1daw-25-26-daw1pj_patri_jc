@@ -1,43 +1,45 @@
 <?php
     //Fer update a incidencies prioritat i tecnic
     function updateIncidencia($conn, $id, $prioritat, $idTecnic, $idTipus){
+        //Crear arrays per guardar els valors:
+        $cols = [];
+        $valors = [];
+        $tipusVariable = '';
 
-        //Actualitza els tres camps
-        if(!empty($prioritat) && !empty($idTecnic) && !empty($idTipus)){
-            $sql= "UPDATE INCIDENCIA SET PRIORITAT = ?, ID_TECNIC = ?, ID_TIPUS = ?
-            WHERE ID_INCIDENCIA = ?";
+        //Ifs per saber si la variables esta buida o no, si no la afegim les dades alsarrays corresponents
 
-            $stmt = $conn->prepare($sql);
-            $stmt-> bind_param("siii", $prioritat, $idTecnic, $idTipus, $id);
-            
-        }        
-        //Actualitza la prioritat
-        elseif(!empty($prioritat) && empty($idTecnic) && empty($idTipus)){
-            $sql= "UPDATE INCIDENCIA SET PRIORITAT = ?
-            WHERE ID_INCIDENCIA = ?";
-
-            $stmt = $conn->prepare($sql);
-            $stmt-> bind_param("si", $prioritat, $id);
+        if(!empty($prioritat)){
+            $cols[] = "PRIORITAT = ?";
+            $valors[] = $prioritat;
+            $tipusVariable .= 's';  //Afegim el tipus de la variable s -> String
         }
-        //Actualitza el tecnic
-        elseif(empty($prioritat) && !empty($idTecnic) && empty($idTipus)){
-            $sql= "UPDATE INCIDENCIA SET ID_TECNIC = ? 
-            WHERE ID_INCIDENCIA = ?";
-
-            $stmt = $conn->prepare($sql);
-            $stmt-> bind_param("ii", $idTecnic, $id);
+        if(!empty($idTecnic)){
+            $cols[] = "ID_TECNIC = ?";
+            $valors[] = $idTecnic;
+            $tipusVariable .= 'i';
         }
-        //Actualitza el tipus
-        elseif(empty($prioritat) && empty($idTecnic) && !empty($idTipus)){
-            $sql= "UPDATE INCIDENCIA SET ID_TIPUS = ? 
-            WHERE ID_INCIDENCIA = ?";
-
-            $stmt = $conn->prepare($sql);
-            $stmt-> bind_param("ii", $idTipus, $id);
+        if(!empty($idTipus)){
+            $cols[] = "ID_TIPUS = ?";
+            $valors[] = $idTipus;
+            $tipusVariable .= 'i';
         }
+
+        if(empty($cols)){ //Si cap té valor, no fa res
+            return;
+        }
+
+        $tipusVariable .= 'i';
+        $valors[] = $id; //Afegim l'id de la incidencia també a l'array.
+
+        //Fem la consulta de forma dinamica per a no fer 7 ifs diferents
+        //implodes uneix els valors de l'arrray cols amb una , per poder afegir-ho a la consulta
+
+        $sql = "UPDATE INCIDENCIA SET " . implode(", ", $cols) . " WHERE ID_INCIDENCIA = ?";
+        $stmt = $conn -> prepare($sql);
+        $stmt -> bind_param($tipusVariable, ...$valors); // ... es un spread operator, desplega l'array.
+        $stmt -> execute();
+
         //TODO: SI NO OMPLE CAP DELS DOS CAMPS ES RETORNA UN ERROR AMB JS
-
-        $stmt->execute();
     }
 
    //Llista les incidències d'un tecnic segons el seu id
@@ -73,7 +75,7 @@
 
         return $incidenciesDept;
     }
-
+        
     //Funcio per afegir l'estat a l'array d'incidencies
     function afegirEstat($conn, $incidencies){
         foreach($incidencies as &$inc){ // la & fa que es modifiqui a l'array original
@@ -338,7 +340,7 @@
 
     function afegir_actuacions($conn, $idIncidencia, $rol){
         
-        $temps = $_POST['temps'] . ':00';
+        $temps = $_POST['temps'];
 
         if(empty($temps)){
             echo "<p class='error'>No has posat el temps que has dedicat per fer la incidència.</p>";
@@ -403,5 +405,56 @@
 
 
     }
+
+    function sumarTemps($conn, $idIncidencia){
+        $sql = "SELECT TIME_FORMAT(SEC_TO_TIME(SUM(TIME_TO_SEC(temps))), '%H:%i:%s') AS TOTAL_TEMPS
+        FROM ACTUACIO
+        WHERE id_incidencia = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $idIncidencia);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $fila = $result->fetch_assoc();
+
+        return $fila["TOTAL_TEMPS"] ?? '00:00';
+    }
+
+
+    //ACTUALIZAR LES ACTUACIONS
+    function actualizarActuacio($conn, $idActuacio, $descActuacio, $temps, $esVisible, $rol){
+        $sql = "UPDATE ACTUACIO
+        SET DESC_ACTUACIO = ?, TEMPS = ?, ES_VISIBLE = ?
+        WHERE ID_ACTUACIO = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssii", $descActuacio, $temps, $esVisible, $idActuacio);
+        $stmt->execute();
+
+        if($stmt->execute()){
+        $id = $stmt->insert_id;
+        echo "<script> window.location.href = 'confirmacio.php?id=" . $idActuacio . "&rol=" . $rol . "'; </script>";
+        exit();
+        }   
+        else {
+        echo "<p class='error'> Error al crear la actuació: " . htmlspecialchars($stmt->error) . "</p>";
+        }
+        $stmt->close();
+    }
+
+    //FINALITZAR INCIDENCIA
+    function finalitzarIncidencia($conn, $idIncidencia, $rol){
+        $sql = "UPDATE INCIDENCIA
+        SET DATA_FI = NOW()
+        WHERE ID_INCIDENCIA = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $idIncidencia);
+        $stmt->execute();
+
+        $stmt->close();
+
+    }
+
 
 ?>
