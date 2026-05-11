@@ -37,6 +37,8 @@ $esVisible = $_GET['esVisible'] ?? '';
             $idIncidencia = $_GET['id'] ?? '';
             ?>
 
+            
+<main class="d-flex flex-column flex-grow-1 pb-3">
 <?php
     if(empty($idActuacio)){
         echo '<h1 class = "text-center mx-auto mt-5">Actuació de la Incidència <span style = "color: #F28508">' . $idIncidencia . '</span></h1>';
@@ -96,7 +98,8 @@ $esVisible = $_GET['esVisible'] ?? '';
         <?php }?>
 </div>
 
+</main>
  <?php
  include './header-footer/footer.php' ?>
-</body>
-</html>
+
+

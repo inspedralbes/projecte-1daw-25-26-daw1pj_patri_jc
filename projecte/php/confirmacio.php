@@ -19,6 +19,8 @@
 
     
 ?>
+<main class="d-flex flex-column flex-grow-1 pb-3">
+
 
     <?php
         if($rol == 'tecnic' && $finalitzar == 1){
@@ -66,7 +68,9 @@
     
 
     ?>
+    </main>
     <?php
+
 include './header-footer/footer.php';?>
 
 

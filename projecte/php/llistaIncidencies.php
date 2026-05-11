@@ -56,7 +56,8 @@ include './header-footer/header.php';
                     <?php if (!empty($incidencies)): ?>
                         <?php foreach ($incidencies as $inc):
 
-                    $res_estat = getEstat($actuacions, $inc);
+                    $actuacions_inc = getActuacions($conn, $inc['ID_INCIDENCIA']); 
+                    $res_estat = getEstat($actuacions_inc, $inc);
                     $estat = $res_estat ["estat"];
                     $classe = $res_estat["classe"];
                     
@@ -328,7 +329,8 @@ include './header-footer/header.php';
                 🢘 Panell d'administració
             </a>
     </div>
-    <?php endif; ?>
+    <?php endif ?>
+    
 </main>
 
 <?php include './header-footer/footer.php'; ?>

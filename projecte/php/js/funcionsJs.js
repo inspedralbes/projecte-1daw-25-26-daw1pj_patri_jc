@@ -94,7 +94,45 @@ function errorUpdateIncidencia(){
 }
 
 
-mostrarIncidenciesActives();
-filtreAssignades();
-filtreEstat();
-errorUpdateIncidencia();
+function comprobarCrearIncidencia(){
+        document.querySelector('form').addEventListener('submit', function(e){
+            var valid = true;
+            var errores = [];
+
+            const dept = document.querySelector('select[name="dept"]').value;
+            const tipus = document.querySelector('select[name="tipus"]').value;
+            const desc = document.querySelector('textarea[name="desc"]').value;
+
+            if(dept === '' || dept === 0){
+                valid = false;
+                errores.push('Has de seleccionar un departament.');
+            }
+
+            if(tipus === '' || tipus === 0){
+                valid = false;
+                errores.push('Has de seleccionar un tipus.');
+            }
+
+            if(desc.trim() === ''){
+                valid = false;
+                errores.push('La descripció no pot estar buida.')
+            }
+
+            if (!valid){
+                e.preventDefault();
+                
+                var errorDiv = document.getElementById('errors');
+                errorDiv.innerHTML = '';
+
+                errores.forEach(function(error){
+                    errorDiv.innerHTML += '<p class ="text-danger">⚠️ ' + error + '</p>'
+                });
+            }
+        });
+    }
+
+    comprobarCrearIncidencia();
+    mostrarIncidenciesActives();
+    filtreAssignades();
+    filtreEstat();
+    errorUpdateIncidencia();
