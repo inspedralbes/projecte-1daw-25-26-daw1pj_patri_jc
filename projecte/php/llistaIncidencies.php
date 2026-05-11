@@ -14,7 +14,7 @@ if ($rol == 'tecnic' && !empty($idTecnic)) {
     $nom_dept = $incidencies[0]['NOM_DEPT'] ?? 'Departament';
 } elseif ($rol == 'admin') {
     $filtre = $_GET['filtre'] ?? '';
-    $filtre_estat = $_GET['filtre_estat'] ?? 'actives';
+    $filtre_estat = 'totes';
     $ordre = $_GET['ordre'] ?? 'ID_INCIDENCIA';
     $dir = $_GET['dir'] ?? 'ASC';
     $incidencies = getAllIncidencies($conn, $filtre, $filtre_estat, $ordre, $dir);

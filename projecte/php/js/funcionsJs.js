@@ -35,6 +35,7 @@ document.querySelectorAll('[data-f-estat]').forEach(btn => {
 
         document.querySelectorAll('tbody tr').forEach(fila => {
             const estat = fila.dataset.estat;
+                console.log(estat);
             
             if(filtre === 'totes'){
                 fila.style.display = '';
