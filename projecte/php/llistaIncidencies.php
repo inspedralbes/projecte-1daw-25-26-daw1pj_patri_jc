@@ -267,8 +267,15 @@ include './header-footer/header.php';
                                     </select>
                                             
                                 </div>
+                                
+                                <!--Div error -->
+                                <div id="error-updateInc-<?= $inc['ID_INCIDENCIA']?>" class="alert alert-warning d-none mx-3 col-11">
+                                    Siusplau ompli almenys un camp.
+                                </div>
+
                                 <div class="modal-footer mt-2">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tanca</button>
+
                                     <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
                             </form>
