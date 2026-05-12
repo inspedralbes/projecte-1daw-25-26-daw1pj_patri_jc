@@ -113,9 +113,9 @@ function comprobarCrearIncidencia(){
                 errores.push('Has de seleccionar un tipus.');
             }
 
-            if(desc.trim() === ''){
+            if(desc.trim().length < 20){
                 valid = false;
-                errores.push('La descripció no pot estar buida.')
+                errores.push('La descripció ha de tenir com a mínim 20 caràcters.')
             }
 
             if (!valid){
@@ -131,8 +131,50 @@ function comprobarCrearIncidencia(){
         });
     }
 
+    function introduirDesc(){
+        
+        document.querySelector('form').addEventListener('submit',function(e){
+
+            var valid = true;
+            var errores = [];
+
+            const temps = document.querySelector('input[name="temps"]').value;
+            const desc = document.querySelector('textarea[name="desc"]').value;
+            const dataActuacio = document.querySelector('input[name="dataActuacio"]').value;
+            
+            if(temps === ''){
+            valid = false;
+            errores.push('Has de posar el temps dedicat.');
+        }
+
+        if(dataActuacio && dataActuacio.type === 'date' && dataActuacio.value === ''){
+            valid = false;
+            errores.push('Has de posar la data.');
+        }
+        if(desc.trim() === ''){
+            valid = false;
+            errores.push('La descripció no pot estar buida.');
+        }
+        if(desc.trim().length < 20){
+            valid = false;
+            errores.push('La descripció ha de tenir com a mínim 20 caràcters.');
+        }
+
+        if(!valid){
+            e.preventDefault();
+            var errorDiv = document.getElementById('errors');
+            errorDiv.innerHTML = '';
+            errores.forEach(function(error){
+                errorDiv.innerHTML += '<p class="text-danger">⚠️ ' + error + '</p>';
+            });
+        }
+        });
+    }
+    
+
     comprobarCrearIncidencia();
     mostrarIncidenciesActives();
     filtreAssignades();
     filtreEstat();
     errorUpdateIncidencia();
+    introduirDesc();
