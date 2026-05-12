@@ -465,4 +465,12 @@
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    function getInformeTecnic($conn){
+        $sql = "SELECT * FROM vista_informe_tecnics";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
 ?>

@@ -22,7 +22,7 @@ include './header-footer/header.php';
             <tr>
                 <th>Departament</th>
                 <th>Total incidències</th>
-                <th>Total temps dedicat</th>
+                <th>Total temps dedicat (HH:MM)</th>
             </tr>
             
         </thead>
