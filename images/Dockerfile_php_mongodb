@@ -1,0 +1,29 @@
+FROM php:8.4-apache
+
+RUN docker-php-ext-install pdo_mysql mysqli
+
+RUN apt-get update && apt-get install -y \
+    libcurl4-openssl-dev \
+    pkg-config \
+    libssl-dev \
+    unzip \
+    git\
+    apt-transport-https\
+    ca-certificates\
+    wget\
+    lsb-release \
+    gnupg2
+
+RUN apt-get clean
+
+RUN pecl install mongodb \
+    && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini \
+    && docker-php-ext-enable mongodb
+
+COPY --from=composer/composer:2.8.8-bin /composer /usr/bin/composer
+
+WORKDIR /var/www/html
+
+RUN chown -R www-data:www-data /var/www/html
+
+EXPOSE 80

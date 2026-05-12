@@ -1,4 +1,6 @@
 <?php 
+require_once '/var/www/html/logger.php';
+inserirLog();
 $titol = "Institut Pedralbes";
 ?>
 
