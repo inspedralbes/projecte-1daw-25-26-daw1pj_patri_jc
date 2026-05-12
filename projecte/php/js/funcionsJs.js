@@ -93,9 +93,14 @@ function errorUpdateIncidencia(){
     });
 }
 
+//Comprobar les dades de esten correctecte
 
 function comprobarCrearIncidencia(){
-        document.querySelector('form').addEventListener('submit', function(e){
+
+        var form = document.querySelector('form[action="crear_incidencies.php"]');
+        if(form === null) return;
+
+        form.addEventListener('submit', function(e){
             var valid = true;
             var errores = [];
 
@@ -131,9 +136,13 @@ function comprobarCrearIncidencia(){
         });
     }
 
+    //Formulario de tecnics que totes les dades estiguin correctes
     function introduirDesc(){
         
-        document.querySelector('form').addEventListener('submit',function(e){
+        var form = document.querySelector('form[action="afegir_actuacio.php"]');
+        if(form === null) return;
+
+        form.addEventListener('submit',function(e){
 
             var valid = true;
             var errores = [];
@@ -170,6 +179,21 @@ function comprobarCrearIncidencia(){
         }
         });
     }
+
+    //Abans de fer la ejecucio de finalitazar li surt una confirmació
+    function comprobarFinalitzarIncidencia(){
+
+        var form = document.querySelector('form[action="confirmacio.php"]')
+
+        if(form === null) return;
+        
+        form.addEventListener('submit', function(e){
+        var confirmar = confirm('Estàs segur que vols finalitzar aquesta incidència?');
+        if(!confirmar){
+            e.preventDefault();
+        }
+    });
+    }
     
 
     comprobarCrearIncidencia();
@@ -178,3 +202,4 @@ function comprobarCrearIncidencia(){
     filtreEstat();
     errorUpdateIncidencia();
     introduirDesc();
+    comprobarFinalitzarIncidencia();
