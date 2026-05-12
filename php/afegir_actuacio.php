@@ -37,6 +37,8 @@ $esVisible = $_GET['esVisible'] ?? '';
             $idIncidencia = $_GET['id'] ?? '';
             ?>
 
+            
+<main class="d-flex flex-column flex-grow-1 pb-3">
 <?php
     if(empty($idActuacio)){
         echo '<h1 class = "text-center mx-auto mt-5">Actuació de la Incidència <span style = "color: #F28508">' . $idIncidencia . '</span></h1>';
@@ -51,16 +53,16 @@ $esVisible = $_GET['esVisible'] ?? '';
 <form action="afegir_actuacio.php" method ="POST">
             
             <div class = 'd-flex flex-column mb-2 p-2 border rounded border-dark p-5'>
-
+                <div id="errors"></div>
                 <label for="temps" class="form-label mb-2 mt-2">Temps(HH:MM):</label>
-                <input type="time" name="temps" id="temps" value="<?= $temps ?>">
+                <input type="time" name="temps" id="temps" value="<?= $temps ?>" required>
 
                 <?php
                 if(empty($dataActuacio)){
                 ?>
 
                     <label for="dataActuacio" class = "form-label mt-3 mb-2">Data:</label>
-                    <input type="date" name="dataActuacio" id="dataActuacio" value = "<?= $dataActuacio?>">
+                    <input type="date" name="dataActuacio" id="dataActuacio" value = "<?= date('Y-m-d')?>" required>
 
                 <?php
                 }else {
@@ -96,7 +98,8 @@ $esVisible = $_GET['esVisible'] ?? '';
         <?php }?>
 </div>
 
+</main>
  <?php
  include './header-footer/footer.php' ?>
-</body>
-</html>
+
+

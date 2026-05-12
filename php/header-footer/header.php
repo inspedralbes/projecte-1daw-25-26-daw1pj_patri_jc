@@ -16,7 +16,10 @@ $titol = "Institut Pedralbes";
 <body class="d-flex flex-column min-vh-100">    <header>
         <nav class="navbar col-12" style="background-color: #D0F3F9;" data-bs-theme="light">
             <div class="container-fluid">
-                <img src="./assets/logo2.png" alt="Logo de l'institut Pedralbes" width="50" class="d-inline-block align-text-top">
+                <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover mx-1" href="index.php">
+                    <img src="./assets/logo2.png" alt="Logo de l'institut Pedralbes" width="50" class="d-inline-block align-text-top">
+                </a>
+                
                 
                 <span class="mb-0 mx-auto h1 fs-2" style="color: #555555"><?php echo $titol; ?></span> 
 

@@ -93,8 +93,113 @@ function errorUpdateIncidencia(){
     });
 }
 
+//Comprobar les dades de esten correctecte
 
-mostrarIncidenciesActives();
-filtreAssignades();
-filtreEstat();
-errorUpdateIncidencia();
+function comprobarCrearIncidencia(){
+
+        var form = document.querySelector('form[action="crear_incidencies.php"]');
+        if(form === null) return;
+
+        form.addEventListener('submit', function(e){
+            var valid = true;
+            var errores = [];
+
+            const dept = document.querySelector('select[name="dept"]').value;
+            const tipus = document.querySelector('select[name="tipus"]').value;
+            const desc = document.querySelector('textarea[name="desc"]').value;
+
+            if(dept === '' || dept === 0){
+                valid = false;
+                errores.push('Has de seleccionar un departament.');
+            }
+
+            if(tipus === '' || tipus === 0){
+                valid = false;
+                errores.push('Has de seleccionar un tipus.');
+            }
+
+            if(desc.trim().length < 20){
+                valid = false;
+                errores.push('La descripció ha de tenir com a mínim 20 caràcters.')
+            }
+
+            if (!valid){
+                e.preventDefault();
+                
+                var errorDiv = document.getElementById('errors');
+                errorDiv.innerHTML = '';
+
+                errores.forEach(function(error){
+                    errorDiv.innerHTML += '<p class ="text-danger">⚠️ ' + error + '</p>'
+                });
+            }
+        });
+    }
+
+    //Formulario de tecnics que totes les dades estiguin correctes
+    function introduirDesc(){
+        
+        var form = document.querySelector('form[action="afegir_actuacio.php"]');
+        if(form === null) return;
+
+        form.addEventListener('submit',function(e){
+
+            var valid = true;
+            var errores = [];
+
+            const temps = document.querySelector('input[name="temps"]').value;
+            const desc = document.querySelector('textarea[name="desc"]').value;
+            const dataActuacio = document.querySelector('input[name="dataActuacio"]').value;
+            
+            if(temps === ''){
+            valid = false;
+            errores.push('Has de posar el temps dedicat.');
+        }
+
+        if(dataActuacio && dataActuacio.type === 'date' && dataActuacio.value === ''){
+            valid = false;
+            errores.push('Has de posar la data.');
+        }
+        if(desc.trim() === ''){
+            valid = false;
+            errores.push('La descripció no pot estar buida.');
+        }
+        if(desc.trim().length < 20){
+            valid = false;
+            errores.push('La descripció ha de tenir com a mínim 20 caràcters.');
+        }
+
+        if(!valid){
+            e.preventDefault();
+            var errorDiv = document.getElementById('errors');
+            errorDiv.innerHTML = '';
+            errores.forEach(function(error){
+                errorDiv.innerHTML += '<p class="text-danger">⚠️ ' + error + '</p>';
+            });
+        }
+        });
+    }
+
+    //Abans de fer la ejecucio de finalitazar li surt una confirmació
+    function comprobarFinalitzarIncidencia(){
+
+        var form = document.querySelector('form[action="confirmacio.php"]')
+
+        if(form === null) return;
+        
+        form.addEventListener('submit', function(e){
+        var confirmar = confirm('Estàs segur que vols finalitzar aquesta incidència?');
+        if(!confirmar){
+            e.preventDefault();
+        }
+    });
+    }
+    
+
+    comprobarCrearIncidencia();
+    mostrarIncidenciesActives();
+    filtreAssignades();
+    filtreEstat();
+    errorUpdateIncidencia();
+    introduirDesc();
+    comprobarFinalitzarIncidencia();
