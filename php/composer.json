@@ -1,7 +1,8 @@
 {
-    "name": "inspedralbes/amb-mongodb",
-    "description": "PHP Amb MongoDB",
+    "name": "a25patforros_a25juadiadua/projecte-1daw-25-26-daw1pj_patri_jc",
 
+    "autoload": {
+    },
     "authors": [
         {
             "name": "Juan Carlos Diaz Dual"

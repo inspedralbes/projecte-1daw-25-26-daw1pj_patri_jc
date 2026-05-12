@@ -1,17 +1,24 @@
 services:
-  web:
-    build:
-      context: ./images
-      dockerfile: Dockerfile_php
+
+  apache_php_mysql_mongodb:
+    image: ebota/daw:apache_php_mysql_mongodb
+    
     ports:
       - "8080:80"
+
     volumes:
-      - ./projecte/php:/var/www/html
+      - ./php:/var/www/html
+
+    command: /bin/bash -c "composer install --no-interaction --no-plugins --no-scripts && echo WEBSERVER_________UP_________AND_______RUNNIIIIIIING && apache2-foreground"
+
     environment:
-      VAR1: ${VAR1}
-      VAR2: ${VAR2}
+      - VAR1=${VAR1}
+      - VAR2=${VAR2}
+      - MONGODB_URI=${MONGODB_URI}
+
     depends_on:
       - db
+
 
   db:
     image: mysql:9.3
@@ -20,8 +27,7 @@ services:
       MYSQL_USER: ${VAR1}
       MYSQL_PASSWORD: ${VAR2}
       LANG: C.UTF-8
-    ports:
-      - "3306:3306"
+    
     volumes:
       - ./db_data:/var/lib/mysql
       - ./db_init:/docker-entrypoint-initdb.d
