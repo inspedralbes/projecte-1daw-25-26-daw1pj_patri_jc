@@ -473,4 +473,10 @@
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    function filtrarDocuments($collections, $date, $usuari, $pagina){
+
+
+
+    }
+
 ?>
