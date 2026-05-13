@@ -11,7 +11,7 @@ $noms = "©Juan Carlos Diaz Dual | Patricia Fornieles Rosa";
             </div>
         </nav>
     </footer>
-    <script src="/js/funcionsJs.js"></script>
+    <script src="js/funcionsJs.js"></script>
 </body>
 </html>
 
