@@ -5,6 +5,8 @@ require_once 'logger.php';
 
 $collection = getCollection();
 $documents = $collection->find();
+
+//------------------------------------LOGS------------------------------------//
 $date = $_GET['date'] ?? date('Y-m-d');
     $usuari = $_GET['usuari'] ?? '';
     $pagina = $_GET['pagina'] ?? '';
@@ -61,10 +63,15 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
 </script>
 
 <main class="d-flex flex-column flex-grow-1 pb-3">
+    <div>
+        <h1 class=" text-center mt-5">Estadísiques d'Accès</h1>
+        <hr class="border border-primary border-3 opacity-75  mx-auto col-4">
+    </div>
     <!-------------------------------------- NAV -------------------------------------->
     <h4 class="text-primary mt-5 mx-5">Gràfiques</h4>
-    <hr class="border border-primary border-3 opacity-75 mb-5 col-2 mx-4">
+    <hr class="border border-primary border-3 opacity-75 mb-1 col-2 mx-4">
 
+<div class="container mx-auto col-10 col-lg-8 mt-5">
     <nav class="navbar bg-body-tertiary">
         <div class="container-fluid justify-content-center">
             <button onclick="showTopic('accesos')" id="btn-accesos" class="btn btn-outline-secondary active mx-3" type="button">Accesos</button>
@@ -72,12 +79,13 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
             <button onclick="showTopic('usuaris')" id="btn-usuaris" class="btn btn-outline-secondary mx-3" type="button">Usuaris</button>
         </div>
     </nav>
+</div>
 
     <!-------------------------------------- divs -------------------------------------->
-    <div id="accesos" class="active">
+    <div id="accesos" class="active border border-light-subtle rounded p-5 col-8 mx-auto mt-5">
         
-        <h5 class="text-center text-primary mt-5">Accessos a la pàgina</h5>
-        <div class="row justify-content-center align-items-center mx-auto col-12">
+        <h5 class="text-center text-primary">Accessos a la pàgina</h5>
+        <div class="row justify-content-center align-items-center mx-auto">
 
             <div class="d-flex flex-column col-lg-2 col-8 mt-3 gap-4">
 
@@ -99,7 +107,7 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
             </div>
 
             <!--Grafica -->
-            <div class=" mx-5 mt-4 col-lg-6">
+            <div class=" mx-5 mt-4 col-lg-8">
                 <canvas id="graficaXDies"></canvas>
                 <script>
                     graficaXDies();
@@ -116,27 +124,15 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
     <div id="usuaris">
         bleble
     </div>
+    <hr class="border border-light-subtle border-1 opacity-75 my-5 mx-4">
+    <!-------------------------------------- LOGS -------------------------------------->
 
-
-
-    
-
-
-
-
-
+    <h4 class="text-primary mx-5">Logs</h4>
+    <hr class="border border-primary border-3 opacity-75 mb-1 col-2 mx-4">
     <div class="container mx-auto col-10 col-lg-8 mt-5">
-
-
-    <div>
-        <h1 class="text-primary text-center">Estadísiques d'Accès</h1>
-        <hr class="border border-primary border-3 opacity-75 mb-5 mx-auto">
-    </div>
 
     <div class = "mb-3 p-3">
         
-    <h4 class="text-primary">Filtres</h4>
-
     <nav class="navbar navbar-expand-lg bg-body-tertiary p-3 ">
     <form action="estadistiques.php" method="get">
     <div class = "d-flex gap-5">
@@ -180,7 +176,7 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
     </div>
      
 
-    <div class="overflow-auto" style="max-height: 400px;">
+    <div class="overflow-auto mb-5" style="max-height: 400px;">
         
     
     
