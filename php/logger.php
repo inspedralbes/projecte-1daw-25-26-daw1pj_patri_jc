@@ -34,4 +34,28 @@
             'ip' => $ip
         ]);
     }   
+
+    function filtrarDocuments($collections, $date, $usuari, $pagina){
+
+    $documents = $collections->find();
+    $resultado = [];
+
+    foreach($documents as $document){
+        if(!empty($date) && substr($document['data'], 0, 10) !== $date){
+            continue;
+        }
+        if(!empty($usuari) && $document['rol'] !== $usuari){
+            continue;
+        }
+
+        if(!empty($pagina)&& $document['url'] !== $pagina){
+            continue;
+        }
+        $resultado[] = $document;
+
+    }
+
+        return $resultado; 
+
+    }
 ?>

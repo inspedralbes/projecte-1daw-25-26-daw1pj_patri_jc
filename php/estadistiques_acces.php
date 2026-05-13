@@ -4,13 +4,13 @@ require_once 'connexio.php';
 require_once 'logger.php';
 
 $collection = getCollection();
-$documents = $collection->find();
+
 
 //------------------------------------LOGS------------------------------------//
-$date = $_GET['date'] ?? date('Y-m-d');
+    $date = $_GET['date'] ?? date('Y-m-d');
     $usuari = $_GET['usuari'] ?? '';
     $pagina = $_GET['pagina'] ?? '';
-
+    $documents = filtrarDocuments($collection,$date,$usuari,$pagina);
 
 //------------------------------------ACCESSOS------------------------------------//
 $totalAccesos =  $collection->countDocuments();
