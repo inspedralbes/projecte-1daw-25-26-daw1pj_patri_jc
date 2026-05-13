@@ -1,5 +1,5 @@
 <?php 
-require_once '/var/www/html/logger.php';
+require_once 'logger.php';
 inserirLog();
 $titol = "Institut Pedralbes";
 ?>
