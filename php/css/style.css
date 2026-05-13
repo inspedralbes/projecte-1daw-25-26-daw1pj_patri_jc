@@ -1,0 +1,6 @@
+#accesos, #pagines, #usuaris {
+    display: none;
+}
+#accesos.active, #pagines.active, #usuaris.active {
+    display: block;
+}

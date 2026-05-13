@@ -21,6 +21,7 @@
         }
 
         $ip = $_SERVER['REMOTE_ADDR'] ?? 'Desconegut';
+        date_default_timezone_set('Europe/Madrid');
         $data = date('Y-m-d H:i:s');
         $rol = $_GET['rol'] ?? '';
 
