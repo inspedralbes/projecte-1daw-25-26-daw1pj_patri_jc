@@ -40,8 +40,9 @@ include './header-footer/header.php';
             <span style="color: #F28508"><?php echo $nomTecnic ?>!</span>
         </h1>
         <div class="mt-5 col-10 col-lg-8 mx-auto">
-            <table class="table table-bordered table-striped table-responsive overflow-auto" style="max-height: 380px">
-                <thead>
+             <div class="overflow-auto" style="max-height: 400px;">
+            <table class="table table-bordered table-striped table-responsive">
+                <thead class="position-sticky top-0 table-light" style="box-shadow: 0 2px 0 0 #0d6efd;">
                     <tr>
                         <th class="col-1" scope="col">ID</th>
                         <th class="col-2" scope="col">Data</th>
@@ -77,6 +78,7 @@ include './header-footer/header.php';
             <?php endif ?>
         </tbody>
     </table>
+                        </div>
 
     <div class="mt-auto col-10 col-lg-11 mx-auto">
         <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover position-absolute bottom-0 start-0 mb-5 ms-5" href="tecnic.php">

@@ -52,8 +52,9 @@ $classe = $resultat["classe"];
 
         <div class="mt-5 col-10 col-lg-8 mx-auto">
             <h4 class="text-primary">Actuacions</h4>
+            <div class="overflow-auto" style="max-height: 400px;">
             <table class="table table-bordered table-striped">
-                <thead>
+                <thead class="position-sticky top-0 table-primary" style="box-shadow: 0 2px 0 0 #0d6efd;">
                     <tr>
                         <th class="col-3 col-lg-2" scope="col">Data</th>
                         <th scope="col" class="col-3 col-lg-7">Descripció</th>
@@ -76,6 +77,7 @@ $classe = $resultat["classe"];
                     <?php endif; ?>
                 </tbody>
             </table>
+                    </div>
         </div>
 
         <div class="mt-auto col-12 px-3 mx-auto">
@@ -105,8 +107,9 @@ $classe = $resultat["classe"];
 
         <div class="mt-5 col-10 col-lg-8 mx-auto">
             <h4 class="text-primary">Actuacions</h4>
+             <div class="overflow-auto" style="max-height: 400px;">
             <table class="table table-bordered table-striped">
-                <thead>
+                <thead class="position-sticky top-0 table-primary" style="box-shadow: 0 2px 0 0 #0d6efd;">
                     <tr>
                         <th class="col-3 col-lg-2" scope="col">Data</th>
                         <th scope="col" class="col-3 col-lg-7">Descripció</th>
@@ -139,6 +142,7 @@ $classe = $resultat["classe"];
                     </tr>
                 </tbody>
             </table>
+                    </div>
 
             <?php if ($resultat["estat"] != 'Tancada'): ?>
                 <div class="mt-3 mb-3 d-flex justify-content-between align-items-center">
@@ -205,8 +209,9 @@ $classe = $resultat["classe"];
         <div class="mt-5 col-10 col-lg-8 mx-auto">
             <h4 class="text-primary">Actuacions</h4>
             <div class="table-responsive overflow-auto" style="max-height: 380px;">
+                 <div class="overflow-auto" style="max-height: 400px;">
                 <table class="table table-bordered table-striped">
-                    <thead>
+                    <thead class="position-sticky top-0 table-primary" style="box-shadow: 0 2px 0 0 #0d6efd;">
                         <tr>
                             <th class="col-3 col-lg-2" scope="col">Data</th>
                             <th scope="col" class="col-3 col-lg-7">Descripció</th>
@@ -229,6 +234,7 @@ $classe = $resultat["classe"];
                         <?php endif; ?>
                     </tbody>
                 </table>
+                </div
             </div>
         </div>
 
