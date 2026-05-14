@@ -360,21 +360,20 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
                                 </select>
                             </div>
 
-                            <div class="mx-auto col-12 col-lg-3  text-center text-lg-start">
-                                <h5 class="text-primary mb-0">Pàgina </h5>
-                                <select name="pagina" id="pagina" class="form-control form-control-sm mx-auto">
-                                    <option value="">Tots</option>
-                                    <option value="admin" <?= $pagina === 'admin' ? 'selected' : '' ?>>Admin</option>
-                                    <option value="tecnic" <?= $pagina === 'tecnic' ? 'selected' : '' ?>>Tècnic</option>
-                                    <option value="usuari" <?= $pagina === 'usuari' ? 'selected' : '' ?>>Usuari</option>
-                                    <option value="afeguir_actuacio" <?= $pagina === 'afeguir_actuacio' ? 'selected' : '' ?>>Afegir Actuació</option>
-                                    <option value="buscar_incidencia" <?= $pagina === 'buscar_incidencia' ? 'selected' : '' ?>>Buscar Incidència</option>
-                                    <option value="crear_incidencies" <?= $pagina === 'crear_incidencies' ? 'selected' : '' ?>>Crear Incidència</option>
-                                    <option value="detall_incidencia" <?= $pagina === 'detall_incidencia' ? 'selected' : '' ?>>Detall Incidència</option>
-                                    <option value="llistaIncidencies" <?= $pagina === 'llistaIncidencies' ? 'selected' : '' ?>>Llista Incidències</option>
-                                </select>
-
-                            </div>
+                            <div class="mx-auto col-12 col-lg-3 text-center text-lg-start">
+    <h5 class="text-primary mb-0">Pàgina</h5>
+    <select name="pagina" id="pagina" class="form-control form-control-sm mx-auto">
+        <option value="">Tots</option>
+        <option value="/admin.php" <?= $pagina === '/admin.php' ? 'selected' : '' ?>>Admin</option>
+        <option value="/tecnic.php" <?= $pagina === '/tecnic.php' ? 'selected' : '' ?>>Tècnic</option>
+        <option value="/usuari.php" <?= $pagina === '/usuari.php' ? 'selected' : '' ?>>Usuari</option>
+        <option value="/afegir_actuacio.php" <?= $pagina === '/afegir_actuacio.php' ? 'selected' : '' ?>>Afegir Actuació</option>
+        <option value="/buscar_incidencia.php" <?= $pagina === '/buscar_incidencia.php' ? 'selected' : '' ?>>Buscar Incidència</option>
+        <option value="/crear_incidencies.php" <?= $pagina === '/crear_incidencies.php' ? 'selected' : '' ?>>Crear Incidència</option>
+        <option value="/detall_incidencia.php" <?= $pagina === '/detall_incidencia.php' ? 'selected' : '' ?>>Detall Incidència</option>
+        <option value="/llistaIncidencies.php" <?= $pagina === '/llistaIncidencies.php' ? 'selected' : '' ?>>Llista Incidències</option>
+    </select>
+</div>
 
 
 
@@ -407,7 +406,7 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
                     <tbody>
                         <?php foreach ($documents as $document): ?>
                             <tr>
-                                <td><?= substr($document['url'], 0, 24) ?></td>
+                                <td><?= strtok($document['url'], '?') ?></td>
                                 <?php $color = $document['metode'] === 'GET' ? 'success' : 'primary'; ?>
                                 <td class="text-center"><span class="badge bg-<?= $color ?>"><?= $document['metode'] ?></span></td>
                                 <td><?= $document['rol'] ?></td>
