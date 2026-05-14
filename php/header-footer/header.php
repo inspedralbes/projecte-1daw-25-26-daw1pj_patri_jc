@@ -24,9 +24,11 @@ $titol = "Institut Pedralbes";
                 
                 
                 <span class="mb-0 mx-auto h1 fs-2" style="color: #555555"><?php echo $titol; ?></span> 
-
-                <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover mx-1" href="index.php">
-                🏠︎ Inici
+                
+                <a class="link-offset-2 text-primary link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover mx-1" href="index.php">
+                    <button class = "btn btn-primary">
+                        🏠︎ Inici
+                </button>
                 </a>
             </div>
         </nav>
