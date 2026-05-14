@@ -35,26 +35,32 @@
         ]);
     }   
 
-   function filtrarDocuments($collection, $date, $usuari, $pagina) {
-
+    //Funció per filtrar els documents segons els paràmetres rebuts
+    function filtrarDocuments($collection, $date, $usuari, $pagina) {
+    //Construimos el filtro
     $filter = [];
 
-    // 📅 FILTRO POR FECHA (día completo)
+    
     if (!empty($date)) {
+       
         $filter['data'] = [
+            // Filtrar por el rango de fechas del día
             '$gte' => $date . " 00:00:00",
             '$lte' => $date . " 23:59:59"
         ];
     }
 
-    // 👤 FILTRO POR ROL
+    
     if (!empty($usuari)) {
+        // Filtrar por rol exacto
         $filter['rol'] = $usuari;
     }
 
-    // 📄 FILTRO POR PÁGINA (contiene texto)
+    
     if (!empty($pagina)) {
-    $filter['url'] = new MongoDB\BSON\Regex('\/' . preg_quote($pagina, '/') . '$');
+    
+    //Utilizamos regex para buscar la palabra dentro de la URL
+    $filter['url'] = ['$regex' => $pagina];
 }
 
     return $collection->find($filter);
