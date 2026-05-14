@@ -11,6 +11,70 @@ $date = $_GET['date'] ?? date('Y-m-d');
     $usuari = $_GET['usuari'] ?? '';
     $pagina = $_GET['pagina'] ?? '';
 
+//------------------------------------USUARIS------------------------------------//
+
+$rolGr = $collection->aggregate([
+    ['$match' => [
+    'rol' => [
+        '$nin' => [null, '', ' ']
+        ]
+    ]],
+    ['$group' => [
+        '_id' => '$rol',
+        'total' => ['$sum' => 1]
+    ]],
+    ['$sort' => ['total' => -1]]
+]);
+
+$rolArray = iterator_to_array($rolGr);
+
+$rolMesActiu = $rolArray[0]['_id'] ?? 'desconegut';
+$rolMesActiuTotal = $rolArray[0]['total'] ?? null;
+
+$rolMenysActiu = end($rolArray)['_id'] ?? 'desconegut';
+$rolMenysActiuTotal = end($rolArray)['total'] ?? null;
+
+$rollabels=[];
+$rolvalors=[];
+
+foreach($rolArray as $rol){
+    $rollabels[]=$rol['_id'];
+    $rolvalors[]=$rol['total'];
+}
+
+//------------------------------------PAGINES------------------------------------//
+
+$paginesMesVisitadesGr = $collection->aggregate([
+    ['$group' => ['_id' => '$url', 
+        'total' => ['$sum' => 1]]],
+
+    ['$sort' => ['total' => -1]],
+]);
+
+$pagArray = iterator_to_array($paginesMesVisitadesGr);//iterator_to_array converteix el res en una array normal de php.
+
+$paginaMesVisitada=$pagArray[0] ?? null;
+$paginaMesVisitadaTotal=$paginaMesVisitada['total'] ?? null;
+$paginaMesVisitada=basename(parse_url($paginaMesVisitada['_id'], PHP_URL_PATH)); 
+
+$paginaMenysVisitada=end($pagArray) ?? null; //Agafa la ultima
+$paginaMenysVisitadaTotal=$paginaMenysVisitada['total'] ?? null;
+$paginaMenysVisitada=basename(parse_url($paginaMenysVisitada['_id'], PHP_URL_PATH)); 
+
+$top5Pagines = array_slice($pagArray, 0, 5); //Agafa les 5 primeress
+
+$paglabels=[];
+$pagvalors=[];
+
+foreach($top5Pagines as $pag){
+    $url=$pag['_id']; //Agafa la url de cada pagina
+
+    $pagName=basename(parse_url($url, PHP_URL_PATH)); //Agafa el nom de la pagina a partir de la url, netejant-la de params.
+
+    $paglabels[] = $pagName;
+    $pagvalors[] =  $pag['total']; //Agafa el total de visites de cada pagina
+}
+
 
 //------------------------------------ACCESSOS------------------------------------//
 $totalAccesos =  $collection->countDocuments();
@@ -60,37 +124,163 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
             }
         });
     }
+
+    function graficaPagines(){
+        const ctx = document.getElementById('graficaPagines').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?=  json_encode($paglabels) ?>,
+                datasets: [{
+                    label: 'Pagines més visitades',
+                    data: <?= json_encode($pagvalors) ?>
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+
+    function graficaRols(){
+        const ctx = document.getElementById('graficaRols').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?=  json_encode($rollabels) ?>,
+                datasets: [{
+                    label: 'Rols més actius',
+                    data: <?= json_encode($rolvalors) ?>
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
 </script>
 
 
 
 
 <main class="d-flex flex-column flex-grow-1 pb-3">
+
     <div>
         <h1 class=" text-center mt-5">Estadísiques d'Accès</h1>
         <hr class="border border-primary border-3 opacity-75  mx-auto col-4">
     </div>
-    <!-------------------------------------- NAV -------------------------------------->
+
+
+<!-------------------------------------- NAV -------------------------------------->
     <h4 class="text-primary mt-5 mx-5">Gràfiques</h4>
-    <hr class="border border-primary border-3 opacity-75 mb-1 col-2 mx-4">
+    <hr class="border border-primary border-3 opacity-75 mb-1 col-3 col-lg-2 mx-4">
 
 <div class="container mx-auto col-10 col-lg-8 mt-5">
     <nav class="navbar bg-body-tertiary">
         <div class="container-fluid justify-content-center">
             <button onclick="showTopic('accesos')" id="btn-accesos" class="btn btn-outline-secondary active mx-3" type="button">Accesos</button>
             <button onclick="showTopic('pagines')" id="btn-pagines" class="btn btn-outline-secondary mx-3" type="button">Pàgines</button>
-            <button onclick="showTopic('usuaris')" id="btn-usuaris" class="btn btn-outline-secondary mx-3" type="button">Usuaris</button>
+            <button onclick="showTopic('rols')" id="btn-rols" class="btn btn-outline-secondary mx-3" type="button">Rols</button>
         </div>
     </nav>
 </div>
 
-    <!-------------------------------------- divs -------------------------------------->
-    <div id="accesos" class="active border border-light-subtle rounded p-5 col-8 mx-auto mt-5">
+
+<!-------------------------------------- ROLS -------------------------------------->
+    <div id="rols" class="tab border border-light-subtle rounded p-5 col-10 col-lg-8     mx-auto mt-5">
+        <h5 class="text-center text-primary">Rols més actius</h5>
+
+        <div class="row justify-content-center align-items-center mx-auto">
+
+            <div class="d-flex flex-column col-lg-4 col-10 mt-3 gap-4">
+
+                <!-- + actiu -->
+                <div class="border border-dark-subtle rounded">
+                    <div class="text-center p-2">
+                        <p class="mt-2 fw-bold">Rol més actiu</p>
+                        <h6 class="text-primary text-break"><?=$rolMesActiu?></h6>
+                        <small class="text-secondary"><?=$rolMesActiuTotal?> accessos</small>  
+                    </div>
+                </div>
+
+                <!-- - actiu -->
+                <div class="border border-dark-subtle rounded">
+                    <div class="text-center p-2">
+                        <p class="mt-2 fw-bold">Rol menys actiu</p>
+                        <h6 class="text-primary text-break"><?=$rolMenysActiu?></h6>
+                        <small class="text-secondary"><?=$rolMenysActiuTotal?> accessos</small>  
+                    </div>
+                </div>
+
+            </div>
+
+            <!--Grafica -->
+            <div class=" mx-5 mt-4 col-12 col-lg-6">
+                <canvas id="graficaRols"></canvas>
+                <script>
+                    graficaRols();
+                </script>
+
+            </div>
+
+        </div>
+    </div>
+
+<!-------------------------------------- PAGINA -------------------------------------->
+    <div id="pagines" class="tab border border-light-subtle rounded p-5 col-10 col-lg-8     mx-auto mt-5">
+        <h5 class="text-center text-primary">Pàgines més visitades</h5>
+
+        <div class="row justify-content-center align-items-center mx-auto">
+
+            <div class="d-flex flex-column col-lg-4 col-10 mt-3 gap-4">
+                    
+                <!-- + visitada -->
+                <div class="border border-dark-subtle rounded">
+                    <div class="text-center p-2">
+                        <p class="mt-2 fw-bold">Pàgina més visitada</p>
+                        <h6 class="text-primary text-break"><?=$paginaMesVisitada?></h6>
+                        <small class="text-secondary"><?=$paginaMesVisitadaTotal?> accessos</small>  
+                    </div>
+                </div>
+
+                <!-- - visitada -->
+                <div class="border border-dark-subtle rounded">
+                    <div class="text-center p-2">
+                        <p class="mt-2 fw-bold">Pàgina menys visitada</p>
+                        <h6 class="text-primary text-break"><?=$paginaMenysVisitada?></h6>
+                        <small class="text-secondary"><?=$paginaMenysVisitadaTotal?> accessos</small>  
+                    </div>
+                </div>
+            </div>
+
+            <!--Grafica -->
+            <div class=" mx-5 mt-4 col-12 col-lg-6">
+                <canvas id="graficaPagines"></canvas>
+                <script>
+                    graficaPagines();
+                </script>
+            </div>
+
+        </div>  
+
+    </div>
+
+
+<!-------------------------------------- ACCESOS -------------------------------------->
+    <div id="accesos" class="tab active border border-light-subtle rounded p-5 col-10 col-lg-8 mx-auto mt-5">
         
         <h5 class="text-center text-primary">Accessos a la pàgina</h5>
         <div class="row justify-content-center align-items-center mx-auto">
 
-            <div class="d-flex flex-column col-lg-2 col-8 mt-3 gap-4">
+            <div class="d-flex flex-column col-lg-3 col-10 mt-3 gap-4">
 
                 <div class="border border-dark-subtle rounded">
                     <!--Accessos totals-->
@@ -110,7 +300,7 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
             </div>
 
             <!--Grafica -->
-            <div class=" mx-5 mt-4 col-lg-8">
+            <div class=" mx-5 mt-4 col-12 col-lg-7">
                 <canvas id="graficaXDies"></canvas>
                 <script>
                     graficaXDies();
@@ -120,18 +310,11 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
 
     </div>
 
-
-    <div id="pagines">
-        blublu
-    </div>
-    <div id="usuaris">
-        bleble
-    </div>
     <hr class="border border-light-subtle border-1 opacity-75 my-5 mx-4">
     <!-------------------------------------- LOGS -------------------------------------->
 
     <h4 class="text-primary mx-5">Logs</h4>
-    <hr class="border border-primary border-3 opacity-75 mb-1 col-2 mx-4">
+    <hr class="border border-primary border-3 opacity-75 mb-1 col-3 col-lg-2 mx-4">
     <div class="container mx-auto col-10 col-lg-8 mt-5">
 
     <div class = "mb-3 p-3">
@@ -222,7 +405,7 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
 
 <script>
     //Canvi de pestanya
-    const topics = ['accesos', 'pagines', 'usuaris'];
+    const topics = ['accesos', 'pagines', 'rols'];
 
     function showTopic(topic) {
 

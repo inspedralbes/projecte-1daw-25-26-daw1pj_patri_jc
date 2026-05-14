@@ -1,6 +1,6 @@
-#accesos, #pagines, #usuaris {
+.tab {
     display: none;
 }
-#accesos.active, #pagines.active, #usuaris.active {
+.tab.active {
     display: block;
 }
