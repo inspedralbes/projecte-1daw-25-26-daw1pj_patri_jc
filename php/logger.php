@@ -35,21 +35,28 @@
         ]);
     }   
 
-    function filtrarDocuments($collections, $date, $usuari, $pagina){
-    $documents = $collections->find();
-    $resultado = [];
-    foreach($documents as $document){
-        if(!empty($date) && substr($document['data'] ?? '', 0, 10) !== $date){
-            continue;
-        }
-        if(!empty($usuari) && ($document['rol'] ?? '') !== $usuari){
-            continue;
-        }
-        if(!empty($pagina) && strpos($document['url'] ?? '', $pagina) === false){
-            continue;
-        }
-        $resultado[] = $document;
+   function filtrarDocuments($collection, $date, $usuari, $pagina) {
+
+    $filter = [];
+
+    // 📅 FILTRO POR FECHA (día completo)
+    if (!empty($date)) {
+        $filter['data'] = [
+            '$gte' => $date . " 00:00:00",
+            '$lte' => $date . " 23:59:59"
+        ];
     }
-        return $resultado; 
+
+    // 👤 FILTRO POR ROL
+    if (!empty($usuari)) {
+        $filter['rol'] = $usuari;
     }
+
+    // 📄 FILTRO POR PÁGINA (contiene texto)
+    if (!empty($pagina)) {
+    $filter['url'] = new MongoDB\BSON\Regex('\/' . preg_quote($pagina, '/') . '$');
+}
+
+    return $collection->find($filter);
+}
 ?>
