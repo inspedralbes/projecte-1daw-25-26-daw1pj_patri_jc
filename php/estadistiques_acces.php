@@ -56,6 +56,9 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
     }
 </script>
 
+
+
+
 <main class="d-flex flex-column flex-grow-1 pb-3">
     <!-------------------------------------- NAV -------------------------------------->
     <h4 class="text-primary mt-5 mx-5">Gràfiques</h4>
@@ -69,7 +72,7 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
         </div>
     </nav>
 
-    <!-------------------------------------- divs -------------------------------------->
+    <!-------------------------------------- ACCESOS -------------------------------------->
     <div id="accesos" class="active">
         
         <h5 class="text-center text-primary mt-5">Accessos a la pàgina</h5>
