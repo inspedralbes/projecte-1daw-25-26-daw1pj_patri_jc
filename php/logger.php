@@ -50,6 +50,6 @@
         }
         $resultado[] = $document;
     }
-    return $resultado; 
-}
+        return $resultado; 
+    }
 ?>
