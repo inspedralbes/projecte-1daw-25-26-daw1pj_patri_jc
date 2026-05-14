@@ -9,6 +9,7 @@ $noms = "©Juan Carlos Diaz Dual | Patricia Fornieles Rosa";
                     <?= $noms ?>
                 </span>
             </div>
+        
         </nav>
     </footer>
     <script src="/js/funcionsJs.js"></script>
