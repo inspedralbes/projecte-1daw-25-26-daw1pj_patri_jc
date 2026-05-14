@@ -36,26 +36,20 @@
     }   
 
     function filtrarDocuments($collections, $date, $usuari, $pagina){
-
     $documents = $collections->find();
     $resultado = [];
-
     foreach($documents as $document){
-        if(!empty($date) && substr($document['data'], 0, 10) !== $date){
+        if(!empty($date) && substr($document['data'] ?? '', 0, 10) !== $date){
             continue;
         }
-        if(!empty($usuari) && $document['rol'] !== $usuari){
+        if(!empty($usuari) && ($document['rol'] ?? '') !== $usuari){
             continue;
         }
-
-        if(!empty($pagina)&& $document['url'] !== $pagina){
+        if(!empty($pagina) && strpos($document['url'] ?? '', $pagina) === false){
             continue;
         }
         $resultado[] = $document;
-
     }
-
-        return $resultado; 
-
-    }
+    return $resultado; 
+}
 ?>
