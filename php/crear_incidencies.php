@@ -24,9 +24,12 @@
     </div>
     
     <div class="mb-2 col-lg-6 p-3 mx-auto px-3 mt-3">
+            
         <form action="crear_incidencies.php" method ="POST">
             
+            
             <div class = 'd-flex flex-column mb-2 p-2 border rounded border-dark p-5'>
+                <div id = "errors"></div>
                 <label for="dept" class = "form-label mb-2 mt-2">Departament</label>
                 <select name="dept" id="dept" class = "form-control" required>  
                     <option selected disabled value="">Selecciona...</option>
@@ -57,8 +60,10 @@
                 <div class = "text-center">
                 <input type="submit" value="Envía" class = "btn btn-primary mt-3">
             </div>
-            </div>                       
+            </div>   
+                            
         </form>
+        
         <?php
         }
         ?>

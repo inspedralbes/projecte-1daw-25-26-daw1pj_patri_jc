@@ -1,0 +1,17 @@
+{
+    "name": "a25patforros_a25juadiadua/projecte-1daw-25-26-daw1pj_patri_jc",
+
+    "autoload": {
+    },
+    "authors": [
+        {
+            "name": "Juan Carlos Diaz Dual"
+        },
+        {
+            "name": "Patricia Fornieles Rosa"
+        }
+    ],
+    "require": {
+        "mongodb/mongodb": "^2.0"
+    }
+}
