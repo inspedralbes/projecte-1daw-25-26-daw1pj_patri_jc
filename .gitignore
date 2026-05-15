@@ -1,3 +1,5 @@
 db_data/
 vendor/
+lib/
+drivers/
 .env

@@ -11,6 +11,7 @@ if ($rol == 'tecnic' && !empty($idTecnic)) {
     $actuacions  = getActuacions($conn, $incidencies);
 } elseif ($rol == 'usuari' && !empty($id_dept)) {
     $incidencies = getIncidenciesDept($conn, $id_dept);
+    $incidencies = afegirEstat($conn, $incidencies);
     $nom_dept = $incidencies[0]['NOM_DEPT'] ?? 'Departament';
 } elseif ($rol == 'admin') {
     $filtre = $_GET['filtre'] ?? '';
@@ -118,7 +119,7 @@ include './header-footer/header.php';
                                     </a>
                                 </td>
                                 <td><?= $inc["DATA_INICI"]; ?> </td>
-                                <td><span class="badge <?= $inc['classe'] ?>"><?= $inc['estat'] ?></span></td>
+                                <td class="text-center"><span class="text-center badge <?= $inc['classe'] ?>"><?= $inc['estat'] ?></span></td>
                                 <td><?= htmlspecialchars($inc['DESC_INCIDENCIA']) ?></td>
                             </tr>
                         <?php endforeach ?>
