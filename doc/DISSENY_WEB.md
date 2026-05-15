@@ -104,3 +104,8 @@ Actualment encara hi ha alguns aspectes d’accessibilitat millorables per compl
 <p align="center">
 <img src="../diagrames/CreacioIncidenciaAccesibilitat.png" alt="Captura de la pàgina crear incidència" width="800">
 </p>
+
+## Captura: Llista Incidència (Tècnic)
+<p align="center">
+<img src="../diagrames/llistatIncidenciesAccesibilitat.png" alt="Captura de la pàgina crear incidència" width="800">
+</p>
