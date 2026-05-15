@@ -213,8 +213,8 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
 
 
         <!---------------------------------- ROLS ---------------------------------->
-        <div id="rols" class="tab border border-light-subtle rounded p-5 col-10 col-lg-8     mx-auto mt-5">
-            <h5 class="text-center text-primary">Rols més actius</h5>
+        <div id="rols" class="tab d-none border border-light-subtle rounded p-5 col-10 col-lg-8 mx-auto mt-5">            
+        <h5 class="text-center text-primary">Rols més actius</h5>
 
             <div class="row justify-content-center align-items-center mx-auto">
 
@@ -253,8 +253,8 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
         </div>
 
         <!---------------------------------- PAGINA ---------------------------------->
-        <div id="pagines" class="tab border border-light-subtle rounded p-5 col-10 col-lg-8     mx-auto mt-5">
-            <h5 class="text-center text-primary">Pàgines més visitades</h5>
+        <div id="pagines" class="tab d-none border border-light-subtle rounded p-5 col-10 col-lg-8 mx-auto mt-5">
+                <h5 class="text-center text-primary">Pàgines més visitades</h5>
 
             <div class="row justify-content-center align-items-center mx-auto">
 
@@ -293,7 +293,7 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
 
 
         <!---------------------------------- ACCESOS ---------------------------------->
-        <div id="accesos" class="tab active border border-light-subtle rounded p-5 col-10 col-lg-8 mx-auto mt-5">
+        <div id="accesos" class="tab d-block border border-light-subtle rounded p-5 col-10 col-lg-8 mx-auto mt-5">
 
             <h5 class="text-center text-primary">Accessos a la pàgina</h5>
             <div class="row justify-content-center align-items-center mx-auto">
@@ -427,19 +427,32 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
     </div>
 
 <script>
+
     //Canvi de pestanya
     const topics = ['accesos', 'pagines', 'rols'];
 
     function showTopic(topic) {
-
-        topics.forEach(t => {
-            document.getElementById(t).classList.remove('active');
-            document.getElementById(`btn-${t}`).classList.remove('active');
-        });
-
-        document.getElementById(topic).classList.add('active');
-        document.getElementById(`btn-${topic}`).classList.add('active');
+        
+    // Amagar totes
+    topics.forEach(t => {
+        const tabDiv = document.getElementById(t);
+        const btn = document.getElementById(`btn-${t}`);
+        if (tabDiv) {
+            tabDiv.classList.remove('d-block');
+            tabDiv.classList.add('d-none');
+        }
+        if (btn) btn.classList.remove('active');
+    });
+    
+    // Mostrar la seleccionada
+    const selectedTab = document.getElementById(topic);
+    const selectedBtn = document.getElementById(`btn-${topic}`);
+    if (selectedTab) {
+        selectedTab.classList.remove('d-none');
+        selectedTab.classList.add('d-block');
     }
+    if (selectedBtn) selectedBtn.classList.add('active');
+}
 
     function showSection(section) {
         document.querySelectorAll('.section').forEach(s => {
@@ -448,7 +461,16 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
         });
         document.getElementById(section).classList.remove('d-none');
         document.getElementById(section).classList.add('d-block');
+
+         if (section === 'grafiques') {
+        showTopic('accesos');
     }
+    }
+
+    // Inicialitzar
+if (document.getElementById('grafiques').classList.contains('d-block')) {
+    showTopic('accesos');
+}
 </script>
 
 <?php
