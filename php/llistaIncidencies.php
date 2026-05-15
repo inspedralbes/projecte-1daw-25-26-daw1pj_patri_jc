@@ -40,53 +40,52 @@ include './header-footer/header.php';
         <h1 class="mt-5 ms-4 text-center">Benvingut,
             <span style="color: #F28508"><?php echo $nomTecnic ?>!</span>
         </h1>
-        <div class="mt-5 col-10 col-lg-8 mx-auto">
-             <div class="overflow-auto" style="max-height: 400px;">
-            <table class="table table-bordered table-striped table-responsive">
-                <thead class="position-sticky top-0 table-light" style="box-shadow: 0 2px 0 0 #0d6efd;">
-                    <tr>
-                        <th class="col-1" scope="col">ID</th>
-                        <th class="col-2" scope="col">Data</th>
-                        <th class="col-2" scope="col">Prioritat</th>
-                        <th scope="col">Descripció</th>
-                        <th scope="col">Estat</th>
-                    </tr>
-                </thead>
+        <div class="mt-5 col-10 col-lg-8 mx-auto d-flex flex-column flex-grow-1">
+            <div class="overflow-auto" style="max-height: 400px;">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead class="position-sticky top-0 table-light" style="box-shadow: 0 2px 0 0 #0d6efd;">
+                        <tr>
+                            <th class="col-1" scope="col">ID</th>
+                            <th class="col-2" scope="col">Data</th>
+                            <th class="col-2" scope="col">Prioritat</th>
+                            <th scope="col">Descripció</th>
+                            <th scope="col">Estat</th>
+                        </tr>
+                    </thead>
 
-                <tbody class="table-group-divider">
-                    <!--Si n'hi han fa un bucle-->
-                    <?php if (!empty($incidencies)): ?>
-                        <?php foreach ($incidencies as $inc):
+                    <tbody class="table-group-divider">
+                        <!--Si n'hi han fa un bucle-->
+                        <?php if (!empty($incidencies)): ?>
+                            <?php foreach ($incidencies as $inc):
 
-                    $actuacions_inc = getActuacions($conn, $inc['ID_INCIDENCIA']); 
-                    $res_estat = getEstat($actuacions_inc, $inc);
-                    $estat = $res_estat ["estat"];
-                    $classe = $res_estat["classe"];
-                    
-                ?>
-                
-                <tr> 
-                <td><a href="detall_incidencia.php?id=<?php echo $inc['ID_INCIDENCIA']; ?>&rol=<?php echo $rol; ?>" class="link-primary"><?php echo $inc['ID_INCIDENCIA']; ?></a></td>
-                <td><?= $inc["DATA_INICI"];?> </td>
-                <td><?= $inc["PRIORITAT"];?> </td>
-                <td><?= $inc["DESC_INCIDENCIA"];?> </td>
-                <td class = <?php echo $classe;?> > <?php echo $estat;?> </td>
-                </tr>
+                                $actuacions_inc = getActuacions($conn, $inc['ID_INCIDENCIA']);
+                                $res_estat = getEstat($actuacions_inc, $inc);
+                                $estat = $res_estat["estat"];
+                                $classe = $res_estat["classe"];
 
-                            <!--Si no un mutted text "No hi han incidencies asignades"-->
+                            ?>
 
-                <?php endforeach ?>
-            <?php endif ?>
-        </tbody>
-    </table>
-                        </div>
+                                <tr>
+                                    <td><a href="detall_incidencia.php?id=<?php echo $inc['ID_INCIDENCIA']; ?>&rol=<?php echo $rol; ?>" class="link-primary"><?php echo $inc['ID_INCIDENCIA']; ?></a></td>
+                                    <td><?= $inc["DATA_INICI"]; ?> </td>
+                                    <td><?= $inc["PRIORITAT"]; ?> </td>
+                                    <td><?= $inc["DESC_INCIDENCIA"]; ?> </td>
+                                    <td class=<?php echo $classe; ?>> <?php echo $estat; ?> </td>
+                                </tr>
 
-    <div class="mt-auto col-10 col-lg-11 mx-auto">
-        <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover position-absolute bottom-0 start-0 mb-5 ms-5" href="tecnic.php">
-            🢘 Torna al Menú Tècnic
-        </a>
-    </div>
-    </div>
+                                <!--Si no un mutted text "No hi han incidencies asignades"-->
+
+                            <?php endforeach ?>
+                        <?php endif ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="mt-auto col-10 col-lg-12 px-3 pt-5 mx-auto">
+            <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="tecnic.php">
+                🢘 Torna enrere
+            </a>
+        </div>
 
 
         <!-------------------------------------USUARI--------------------------------------->
@@ -250,9 +249,9 @@ include './header-footer/header.php';
                                         <option value="">Selecciona tècnic...</option>
 
                                         <?php foreach ($tecnics as $tec): ?>
-                                            <option value="<?= $tec['ID_TECNIC'] ?>" >
-                                            <?= $tec['NOM_TECNIC'] ?>
-                                        </option> 
+                                            <option value="<?= $tec['ID_TECNIC'] ?>">
+                                                <?= $tec['NOM_TECNIC'] ?>
+                                            </option>
                                         <?php endforeach ?>
                                     </select>
 
@@ -263,16 +262,16 @@ include './header-footer/header.php';
                                         <option value="">Selecciona tipus...</option>
 
                                         <?php foreach ($tipus as $tip): ?>
-                                            <option value="<?= $tip['ID_TIPUS'] ?>" >
-                                            <?= $tip['NOM_TIPUS'] ?>
-                                        </option> 
+                                            <option value="<?= $tip['ID_TIPUS'] ?>">
+                                                <?= $tip['NOM_TIPUS'] ?>
+                                            </option>
                                         <?php endforeach ?>
                                     </select>
-                                            
+
                                 </div>
-                                
+
                                 <!--Div error -->
-                                <div id="error-updateInc-<?= $inc['ID_INCIDENCIA']?>" class="alert alert-warning d-none mx-3 col-11">
+                                <div id="error-updateInc-<?= $inc['ID_INCIDENCIA'] ?>" class="alert alert-warning d-none mx-3 col-11">
                                     Siusplau ompli almenys un camp.
                                 </div>
 
@@ -326,14 +325,14 @@ include './header-footer/header.php';
 
     <?php endif ?>
 
-    <?php if($rol == 'admin'): ?>
-    <div class="mt-auto col-12 col-lg-12 px-3 mx-auto p-3">
-            <a class=" mb-5 bottom-0 start-0 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="admin.php">
+    <?php if ($rol == 'admin'): ?>
+        <div class="mt-auto col-10 col-lg-12 px-3 mx-auto">
+            <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="admin.php">
                 🢘 Panell d'administració
             </a>
-    </div>
+        </div>
     <?php endif ?>
-    
+
 </main>
 
 <?php include './header-footer/footer.php'; ?>
