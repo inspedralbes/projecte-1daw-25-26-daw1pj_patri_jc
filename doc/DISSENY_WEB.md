@@ -99,3 +99,8 @@ Actualment encara hi ha alguns aspectes d’accessibilitat millorables per compl
 - El contrast del color taronja utilitzat en alguns textos pot ser insuficient
 - No es mostra un missatge informatiu quan no existeixen incidències
 - Alguns elements visuals encara es poden millorar per augmentar la compatibilitat amb lectors de pantalla
+
+## Captura: Crear Incidència
+<p align="center">
+<img src="../diagrames/CreacioIncidenciaAccesibilitat.png" alt="Captura de la pàgina crear incidència" width="800">
+</p>
