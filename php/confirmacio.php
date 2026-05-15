@@ -56,9 +56,12 @@
         <h5 class="col-lg-8 mx-auto">Pots consultar l'estat de la teva incidència mitjançant aquest identificador.</h5>
     </div>
 </div>
-<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover mb-5 position-absolute bottom-0 start-0 ms-3" href="usuari.php">
-    🢘 Torna al Menú Usuari
-</a>
+
+        <div class="mt-auto col-10 col-lg-12 px-3 pt-5 mx-auto">
+            <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="index.php">
+                🢘 Torna a l'inici
+            </a>
+        </div>
             <?php  
             }
     
@@ -67,23 +70,24 @@
 
     ?>
     </main>
+
     <?php
     if($rol == 'tecnic'){
         ?>
-        <div>
+        <div class="mt-auto col-10 col-lg-12 px-3 pt-5 mx-auto">
             <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="tecnic.php">
-        🢘   Torna al Menú Tècnic
-        </a>
+                🢘 Panell Tecnic
+            </a>
         </div>
         <?php
     }
     elseif($rol =='usuari'){
         ?>
-            <div>
-                <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover mb-5 position-absolute bottom-0 start-0 ms-3" href="usuari.php">
-    🢘 Torna al Menú Usuari
-</a>
-            </div>
+            <div class="mt-auto col-10 col-lg-12 px-3 pt-5 mx-auto">
+            <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="usuari.php">
+                🢘 Panell Usuari
+            </a>
+        </div>
         <?php
     }
 include './header-footer/footer.php';?>
