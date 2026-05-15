@@ -100,7 +100,7 @@ include './header-footer/header.php';
 
         <div class="mt-5 col-10 col-lg-8 mx-auto">
             <table class="table table-bordered table-striped">
-                <thead>
+                <thead class="position-sticky top-0 table-primary" style="box-shadow: 0 2px 0 0 #0d6efd;">
                     <tr>
                         <th class="col-1" scope="col">ID</th>
                         <th class="col-2" scope="col">Data</th>
@@ -160,7 +160,7 @@ include './header-footer/header.php';
             <h5 class="mb-4">Selecciona l'Incidència per modificarla:</h5>
             <div class="table-responsive overflow-auto" style="max-height: 380px;"> <!--table responsive crea un scroll horitzontal segons el contingut -->
                 <table class="table table-bordered table-striped">
-                    <thead>
+                    <thead class="position-sticky top-0 table-primary" style="box-shadow: 0 2px 0 0 #0d6efd;">
                         <tr>
                             <th class="col-lg-1 text-nowrap" scope="col">ID</th>
 
@@ -327,8 +327,8 @@ include './header-footer/header.php';
     <?php endif ?>
 
     <?php if($rol == 'admin'): ?>
-    <div class="mt-auto col-10 col-lg-12 px-3 mx-auto">
-            <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="admin.php">
+    <div class="mt-auto col-12 col-lg-12 px-3 mx-auto p-3">
+            <a class=" mb-5 bottom-0 start-0 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="admin.php">
                 🢘 Panell d'administració
             </a>
     </div>
