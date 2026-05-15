@@ -88,7 +88,11 @@ $classe = $resultat["classe"];
 
     <?php elseif ($rol == 'tecnic'): ?>
 
+        
+
         <div class="container mx-auto col-10 col-lg-5">
+
+        
             <div class="row justify-content-center">
                 <div class="col-auto">
                     <span class="badge bg-secondary bg-gradient"><?= $incidencia["NOM_TIPUS"] ?></span>
@@ -102,6 +106,12 @@ $classe = $resultat["classe"];
                 <div class="col-auto">
                     <span class="badge <?= $classe ?>"><?= $estat ?></span>
                 </div>
+            </div>
+        </div>
+        <div class="mt-5 col-10 col-lg-8 mx-auto">
+            <h4 class="text-primary">Descripció Incidència</h4>
+            <div class="border rounded p-2">
+                <p><?= $incidencia["DESC_INCIDENCIA"] ?></p>
             </div>
         </div>
 

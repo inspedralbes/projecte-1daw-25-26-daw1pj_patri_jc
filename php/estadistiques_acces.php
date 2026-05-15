@@ -192,14 +192,14 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
 
     <div>
         <h1 class=" text-center mt-5">Estadísiques d'Accès</h1>
-        <hr class="border border-primary border-3 opacity-75  mx-auto col-4">
+        <hr class="border border-primary border-3 opacity-75  mx-auto col-8 col-lg-4">
     </div>
 
 
     <!-------------------------------------- NAV -------------------------------------->
     <div id="grafiques" class= "section <?= $section === 'grafiques' ? 'd-block' : 'd-none' ?> mb-5">
         <h4 class="text-primary mx-5">Gràfiques</h4>
-        <hr class="border border-primary border-3 opacity-75 mb-1 col-3 col-lg-2 mx-4">
+        <hr class="border border-primary border-3 opacity-75 mb-1 col-4 col-lg-2 mx-4">
 
         <div class="container mx-auto col-10 col-lg-8 mt-4">
             <nav class="navbar bg-body-tertiary">
@@ -333,7 +333,7 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
     <!-------------------------------------- LOGS -------------------------------------->
     <div id="logs" class="section <?= $section === 'logs' ? 'd-block' : 'd-none' ?> mb-5">
         <h4 class="text-primary mx-5">Logs</h4>
-        <hr class="border border-primary border-3 opacity-75 mb-1 col-3 col-lg-2 mx-4">
+        <hr class="border border-primary border-3 opacity-75 mb-1 col-4 col-lg-2 mx-4">
         <div class="container mx-auto col-10 col-lg-8 mt-5">
 
             <div class="mb-3 p-3">
@@ -420,6 +420,11 @@ foreach ($estadAccessAvui as $e) { //separa el res de la agregacio en dos arrays
             </div>
         </div>
 </main>
+<div class="mt-auto col-12 col-lg-12 px-3 mx-auto p-3">
+            <a class=" mb-5 bottom-0 start-0 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="admin.php">
+                🢘 Panell d'administració
+            </a>
+    </div>
 
 <script>
     //Canvi de pestanya

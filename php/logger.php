@@ -1,6 +1,6 @@
 <?php
     require 'vendor/autoload.php';
-
+    
     function getCollection(){
         $uri = getenv('MONGODB_URI');
 

@@ -99,7 +99,7 @@ include './header-footer/header.php';
 
         <div class="mt-5 col-10 col-lg-8 mx-auto">
             <table class="table table-bordered table-striped">
-                <thead>
+                <thead class="position-sticky top-0 table-primary" style="box-shadow: 0 2px 0 0 #0d6efd;">
                     <tr>
                         <th class="col-1" scope="col">ID</th>
                         <th class="col-2" scope="col">Data</th>
@@ -159,7 +159,7 @@ include './header-footer/header.php';
             <h5 class="mb-4">Selecciona l'Incidència per modificarla:</h5>
             <div class="table-responsive overflow-auto" style="max-height: 380px;"> <!--table responsive crea un scroll horitzontal segons el contingut -->
                 <table class="table table-bordered table-striped">
-                    <thead>
+                    <thead class="position-sticky top-0 table-primary" style="box-shadow: 0 2px 0 0 #0d6efd;">
                         <tr>
                             <th class="col-lg-1 text-nowrap" scope="col">ID</th>
 
