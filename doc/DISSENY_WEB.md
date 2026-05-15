@@ -1,4 +1,5 @@
-# 🎨DISSENY WEB – Avaluació heurística
+# 🎨DISSENY WEB 
+# 1-Avaluació heurística
 
 ## 1. Visibilitat de l’estat del sistema
 Es compleix, ja que el sistema informa l’usuari en tot moment. Per exemple, si es produeix un error en l’enviament del formulari, aquest es mostra abans de finalitzar l’acció. Així mateix, quan es crea una incidència, es mostra una confirmació amb l’identificador corresponent.
@@ -47,3 +48,54 @@ Es compleix. Quan es produeix un error, es mostra un missatge clar i comprensibl
 
 ## 10. Ajuda i documentació
 Es compleix. El sistema incorpora elements d’ajuda contextual, com ara placeholders explicatius, indicació dels requisits dels camps i missatges d’error que guien l’usuari durant l’ús de l’aplicació.
+
+---
+
+# 2-WCAG
+
+## Pàgina: Crear Incidència
+
+La pàgina `crear_incidencies.php` ha estat desenvolupada seguint criteris d’accessibilitat WCAG 2.1 nivell AA.
+
+### Mesures implementades
+
+- Formulari estructurat amb etiquetes HTML semàntiques
+- Ús de `label` associats correctament als camps del formulari
+- Navegació accessible mitjançant teclat
+- Camps obligatoris amb validació (`required`)
+- Compatibilitat responsive amb Bootstrap 5
+- Contrast visual adequat
+- Estructura clara i llegible
+
+### Aspectes pendents de millora
+
+Actualment encara hi ha alguns aspectes d’accessibilitat millorables per complir completament WCAG AA:
+
+- Els missatges d’error encara no utilitzen atributs ARIA (`aria-live`)
+- Falta afegir descripcions contextuals addicionals als camps del formulari
+- No s’ha implementat encara una gestió avançada del focus en errors
+- Alguns elements visuals encara es poden millorar per augmentar la compatibilitat amb lectors de pantalla
+
+
+## Pàgina: Llista d’Incidències (Tècnic)
+
+La pàgina `llistaIncidencies.php` en la vista de tècnic ha estat desenvolupada seguint criteris d’accessibilitat WCAG 2.1 nivell AA.
+
+### Mesures implementades
+
+- Estructura semàntica amb etiquetes HTML adequades (`table`, `thead`, `tbody`, `th`, `td`)
+- Ús correcte de `scope="col"` a les capçaleres de la taula
+- Navegació accessible mitjançant teclat
+- Enllaços accessibles per consultar el detall de cada incidència
+- Compatibilitat responsive amb Bootstrap 5
+- Separació clara entre contingut i navegació
+- Taula amb estructura clara i llegible
+
+### Aspectes pendents de millora
+
+Actualment encara hi ha alguns aspectes d’accessibilitat millorables per complir completament WCAG AA:
+
+- Alguns estats d’incidència depenen del color per transmetre informació visual
+- El contrast del color taronja utilitzat en alguns textos pot ser insuficient
+- No es mostra un missatge informatiu quan no existeixen incidències
+- Alguns elements visuals encara es poden millorar per augmentar la compatibilitat amb lectors de pantalla
