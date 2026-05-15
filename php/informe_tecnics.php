@@ -17,8 +17,9 @@ include './header-footer/header.php';
         <hr class="border border-primary border-3 opacity-75 mb-5 mx-auto">
     </div>
 
+     <div class="table-responsive overflow-auto mb-5" style="max-height: 400px;">
     <table class="table table-bordered table-striped">
-        <thead>
+        <thead class="position-sticky top-0 table-primary" style="box-shadow: 0 2px 0 0 #0d6efd;">
             <tr>
                 <th>ID Tecnic</th>
                 <th>Nom Tècnic</th>
@@ -47,17 +48,16 @@ include './header-footer/header.php';
                 <?php endif; ?>
         </tbody>
     </table>
-
+                </div>
     
 
 </div>
 
-    <div class="mt-auto col-10 col-lg-12 px-3 mx-auto">
-            <a class=" mb-5 ms-5 position-absolute bottom-0 start-0 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="admin.php">
+    <div class="mt-auto col-12 col-lg-12 px-3 mx-auto">
+            <a class=" mb-5 bottom-0 start-0 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="admin.php">
                 🢘 Panell d'administració
             </a>
     </div>
 </main>
-
-<?php 
-    include './header-footer/footer.php';?>
+    
+    <?php include './header-footer/footer.php';?>

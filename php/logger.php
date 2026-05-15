@@ -1,6 +1,6 @@
 <?php
     require 'vendor/autoload.php';
-
+    
     function getCollection(){
         $uri = getenv('MONGODB_URI');
 
@@ -35,21 +35,34 @@
         ]);
     }   
 
-    function filtrarDocuments($collections, $date, $usuari, $pagina){
-    $documents = $collections->find();
-    $resultado = [];
-    foreach($documents as $document){
-        if(!empty($date) && substr($document['data'] ?? '', 0, 10) !== $date){
-            continue;
-        }
-        if(!empty($usuari) && ($document['rol'] ?? '') !== $usuari){
-            continue;
-        }
-        if(!empty($pagina) && strpos($document['url'] ?? '', $pagina) === false){
-            continue;
-        }
-        $resultado[] = $document;
+    //Funció per filtrar els documents segons els paràmetres rebuts
+    function filtrarDocuments($collection, $date, $usuari, $pagina) {
+    //Construimos el filtro
+    $filter = [];
+
+    
+    if (!empty($date)) {
+       
+        $filter['data'] = [
+            // Filtrar por el rango de fechas del día
+            '$gte' => $date . " 00:00:00",
+            '$lte' => $date . " 23:59:59"
+        ];
     }
-        return $resultado; 
+
+    
+    if (!empty($usuari)) {
+        // Filtrar por rol exacto
+        $filter['rol'] = $usuari;
     }
+
+    
+    if (!empty($pagina)) {
+    
+    //Utilizamos regex para buscar la palabra dentro de la URL
+    $filter['url'] = ['$regex' => $pagina];
+}
+
+    return $collection->find($filter);
+}
 ?>
