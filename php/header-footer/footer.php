@@ -7,7 +7,7 @@ $noms = "Juan Carlos Diaz Dual | Patricia Fornieles Rosa";
         <nav class="navbar" style="background-color:#D0F3F9;">
             <div class="container-fluid justify-content-center d-flex flex-column">
                 <span class="text-center"><?= $c?></span>
-                <span class="text-muted fs-6 mt-1">
+                <span class="text-muted fs-6 mt-1 col-8 text-center">
                     <?= $noms ?>
                 </span>
             </div>
