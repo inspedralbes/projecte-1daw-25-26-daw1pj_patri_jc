@@ -48,7 +48,21 @@ El sistema està dividit en diferents rols:
 - Servidor web (Apache o similar)
 - Navegador web modern
 
-## 🚀 Administració de la base de dades
+ ## 🚀 Entorn de desenvolupament
+
+El projecte s’ha desenvolupat utilitzant un entorn basat en Docker
+
+L’entorn inclou:
+- 🐘 Servidor Apache amb PHP
+- 🟡 Base de dades MySQL
+- 🟢 Base de dades MongoDB
+- 🧰 Eines d’administració (Adminer i mongo-express)
+
+La configuració de les bases de dades es gestiona mitjançant un fitxer `.env` que defineix les credencials i la connexió a MongoDB
+
+Per iniciar l’entorn només cal executar Docker Compose i accedir al projecte des del navegador
+
+## 🛠️ Administració de la base de dades
 
 ### Local
 - MySQL → Adminer: http://localhost:8081  
