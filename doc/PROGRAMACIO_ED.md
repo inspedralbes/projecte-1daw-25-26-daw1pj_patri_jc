@@ -62,13 +62,20 @@ Els divendres es planificaven les tasques del sprint següent i es distribuïen 
 ## 4. 📈 Gràfiques TAIGA
 
 
-<img width="991" height="411" alt="Captura de pantalla de 2026-05-15 12-19-03" src="https://github.com/user-attachments/assets/3e7e3310-5585-4d0c-8563-32d7fc45400d" />
+<img width="991" height="411" alt="Grafica Sprint 1" src="https://github.com/user-attachments/assets/3e7e3310-5585-4d0c-8563-32d7fc45400d" />
 
 ---
 
-<img width="991" height="411" alt="Captura de pantalla de 2026-05-15 12-19-21" src="https://github.com/user-attachments/assets/c6527496-7ec6-4496-8dd8-406f71471839" />
+<img width="991" height="411" alt="Grafica Sprint 2" src="https://github.com/user-attachments/assets/c6527496-7ec6-4496-8dd8-406f71471839" />
 
 ---
 
-<img width="991" height="411" alt="Captura de pantalla de 2026-05-15 12-19-53" src="https://github.com/user-attachments/assets/6359c8de-6090-4c1d-ad61-6b91ad252e5a" />
+<img width="991" height="411" alt="Grafica Sprint 3" src="https://github.com/user-attachments/assets/6359c8de-6090-4c1d-ad61-6b91ad252e5a" />
+
+---
+
+## 5. 🧩 Diagrama de casos d’ús
+<p align="center">
+  <img src="https://github.com/inspedralbes/projecte-1daw-25-26-daw1pj_patri_jc/blob/main/diagrames/casosUsPJIncidencies.drawio.png" alt="Diagrama Casos d’ús">
+</p>
 
