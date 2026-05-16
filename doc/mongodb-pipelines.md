@@ -121,6 +121,7 @@ $estadAccessAvui = $collection->aggregate([
 ```
 ---
  
-## 🛠️ 4- Diagrama E-R
+## 🗂️ 4- Diagrama E-R
 Diagrama entitat relació de la base de dades SQL
 
+![Diagrama ER](https://github.com/inspedralbes/projecte-1daw-25-26-daw1pj_patri_jc/blob/main/diagrames/modelER_incidencia.drawio.png)
