@@ -1,4 +1,25 @@
-## Funcionalitats Implementades
+## 📁 Estructura del Projecte
+
+* **php/**: Codi font de l'aplicació web.
+  * **assets/**: Imatges i recursos estàtics.
+  * **css/**: Fulls d'estil.
+  * **js/**: Validacions i funcions JavaScript.
+  * **header-footer/**: Capçalera i peu de pàgina comuns.
+  * **index.php**: Pàgina d'inici i login.
+  * **usuari.php / tecnic.php / admin.php**: Menús segons el rol.
+  * **buscar_incidencia.php / crear_incidencies.php / llistaIncidencies.php / detall_incidencia.php**: Gestió de les incidències.
+  * **afegir_actuacio.php / modificar_incidencia.php**: Edició i seguiment.
+  * **confirmacio.php**: Pàgina d'èxit de les accions.
+  * **consum_dept.php / informe_tecnics.php / estadistiques_acces.php**: Informes i estadístiques (MySQL/MongoDB).
+  * **connexio.php / funcions.php / logger.php**: Lògica interna, connexions i registre de logs.
+* **db_init/**: Scripts SQL per inicialitzar la base de dades.
+* **db_data/**: Dades persistents de la base de dades.
+* **diagrames/**: Diagrames del projecte.
+* **doc/**: Documentació del sistema.
+* **images/**: Imatges del projecte.
+* **docker-compose.yaml**: Configuració de l'entorn Docker.
+
+## ⚙️ Funcionalitats Implementades
 
 ### Gestió d'Incidències
 - Creació de noves incidències amb departament, tipus i descripció
