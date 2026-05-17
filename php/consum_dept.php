@@ -7,7 +7,7 @@ $consum = getConsumDepartaments($conn);
 include './header-footer/header.php';
 ?>
 
-<main>
+<main class="d-flex flex-column flex-grow-1 pb-3">
 
 <div class="container mx-auto col-10 col-lg-8 mt-5">
 
