@@ -12,6 +12,7 @@ A més s'han implementat filtres per consultar segons diferents criteris.
 
 ## 📋 1- Registre de logs
 Funció per inserir els logs a la database
+S'obté l'IP del dispositiu, la data actual en format 'Y-m-d H:i:s', el rol de l'usuari obtingut per URL, el mètode HTTP, el url sencer i el navegador desde on s'accedeix a la pàgina.
 ```
 function inserirLog(){
         $collection = getCollection();
